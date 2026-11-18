@@ -1,0 +1,74 @@
+:root {
+  --portal-header-height: 56px;
+}
+
+@media (max-width: 1279px) {
+  :root {
+    --portal-header-height: 64px;
+  }
+}
+
+.app {
+  grid-template-rows: var(--portal-header-height) minmax(0, 1fr);
+}
+
+.app > :is(.sidebar, .main) {
+  min-height: calc(100vh - var(--portal-header-height));
+}
+
+.app > .project-rail {
+  height: calc(100vh - var(--portal-header-height));
+}
+
+.review-panel {
+  top: var(--portal-header-height);
+}
+
+.app.projects-collapsed .project-mobile-toggle {
+  top: calc(var(--portal-header-height) + 10px);
+}
+
+.app.projects-collapsed .task-topbar {
+  padding-inline-start: 48px;
+}
+
+.workbench-review-tools .review-toggle {
+  width: 100%;
+  min-height: 36px;
+  gap: 10px;
+  padding: 0 11px;
+  font-size: 12px;
+}
+
+.workbench-review-tools .review-toggle svg {
+  flex: 0 0 16px;
+  width: 16px;
+}
+
+@media (max-width: 850px) {
+  .app > .project-rail {
+    top: var(--portal-header-height);
+    height: auto;
+  }
+
+  .app > .project-rail:not(.open) {
+    visibility: hidden;
+  }
+
+  .app .project-mobile-toggle {
+    top: calc(var(--portal-header-height) + 10px);
+  }
+
+  .app .task-topbar {
+    padding-inline-start: 48px;
+  }
+
+  .workbench-review-tools .review-toggle {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .workbench-review-tools .review-toggle span {
+    display: none;
+  }
+}
