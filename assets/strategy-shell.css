@@ -1,0 +1,14 @@
+/* Reserve the workbench's navigation row for the shared portal header. */
+:root { --portal-header-height: 56px; }
+#siteHeader.site-header.topbar {
+  position: absolute;
+  inset: 0 0 auto;
+}
+#root [data-node-id="1:162"] { display: none; }
+#root [data-node-id="1:61"] {
+  top: calc(var(--portal-header-height) + 5px);
+  height: calc(100% - var(--portal-header-height) - 21px);
+}
+@media (max-width: 1279px) {
+  :root { --portal-header-height: 64px; }
+}

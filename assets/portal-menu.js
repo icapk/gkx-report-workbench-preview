@@ -33,7 +33,7 @@
       ["科技决策支持"]
     ],
     strategy: [
-      ["战略咨询总体"],
+      ["战略咨询总体", new URL("./", document.baseURI).href],
       ["新型高端智库", "https://effortless-licorice-cdaa9f.netlify.app", "new"],
       ["科技专题服务系统", topicService, "hot"],
       ["科技信息展示系统", informationDisplay, "hot"],
