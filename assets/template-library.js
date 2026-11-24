@@ -286,7 +286,11 @@ export function createTemplateLibrary(React, Select) {
     const matches=searchTemplates(items.filter(t=>t.type===type&&(!filters.industry || t.industry===filters.industry)&&(!filters.scenario || t.scenario===filters.scenario)),filters.q);
     const current=items.find(t=>t.id===screen?.id), shared=screen?.kind==="shared"?shareTemplate(screen.token):null;
     useEffect(()=>{
-      const openHash=()=>{const token=shareToken();if(token)setScreen({kind:"shared",token});};
+      const openHash=()=>{
+        const token=shareToken();
+        if(token)setScreen({kind:"shared",token});
+        else setScreen(current=>current?.kind==="shared" ? null : current);
+      };
       window.addEventListener("hashchange",openHash);return ()=>window.removeEventListener("hashchange",openHash);
     },[]);
     useEffect(()=>{
@@ -295,7 +299,10 @@ export function createTemplateLibrary(React, Select) {
       return ()=>clearTimeout(timer);
     },[shared?.share?.expires,clock]);
     function close(){
-      if(screen?.kind==="shared"&&shareToken())history.replaceState(history.state,"",location.pathname+location.search);
+      if(screen?.kind==="shared"&&shareToken()){
+        history.replaceState(history.state,"","#/library/templates");
+        window.dispatchEvent(new Event("hashchange"));
+      }
       setScreen(null);setError("");
     }
     function open(kind,item){setError("");setScreen({kind,id:item.id});}

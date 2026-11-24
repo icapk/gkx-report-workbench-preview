@@ -5,7 +5,7 @@
 .skill-picker-search { padding:4px; }
 .skill-picker-search input { height:32px; width:100%; }
 .skill-picker-row {
-  display:grid; grid-template-columns:minmax(0,1fr) auto auto;
+  display:grid; grid-template-columns:minmax(0,1fr) auto;
   align-items:center; gap:4px; padding:3px 4px;
 }
 .skill-picker-identity {
@@ -16,8 +16,6 @@
   padding:4px 7px; justify-content:center; white-space:nowrap;
   color:var(--color-primary); font-size:13px; cursor:pointer;
 }
-.skill-picker-action[data-disabled], .skill-picker-action[data-gated] { color:var(--color-secondary); }
-.skill-picker-action[data-gated] { opacity:.75; }
 .skill-picker-action:is(:hover,[data-highlighted]) { background:var(--color-hover); }
 .skill-picker-action:focus-visible { outline:1px solid var(--text-field-focus-border); outline-offset:-1px; }
 .skill-picker-empty { margin:0; padding:16px 10px; color:var(--color-secondary); font-size:13px; text-align:center; }

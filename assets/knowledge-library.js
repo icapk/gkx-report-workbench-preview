@@ -378,3 +378,5 @@ export function createKnowledgeLibrary(React) {
   }
   return {KnowledgeLibrary,KnowledgePicker};
 }
+
+export { listCollections, persist, checkBatch };

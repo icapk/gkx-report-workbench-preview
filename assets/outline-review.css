@@ -1,0 +1,54 @@
+.outline-review {
+  --outline-ink:#202b3c;
+  --outline-muted:#66758a;
+  --outline-line:#dde4ed;
+  --outline-blue:#305ce0;
+  width:100%; max-width:830px; margin:0 auto;
+  padding:20px 22px 16px; box-sizing:border-box;
+  color:var(--outline-ink); background:white; border:1px solid var(--outline-line);
+  border-radius:13px; box-shadow:0 4px 18px #14396108;
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.outline-review *, .outline-review *::before { box-sizing:border-box; }
+.outline-review :is(h2,p,ol,li) { margin:0; }
+.outline-review ol { list-style:none; padding:0; }
+.outline-review button, .outline-review input { font:inherit; }
+.outline-review button { cursor:pointer; }
+.outline-review-head { margin-bottom:15px; }
+.outline-review-head h2 { font-size:17px; font-weight:650; line-height:1.45; color:var(--outline-ink); }
+.outline-review .outline-review-topic { margin-top:4px; font-size:14px; color:#47566c; overflow-wrap:anywhere; }
+.outline-review .outline-review-template { margin-top:3px; color:var(--outline-muted); font-size:12px; }
+.outline-review-chapters { display:grid; gap:9px; }
+.outline-review-chapter { min-width:0; padding:9px 10px; border:1px solid var(--outline-line); border-radius:8px; background:#fff; }
+.outline-review-chapter:focus-within { border-color:#b8c9f0; }
+.outline-review-chapter-head { display:flex; align-items:center; gap:8px; }
+.outline-review-number { min-width:22px; padding:0 4px; height:22px; border-radius:5px; display:grid; place-items:center; background:#eef3fe; color:#3d5faf; font-size:12px; font-weight:600; font-variant-numeric:tabular-nums; }
+.outline-review input { min-width:0; flex:1 1 auto; height:30px; padding:3px 7px; border:1px solid transparent; border-radius:4px; color:var(--outline-ink); background:transparent; text-align:left; }
+.outline-review-chapter-head input { font-weight:600; }
+.outline-review input:hover { background:#f8faff; border-color:var(--outline-line); }
+.outline-review input:focus { outline:none; border-color:#638bf0; background:white; box-shadow:0 0 0 2px #edf2fe; }
+.outline-review input[aria-invalid=true] { border-color:#e7abab; }
+.outline-review input::placeholder { color:#8692a5; font-weight:400; }
+.outline-review-tools { display:flex; flex:0 0 auto; align-items:center; gap:2px; }
+.outline-review-tool { display:grid; place-items:center; height:28px; width:28px; padding:0; line-height:1; color:var(--outline-muted); border:0; border-radius:4px; background:transparent; }
+.outline-review-tool:not(:disabled):hover { color:#2d53b0; background:#eff4ff; }
+.outline-review-tool:disabled { color:#bdc6d3; cursor:default; }
+.outline-review button:focus-visible { outline:2px solid #527eeb; outline-offset:2px; }
+.outline-review .outline-review-brief { margin:3px 38px 3px 37px; color:var(--outline-muted); font-size:12px; white-space:pre-line; overflow-wrap:anywhere; }
+.outline-review .outline-review-subheadings { margin-left:32px; }
+.outline-review-subheadings li { display:flex; align-items:center; gap:4px; }
+.outline-review-subheadings input { height:27px; font-size:13px; }
+.outline-review-branch { width:8px; height:10px; border-left:1px solid #cdd7e5; border-bottom:1px solid #cdd7e5; transform:translateY(-2px); }
+.outline-review .outline-review-add-child, .outline-review .outline-review-add { display:inline-flex; align-items:center; justify-content:center; gap:3px; background:transparent; }
+.outline-review .outline-review-add-child { margin:4px 0 0 31px; padding:2px 6px; border:0; border-radius:4px; color:#526d9d; font-size:12px; }
+.outline-review-add-child svg { width:13px; height:13px; }
+.outline-review .outline-review-add { margin-top:10px; border:1px dashed #bac9df; border-radius:6px; min-height:33px; width:100%; color:#446397; font-size:13px; }
+.outline-review :is(.outline-review-add-child,.outline-review-add):hover { color:#244da5; background:#f4f7fe; }
+.outline-review-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:15px; padding-top:12px; border-top:1px solid #e9edf3; }
+.outline-review-error { color:#a13636; font-size:12px; }
+.outline-review .outline-review-confirm { flex:0 0 auto; padding:7px 15px; min-height:35px; border:1px solid transparent; border-radius:6px; background:var(--outline-blue); color:white; font-size:13px; font-weight:550; }
+.outline-review .outline-review-confirm:hover:not(:disabled) { background:#234cc3; }
+.outline-review .outline-review-confirm:disabled { color:#f9fbff; background:#a2b3d2; cursor:not-allowed; }
+.cf-approved-outline { margin:0 0 12px; font-size:13px; color:#405271; }
+.cf-approved-outline summary { width:fit-content; cursor:pointer; padding:4px 0; }
+.cf-approved-outline[open] .lib-generated-outline { margin-top:6px; }
