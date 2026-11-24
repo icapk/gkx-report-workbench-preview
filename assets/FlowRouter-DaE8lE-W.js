@@ -247,7 +247,8 @@ Error generating stack: `+s.message+`
   - \`null\` or \`undefined\` if the progress is indeterminate.
 
 Defaulting to \`null\`.`}Zi(O3,"getInvalidValueError");var pj=Object.defineProperty,Rn=(t,n)=>pj(t,"name",{value:n,configurable:!0}),k3="Radio",[hj,D3]=pa(k3),[mj,Ld]=hj(k3);function _3(t){const{__scopeRadio:n,checked:r=!1,children:o,disabled:l,form:c,name:u,onCheck:d,required:m,value:v="on",internal_do_not_use_render:b}=t,[g,x]=y.useState(null),[S,C]=y.useState(null),[z,E]=y.useState(null),T=g?!!c||!!g.closest("form"):!0,A={checked:r,disabled:l,required:m,name:u,form:c,value:v,control:g,setControl:x,userClick:z,onUserClick:E,isFormControl:T,bubbleInput:S,setBubbleInput:C,onCheck:Rn(()=>d==null?void 0:d(),"onCheck")};return h.jsx(mj,{scope:n,...A,children:$3(b)?b(A):o})}Rn(_3,"RadioProvider");var gj="RadioTrigger",vj=y.forwardRef(Rn(function({__scopeRadio:n,onClick:r,...o},l){const{checked:c,disabled:u,value:d,setControl:m,onCheck:v,onUserClick:b,isFormControl:g,bubbleInput:x}=Ld(gj,n),S=Ze(l,m);return h.jsx(et.button,{type:"button",role:"radio","aria-checked":c,"data-state":Lg(c),"data-disabled":u?"":void 0,disabled:u,value:d,...o,ref:S,onClick:je(r,C=>{const z=C.isPropagationStopped();c||(b({hasConsumerStoppedPropagation:z}),v()),x&&g&&(z||C.stopPropagation())})})},"RadioTrigger")),bj="RadioIndicator",xj=y.forwardRef(Rn(function(n,r){const{__scopeRadio:o,forceMount:l,...c}=n,u=Ld(bj,o);return h.jsx(Yr,{present:l||u.checked,children:h.jsx(et.span,{"data-state":Lg(u.checked),"data-disabled":u.disabled?"":void 0,...c,ref:r})})},"RadioIndicator")),yj="RadioBubbleInput",wj=y.forwardRef(Rn(function({__scopeRadio:n,onClick:r,...o},l){const{control:c,checked:u,required:d,disabled:m,name:v,value:b,form:g,bubbleInput:x,setBubbleInput:S,userClick:C}=Ld(yj,n),z=Ze(l,S),E=Td(c),T=y.useRef(!1),A=y.useRef(u),R=y.useRef(C),M=y.useRef(null);y.useEffect(()=>{const D=x;if(!D)return;const k=window.HTMLInputElement.prototype,L=Object.getOwnPropertyDescriptor(k,"checked").set;if(!L)return;const I=A.current!==u;A.current=u;const Y=C!==null&&C!==R.current;if(R.current=C,Y)M.current=I?null:C,I&&L.call(D,u),D.dispatchEvent(new Event("click",{bubbles:!C.hasConsumerStoppedPropagation}));else if(I){const U=M.current;M.current=null;const de=u&&U!==null;T.current=!0,L.call(D,u),D.dispatchEvent(new Event("click",{bubbles:!(de&&U.hasConsumerStoppedPropagation)})),T.current=!1}},[x,u,C]);const N=y.useRef(u);return h.jsx(et.input,{type:"radio","aria-hidden":!0,defaultChecked:N.current,required:d,disabled:m,name:v,value:b,form:g,...o,tabIndex:-1,ref:z,onClick:je(r,D=>{T.current&&D.stopPropagation()}),style:{...o.style,...E,position:"absolute",pointerEvents:"none",opacity:0,margin:0,transform:"translateX(-100%)"}})},"RadioBubbleInput"));function $3(t){return typeof t=="function"}Rn($3,"isFunction");function Lg(t){return t?"checked":"unchecked"}Rn(Lg,"getState");var Sj=["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"],Pg="RadioGroup",[Cj,KL]=pa(Pg,[kd,D3]),L3=kd(),Pd=D3(),[Tj,Ej]=Cj(Pg),zj=y.forwardRef(Rn(function(n,r){const{__scopeRadioGroup:o,name:l,form:c,defaultValue:u,value:d,required:m=!1,disabled:v=!1,orientation:b,dir:g,loop:x=!0,onValueChange:S,...C}=n,z=L3(o),E=Bc(g),[T,A]=Gi({prop:d,defaultProp:u??null,onChange:S,caller:Pg}),[R,M]=y.useState(null),N=Ze(r,M),D=y.useRef(T);return y.useEffect(()=>{const k=c?R==null?void 0:R.ownerDocument.getElementById(c):R==null?void 0:R.closest("form");if(k instanceof HTMLFormElement){const _=Rn(()=>A(D.current),"reset");return k.addEventListener("reset",_),()=>k.removeEventListener("reset",_)}},[R,c,A]),h.jsx(Tj,{scope:o,name:l,form:c,required:m,disabled:v,value:T,onValueChange:A,children:h.jsx(i3,{asChild:!0,...z,orientation:b,dir:E,loop:x,children:h.jsx(et.div,{role:"radiogroup","aria-required":m,"aria-orientation":b,"data-disabled":v?"":void 0,dir:E,...C,ref:N})})})},"RadioGroup")),Mj="RadioGroupItemProvider",Rj="RadioGroupItemTrigger";function P3(t){const{__scopeRadioGroup:n,value:r,disabled:o,children:l,internal_do_not_use_render:c}=t,u=Ej(Mj,n),d=Pd(n),m=u.disabled||o;return h.jsx(_3,{...d,checked:u.value===r,disabled:m,required:u.required,name:u.name,form:u.form,value:r,onCheck:()=>u.onValueChange(r),internal_do_not_use_render:c,children:l})}Rn(P3,"RadioGroupItemProvider");var Aj=y.forwardRef(Rn(function(n,r){const{__scopeRadioGroup:o,...l}=n,c=L3(o),u=Pd(o),{checked:d,disabled:m}=Ld(Rj,u.__scopeRadio),v=y.useRef(null),b=Ze(r,v),g=y.useRef(!1);return y.useEffect(()=>{const x=Rn(C=>{Sj.includes(C.key)&&(g.current=!0)},"handleKeyDown"),S=Rn(()=>g.current=!1,"handleKeyUp");return document.addEventListener("keydown",x),document.addEventListener("keyup",S),()=>{document.removeEventListener("keydown",x),document.removeEventListener("keyup",S)}},[]),h.jsx(r3,{asChild:!0,...c,focusable:!m,active:d,children:h.jsx(vj,{...u,...l,ref:b,onKeyDown:je(l.onKeyDown,x=>{x.key==="Enter"&&x.preventDefault()}),onFocus:je(l.onFocus,()=>{var x;g.current&&((x=v.current)==null||x.click())})})})},"RadioGroupItemTrigger")),jj=y.forwardRef(Rn(function(n,r){const{__scopeRadioGroup:o,value:l,disabled:c,...u}=n;return h.jsx(P3,{__scopeRadioGroup:o,value:l,disabled:c,internal_do_not_use_render:({isFormControl:d})=>h.jsxs(h.Fragment,{children:[h.jsx(Aj,{...u,ref:r,__scopeRadioGroup:o}),d&&h.jsx(Nj,{__scopeRadioGroup:o})]})})},"RadioGroupItem")),Nj=y.forwardRef(Rn(function(n,r){const{__scopeRadioGroup:o,...l}=n,c=Pd(o);return h.jsx(wj,{...c,...l,ref:r})},"RadioGroupItemBubbleInput")),Oj=y.forwardRef(Rn(function(n,r){const{__scopeRadioGroup:o,...l}=n,c=Pd(o);return h.jsx(xj,{...c,...l,ref:r})},"RadioGroupIndicator")),kj=Object.defineProperty,it=(t,n)=>kj(t,"name",{value:n,configurable:!0}),vy={ItemAligned:"item-aligned",Popper:"popper"},Dj={RTL:"rtl"},_j=[" ","Enter","ArrowUp","ArrowDown"],$j=[" ","Enter"],dl="Select",[Id,Hd,Lj]=wd(dl),[Ko,WL]=pa(dl,[Lj,xl]),Ig=xl(),[Pj,Gr]=Ko(dl),[Ij,Hj]=Ko(dl);function I3(t){const{__scopeSelect:n,children:r,open:o,defaultOpen:l,onOpenChange:c,value:u,defaultValue:d,onValueChange:m,dir:v,name:b,autoComplete:g,disabled:x,required:S,form:C,internal_do_not_use_render:z}=t,E=Ig(n),[T,A]=y.useState(null),[R,M]=y.useState(null),[N,D]=y.useState(!1),k=Bc(v),[_,L]=Gi({prop:o,defaultProp:l??!1,onChange:c,caller:dl}),[I,Y]=Gi({prop:u,defaultProp:d,onChange:m,caller:dl}),U=y.useRef(null),de=y.useRef(!1),[me,ue]=y.useState(null),X=it(J=>{ue({value:J,hasConsumerStoppedPropagation:de.current}),Y(J)},"handleUserSelect"),le=y.useRef(I);y.useEffect(()=>{const J=C?T==null?void 0:T.ownerDocument.getElementById(C):T==null?void 0:T.form;if(J instanceof HTMLFormElement){const re=it(()=>Y(le.current),"reset");return J.addEventListener("reset",re),()=>J.removeEventListener("reset",re)}},[C,T,Y]);const Q=T?!!C||!!T.closest("form"):!0,[ce,ee]=y.useState(new Set),xe=bi(),oe=Array.from(ce).map(J=>J.props.value).join(";"),Be=y.useCallback(J=>{ee(re=>new Set(re).add(J))},[]),O=y.useCallback(J=>{ee(re=>{const Ce=new Set(re);return Ce.delete(J),Ce})},[]),Z={required:S,trigger:T,onTriggerChange:A,valueNode:R,onValueNodeChange:M,valueNodeHasChildren:N,onValueNodeHasChildrenChange:D,contentId:xe,value:I,onValueChange:Y,hasConsumerStoppedPropagationRef:de,userSelection:me,onUserSelect:X,open:_,onOpenChange:L,dir:k,triggerPointerDownPosRef:U,disabled:x,name:b,autoComplete:g,form:C,nativeOptions:ce,nativeSelectKey:oe,isFormControl:Q};return h.jsx(jd,{...E,children:h.jsx(Pj,{scope:n,...Z,children:h.jsx(Id.Provider,{scope:n,children:h.jsx(Ij,{scope:n,onNativeOptionAdd:Be,onNativeOptionRemove:O,children:U3(z)?z(Z):r})})})})}it(I3,"SelectProvider");var Vj=it(t=>{const{__scopeSelect:n,children:r,...o}=t;return h.jsx(I3,{__scopeSelect:n,...o,internal_do_not_use_render:({isFormControl:l})=>h.jsxs(h.Fragment,{children:[r,l?h.jsx(mN,{__scopeSelect:n}):null]})})},"Select"),Bj="SelectTrigger",Uj=y.forwardRef(it(function(n,r){const{__scopeSelect:o,disabled:l=!1,...c}=n,u=Ig(o),d=Gr(Bj,o),m=d.disabled||l,v=Ze(r,d.onTriggerChange),b=Hd(o),g=y.useRef("touch"),[x,S,C]=Vg(E=>{const T=b().filter(M=>!M.disabled),A=T.find(M=>M.value===d.value),R=Bg(T,E,A);R!==void 0&&d.onUserSelect(R.value)}),z=it(E=>{m||(d.onOpenChange(!0),C()),E&&(d.triggerPointerDownPosRef.current={x:Math.round(E.pageX),y:Math.round(E.pageY)})},"handleOpen");return h.jsx(zg,{asChild:!0,...u,children:h.jsx(et.button,{type:"button",role:"combobox","aria-controls":d.open?d.contentId:void 0,"aria-expanded":d.open,"aria-required":d.required,"aria-autocomplete":"none",dir:d.dir,"data-state":d.open?"open":"closed",disabled:m,"data-disabled":m?"":void 0,"data-placeholder":Yc(d.value)?"":void 0,...c,ref:v,onClick:je(c.onClick,E=>{E.currentTarget.focus(),g.current!=="mouse"&&z(E)}),onPointerDown:je(c.onPointerDown,E=>{g.current=E.pointerType;const T=E.target;T.hasPointerCapture(E.pointerId)&&T.releasePointerCapture(E.pointerId),E.button===0&&E.ctrlKey===!1&&E.pointerType==="mouse"&&(z(E),E.preventDefault())}),onKeyDown:je(c.onKeyDown,E=>{const T=x.current!=="";!(E.ctrlKey||E.altKey||E.metaKey)&&E.key.length===1&&(d.hasConsumerStoppedPropagationRef.current=E.isPropagationStopped(),S(E.key)),!(T&&E.key===" ")&&_j.includes(E.key)&&(z(),E.preventDefault())})})})},"SelectTrigger")),Yj="SelectValue",Xj=y.forwardRef(it(function(n,r){const{__scopeSelect:o,className:l,style:c,children:u,placeholder:d="",...m}=n,v=Gr(Yj,o),{onValueNodeHasChildrenChange:b}=v,g=u!==void 0,x=Ze(r,v.onValueNodeChange);$t(()=>{b(g)},[b,g]);const S=Yc(v.value);return h.jsx(et.span,{...m,asChild:S?!1:m.asChild,ref:x,style:{pointerEvents:"none"},children:h.jsx(y.Fragment,{children:S?d:u},S?"placeholder":"value")})},"SelectValue")),Fj=y.forwardRef(it(function(n,r){const{__scopeSelect:o,children:l,...c}=n;return h.jsx(et.span,{"aria-hidden":!0,...c,ref:r,children:l||"▼"})},"SelectIcon")),Gj="SelectPortal",[qj,Kj]=Ko(Gj,{forceMount:void 0}),Wj=it(t=>{const{__scopeSelect:n,forceMount:r,...o}=t;return h.jsx(qj,{scope:t.__scopeSelect,forceMount:r,children:h.jsx(vg,{asChild:!0,...o})})},"SelectPortal"),Xo="SelectContent",Zj=y.forwardRef(it(function(n,r){const o=Kj(Xo,n.__scopeSelect),{forceMount:l=o.forceMount,...c}=n,u=Gr(Xo,n.__scopeSelect),[d,m]=y.useState();return $t(()=>{m(new DocumentFragment)},[]),h.jsx(Yr,{present:l||u.open,children:({present:v})=>v?h.jsx(eN,{...c,ref:r}):h.jsx(Qj,{...c,fragment:d})})},"SelectContent")),Qj=y.forwardRef(it(function(n,r){const{__scopeSelect:o,children:l,fragment:c}=n;return c?ml.createPortal(h.jsx(H3,{scope:o,children:h.jsx(Id.Slot,{scope:o,children:h.jsx("div",{ref:r,children:l})})}),c):null},"SelectContentFragment")),Fa=10,[H3,Wo]=Ko(Xo),Jj=Fi("SelectContent.RemoveScroll"),eN=y.forwardRef(it(function(n,r){const{__scopeSelect:o}=n,{position:l=vy.ItemAligned,onCloseAutoFocus:c,onEscapeKeyDown:u,onPointerDownOutside:d,side:m,sideOffset:v,align:b,alignOffset:g,arrowPadding:x,collisionBoundary:S,collisionPadding:C,sticky:z,hideWhenDetached:E,avoidCollisions:T,...A}=n,R=Gr(Xo,o),[M,N]=y.useState(null),[D,k]=y.useState(null),_=Ze(r,N),[L,I]=y.useState(null),[Y,U]=y.useState(null),de=Hd(o),[me,ue]=y.useState(!1),X=y.useRef(!1),le=y.useRef(!1),Q=y.useRef(!1);y.useEffect(()=>{if(M)return $S(M)},[M]),Sd();const ce=y.useCallback(se=>{const[ve,...be]=de().map(F=>F.ref.current),[ye]=be.slice(-1),Se=document.activeElement;for(const F of se)if(F===Se||(F==null||F.scrollIntoView({block:"nearest"}),F===ve&&D&&(D.scrollTop=0),F===ye&&D&&(D.scrollTop=D.scrollHeight),F==null||F.focus(),document.activeElement!==Se))return},[de,D]),ee=y.useCallback(()=>ce([L,M]),[ce,L,M]);y.useEffect(()=>{me&&ee()},[me,ee]);const{onOpenChange:xe,triggerPointerDownPosRef:oe}=R;y.useEffect(()=>{if(M){let se={x:0,y:0};const ve=it(ye=>{var Se,F;se={x:Math.abs(Math.round(ye.pageX)-(((Se=oe.current)==null?void 0:Se.x)??0)),y:Math.abs(Math.round(ye.pageY)-(((F=oe.current)==null?void 0:F.y)??0))}},"handlePointerMove"),be=it(ye=>{se.x<=10&&se.y<=10?ye.preventDefault():ye.composedPath().includes(M)||xe(!1),document.removeEventListener("pointermove",ve),oe.current=null},"handlePointerUp");return oe.current!==null&&(document.addEventListener("pointermove",ve),document.addEventListener("pointerup",be,{capture:!0,once:!0})),()=>{document.removeEventListener("pointermove",ve),document.removeEventListener("pointerup",be,{capture:!0})}}},[M,xe,oe]),y.useEffect(()=>{const se=it(()=>xe(!1),"close");return window.addEventListener("blur",se),window.addEventListener("resize",se),()=>{window.removeEventListener("blur",se),window.removeEventListener("resize",se)}},[xe]);const[Be,O]=Vg(se=>{const ve=de().filter(Se=>!Se.disabled),be=ve.find(Se=>Se.ref.current===document.activeElement),ye=Bg(ve,se,be);ye&&setTimeout(()=>{var Se;return(Se=ye.ref.current)==null?void 0:Se.focus()})}),Z=y.useCallback((se,ve,be)=>{const ye=!le.current;ye&&(le.current=!0);const Se=!X.current&&!be;R.value!==void 0&&R.value===ve||Se?(I(se),Se&&(X.current=!0)):ye&&I(se)},[R.value]),J=y.useCallback(()=>M==null?void 0:M.focus(),[M]),re=y.useCallback((se,ve,be)=>{if(!se)return;const ye=!Q.current;ye&&(Q.current=!0);const Se=!X.current&&!be;(R.value!==void 0&&R.value===ve||Se||ye)&&U(se)},[R.value]),Ce=l===vy.Popper?by:tN,Me=Ce===by?{side:m,sideOffset:v,align:b,alignOffset:g,arrowPadding:x,collisionBoundary:S,collisionPadding:C,sticky:z,hideWhenDetached:E,avoidCollisions:T}:{};return h.jsx(H3,{scope:o,content:M,viewport:D,onViewportChange:k,itemRefCallback:Z,selectedItem:L,onItemLeave:J,itemTextRefCallback:re,focusSelectedItem:ee,selectedItemText:Y,position:l,isPositioned:me,searchRef:Be,children:h.jsx(xg,{as:Jj,allowPinchZoom:!0,children:h.jsx(bS,{asChild:!0,trapped:R.open,onMountAutoFocus:se=>{se.preventDefault()},onUnmountAutoFocus:je(c,se=>{var ve;(ve=R.trigger)==null||ve.focus({preventScroll:!0}),se.preventDefault()}),children:h.jsx(pg,{asChild:!0,disableOutsidePointerEvents:!0,onEscapeKeyDown:u,onPointerDownOutside:d,onFocusOutside:se=>se.preventDefault(),onDismiss:()=>R.onOpenChange(!1),children:h.jsx(Ce,{role:"listbox",id:R.contentId,"data-state":R.open?"open":"closed",dir:R.dir,onContextMenu:se=>se.preventDefault(),...A,...Me,onPlaced:()=>ue(!0),ref:_,style:{display:"flex",flexDirection:"column",outline:"none",...A.style},onKeyDown:je(A.onKeyDown,se=>{const ve=se.ctrlKey||se.altKey||se.metaKey;if(se.key==="Tab"&&se.preventDefault(),!ve&&se.key.length===1&&O(se.key),["ArrowUp","ArrowDown","Home","End"].includes(se.key)){let ye=de().filter(Se=>!Se.disabled).map(Se=>Se.ref.current);if(["ArrowUp","End"].includes(se.key)&&(ye=ye.slice().reverse()),["ArrowUp","ArrowDown"].includes(se.key)){const Se=se.target,F=ye.indexOf(Se);ye=ye.slice(F+1)}setTimeout(()=>ce(ye)),se.preventDefault()}})})})})})})},"SelectContentImpl")),tN=y.forwardRef(it(function(n,r){const{__scopeSelect:o,onPlaced:l,...c}=n,u=Gr(Xo,o),d=Wo(Xo,o),[m,v]=y.useState(null),[b,g]=y.useState(null),x=Ze(r,g),S=Hd(o),C=y.useRef(!1),z=y.useRef(!0),{viewport:E,selectedItem:T,selectedItemText:A,focusSelectedItem:R}=d,M=y.useCallback(()=>{if(u.trigger&&u.valueNode&&m&&b&&E&&T&&A){const _=u.trigger.getBoundingClientRect(),L=b.getBoundingClientRect(),I=u.valueNode.getBoundingClientRect(),Y=A.getBoundingClientRect();if(u.dir!==Dj.RTL){const be=Y.left-L.left,ye=I.left-be,Se=_.left-ye,F=_.width+Se,ne=Math.max(F,L.width),ze=window.innerWidth-Fa,Ne=Tm(ye,[Fa,Math.max(Fa,ze-ne)]);m.style.minWidth=F+"px",m.style.left=Ne+"px"}else{const be=L.right-Y.right,ye=window.innerWidth-I.right-be,Se=window.innerWidth-_.right-ye,F=_.width+Se,ne=Math.max(F,L.width),ze=window.innerWidth-Fa,Ne=Tm(ye,[Fa,Math.max(Fa,ze-ne)]);m.style.minWidth=F+"px",m.style.right=Ne+"px"}const U=S(),de=window.innerHeight-Fa*2,me=E.scrollHeight,ue=window.getComputedStyle(b),X=parseInt(ue.borderTopWidth,10),le=parseInt(ue.paddingTop,10),Q=parseInt(ue.borderBottomWidth,10),ce=parseInt(ue.paddingBottom,10),ee=X+le+me+ce+Q,xe=Math.min(T.offsetHeight*5,ee),oe=window.getComputedStyle(E),Be=parseInt(oe.paddingTop,10),O=parseInt(oe.paddingBottom,10),Z=_.top+_.height/2-Fa,J=de-Z,re=T.offsetHeight/2,Ce=T.offsetTop+re,Me=X+le+Ce,se=ee-Me;if(Me<=Z){const be=U.length>0&&T===U[U.length-1].ref.current;m.style.bottom="0px";const ye=b.clientHeight-E.offsetTop-E.offsetHeight,Se=Math.max(J,re+(be?O:0)+ye+Q),F=Me+Se;m.style.height=F+"px"}else{const be=U.length>0&&T===U[0].ref.current;m.style.top="0px";const Se=Math.max(Z,X+E.offsetTop+(be?Be:0)+re)+se;m.style.height=Se+"px",E.scrollTop=Me-Z+E.offsetTop}m.style.margin=`${Fa}px 0`,m.style.minHeight=xe+"px",m.style.maxHeight=de+"px",l==null||l(),requestAnimationFrame(()=>C.current=!0)}},[S,u.trigger,u.valueNode,m,b,E,T,A,u.dir,l]);$t(()=>M(),[M]);const[N,D]=y.useState();$t(()=>{b&&D(window.getComputedStyle(b).zIndex)},[b]);const k=y.useCallback(_=>{_&&z.current===!0&&(M(),R==null||R(),z.current=!1)},[M,R]);return h.jsx(nN,{scope:o,contentWrapper:m,shouldExpandOnScrollRef:C,onScrollButtonChange:k,children:h.jsx("div",{ref:v,style:{display:"flex",flexDirection:"column",position:"fixed",zIndex:N},children:h.jsx(et.div,{...c,ref:x,style:{boxSizing:"border-box",maxHeight:"100%",...c.style}})})})},"SelectItemAlignedPosition")),by=y.forwardRef(it(function(n,r){const{__scopeSelect:o,align:l="start",collisionPadding:c=Fa,...u}=n,d=Ig(o);return h.jsx(Mg,{...d,...u,ref:r,align:l,collisionPadding:c,style:{boxSizing:"border-box",...u.style,"--radix-select-content-transform-origin":"var(--radix-popper-transform-origin)","--radix-select-content-available-width":"var(--radix-popper-available-width)","--radix-select-content-available-height":"var(--radix-popper-available-height)","--radix-select-trigger-width":"var(--radix-popper-anchor-width)","--radix-select-trigger-height":"var(--radix-popper-anchor-height)"}})},"SelectPopperPosition")),[nN,Hg]=Ko(Xo,{}),xy="SelectViewport",aN=y.forwardRef(it(function(n,r){const{__scopeSelect:o,nonce:l,...c}=n,u=Wo(xy,o),d=Hg(xy,o),m=Ze(r,u.onViewportChange),v=y.useRef(0);return h.jsxs(h.Fragment,{children:[h.jsx("style",{dangerouslySetInnerHTML:{__html:"[data-radix-select-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}[data-radix-select-viewport]::-webkit-scrollbar{display:none}"},nonce:l}),h.jsx(Id.Slot,{scope:o,children:h.jsx(et.div,{"data-radix-select-viewport":"",role:"presentation",...c,ref:m,style:{position:"relative",flex:1,overflow:"hidden auto",...c.style},onScroll:je(c.onScroll,b=>{const g=b.currentTarget,{contentWrapper:x,shouldExpandOnScrollRef:S}=d;if(S!=null&&S.current&&x){const C=Math.abs(v.current-g.scrollTop);if(C>0){const z=window.innerHeight-Fa*2,E=parseFloat(x.style.minHeight),T=parseFloat(x.style.height),A=Math.max(E,T);if(A<z){const R=A+C,M=Math.min(z,R),N=R-M;x.style.height=M+"px",x.style.bottom==="0px"&&(g.scrollTop=N>0?N:0,x.style.justifyContent="flex-end")}}}v.current=g.scrollTop})})})]})},"SelectViewport")),iN="SelectGroup",[rN,ZL]=Ko(iN),oN=y.forwardRef(it(function(n,r){const{__scopeSelect:o,...l}=n,c=bi();return h.jsx(rN,{scope:o,id:c,children:h.jsx(et.div,{role:"group","aria-labelledby":c,...l,ref:r})})},"SelectGroup")),Mm="SelectItem",[sN,V3]=Ko(Mm),lN=y.forwardRef(it(function(n,r){const{__scopeSelect:o,value:l,disabled:c=!1,textValue:u,...d}=n,m=Gr(Mm,o),v=Wo(Mm,o),b=m.value===l,[g,x]=y.useState(u??""),[S,C]=y.useState(!1),z=Wn(M=>{var N;return(N=v.itemRefCallback)==null?void 0:N.call(v,M,l,c)}),E=Ze(r,z),T=bi(),A=y.useRef("touch");function R(M){m.hasConsumerStoppedPropagationRef.current=M.isPropagationStopped(),m.onUserSelect(l),m.onOpenChange(!1)}return it(R,"handleSelect"),h.jsx(sN,{scope:o,value:l,disabled:c,textId:T,isSelected:b,onItemTextChange:y.useCallback(M=>{x(N=>N||((M==null?void 0:M.textContent)??"").trim())},[]),children:h.jsx(Id.ItemSlot,{scope:o,value:l,disabled:c,textValue:g,children:h.jsx(et.div,{role:"option","aria-labelledby":T,"data-highlighted":S?"":void 0,"aria-selected":b&&S,"data-state":b?"checked":"unchecked","aria-disabled":c||void 0,"data-disabled":c?"":void 0,tabIndex:c?void 0:-1,...d,ref:E,onFocus:je(d.onFocus,()=>C(!0)),onBlur:je(d.onBlur,()=>C(!1)),onClick:je(d.onClick,M=>{c||A.current!=="mouse"&&R(M)}),onPointerUp:je(d.onPointerUp,M=>{c||A.current==="mouse"&&R(M)}),onPointerDown:je(d.onPointerDown,M=>{A.current=M.pointerType}),onPointerMove:je(d.onPointerMove,M=>{var N;A.current=M.pointerType,c?(N=v.onItemLeave)==null||N.call(v):A.current==="mouse"&&M.currentTarget.focus({preventScroll:!0})}),onPointerLeave:je(d.onPointerLeave,M=>{var N;M.currentTarget===document.activeElement&&((N=v.onItemLeave)==null||N.call(v))}),onKeyDown:je(d.onKeyDown,M=>{var D;c||M.target!==M.currentTarget||((D=v.searchRef)==null?void 0:D.current)!==""&&M.key===" "||($j.includes(M.key)&&R(M),M.key===" "&&M.preventDefault())})})})})},"SelectItem")),Ef="SelectItemText",cN=y.forwardRef(it(function(n,r){const{__scopeSelect:o,className:l,style:c,...u}=n,d=Gr(Ef,o),m=Wo(Ef,o),v=V3(Ef,o),b=Hj(Ef,o),[g,x]=y.useState(null),S=Wn(R=>{var M;return(M=m.itemTextRefCallback)==null?void 0:M.call(m,R,v.value,v.disabled)}),C=Ze(r,x,v.onItemTextChange,S),z=g==null?void 0:g.textContent,E=y.useMemo(()=>h.jsx("option",{value:v.value,disabled:v.disabled,children:z},v.value),[v.disabled,v.value,z]),{onNativeOptionAdd:T,onNativeOptionRemove:A}=b;return $t(()=>(T(E),()=>A(E)),[T,A,E]),h.jsxs(h.Fragment,{children:[h.jsx(et.span,{id:v.textId,...u,ref:C}),v.isSelected&&d.valueNode&&!d.valueNodeHasChildren&&!Yc(d.value)?ml.createPortal(u.children,d.valueNode):null]})},"SelectItemText")),uN="SelectItemIndicator",fN=y.forwardRef(it(function(n,r){const{__scopeSelect:o,...l}=n;return V3(uN,o).isSelected?h.jsx(et.span,{"aria-hidden":!0,...l,ref:r}):null},"SelectItemIndicator")),yy="SelectScrollUpButton",dN=y.forwardRef(it(function(n,r){const o=Wo(yy,n.__scopeSelect),l=Hg(yy,n.__scopeSelect),[c,u]=y.useState(!1),d=Ze(r,l.onScrollButtonChange);return $t(()=>{if(o.viewport&&o.isPositioned){let m=function(){const b=v.scrollTop>0;u(b)};it(m,"handleScroll");const v=o.viewport;return m(),v.addEventListener("scroll",m),()=>v.removeEventListener("scroll",m)}},[o.viewport,o.isPositioned]),c?h.jsx(B3,{...n,ref:d,onAutoScroll:()=>{const{viewport:m,selectedItem:v}=o;m&&v&&(m.scrollTop=m.scrollTop-v.offsetHeight)}}):null},"SelectScrollUpButton")),wy="SelectScrollDownButton",pN=y.forwardRef(it(function(n,r){const o=Wo(wy,n.__scopeSelect),l=Hg(wy,n.__scopeSelect),[c,u]=y.useState(!1),d=Ze(r,l.onScrollButtonChange);return $t(()=>{if(o.viewport&&o.isPositioned){let m=function(){const b=v.scrollHeight-v.clientHeight,g=Math.ceil(v.scrollTop)<b;u(g)};it(m,"handleScroll");const v=o.viewport;return m(),v.addEventListener("scroll",m),()=>v.removeEventListener("scroll",m)}},[o.viewport,o.isPositioned]),c?h.jsx(B3,{...n,ref:d,onAutoScroll:()=>{const{viewport:m,selectedItem:v}=o;m&&v&&(m.scrollTop=m.scrollTop+v.offsetHeight)}}):null},"SelectScrollDownButton")),B3=y.forwardRef(it(function(n,r){const{__scopeSelect:o,onAutoScroll:l,...c}=n,u=Wo("SelectScrollButton",o),d=y.useRef(null),m=Hd(o),v=y.useCallback(()=>{d.current!==null&&(window.clearInterval(d.current),d.current=null)},[]);return y.useEffect(()=>()=>v(),[v]),$t(()=>{var g;const b=m().find(x=>x.ref.current===document.activeElement);(g=b==null?void 0:b.ref.current)==null||g.scrollIntoView({block:"nearest"})},[m]),h.jsx(et.div,{"aria-hidden":!0,...c,ref:r,style:{flexShrink:0,...c.style},onPointerDown:je(c.onPointerDown,()=>{d.current===null&&(d.current=window.setInterval(l,50))}),onPointerMove:je(c.onPointerMove,()=>{var b;(b=u.onItemLeave)==null||b.call(u),d.current===null&&(d.current=window.setInterval(l,50))}),onPointerLeave:je(c.onPointerLeave,()=>{v()})})},"SelectScrollButtonImpl")),hN="SelectBubbleInput",mN=y.forwardRef(it(function({__scopeSelect:n,...r},o){const l=Gr(hN,n),{value:c,onValueChange:u,required:d,disabled:m,name:v,autoComplete:b,form:g,userSelection:x}=l,{nativeOptions:S,nativeSelectKey:C}=l,z=y.useRef(null),E=Ze(o,z),T=c??"",A=y.useRef(T),R=y.useRef(x),M=y.useRef(!1),N=Array.from(S).some(D=>(D.props.value??"")==="");return y.useEffect(()=>{const D=z.current;if(!D)return;const k=window.HTMLSelectElement.prototype,L=Object.getOwnPropertyDescriptor(k,"value").set,I=x!==null&&x!==R.current;R.current=x;const Y=A.current!==T;A.current=T;const U=I&&Y;if(I&&!Y&&x.value!==T&&!x.hasConsumerStoppedPropagation&&L){M.current=!0;try{L.call(D,x.value),D.dispatchEvent(new Event("change",{bubbles:!0}))}finally{M.current=!1,L.call(D,T)}return}const de=U&&!x.hasConsumerStoppedPropagation;if(Y&&L){const me=new Event("change",{bubbles:de});L.call(D,T),D.dispatchEvent(me)}},[T,x]),h.jsxs(et.select,{"aria-hidden":!0,required:d,tabIndex:-1,name:v,autoComplete:b,disabled:m,form:g,onChange:D=>{M.current||u(D.target.value)},...r,style:{...Qw,...r.style},ref:E,defaultValue:T,children:[Yc(c)&&!N?h.jsx("option",{value:""}):null,Array.from(S)]},C)},"SelectBubbleInput"));function U3(t){return typeof t=="function"}it(U3,"isFunction");function Yc(t){return t===""||t===void 0}it(Yc,"shouldShowPlaceholder");function Vg(t){const n=Wn(t),r=y.useRef(""),o=y.useRef(0),l=y.useCallback(u=>{const d=r.current+u;n(d);function m(v){r.current=v,window.clearTimeout(o.current),v!==""&&(o.current=window.setTimeout(()=>m(""),1e3))}it(m,"updateSearch"),m(d)},[n]),c=y.useCallback(()=>{r.current="",window.clearTimeout(o.current)},[]);return y.useEffect(()=>()=>window.clearTimeout(o.current),[]),[r,l,c]}it(Vg,"useTypeaheadSearch");function Bg(t,n,r){const l=n.length>1&&Array.from(n).every(v=>v===n[0])?n[0]:n,c=r?t.indexOf(r):-1;let u=Y3(t,Math.max(c,0));l.length===1&&(u=u.filter(v=>v!==r));const m=u.find(v=>v.textValue.toLowerCase().startsWith(l.toLowerCase()));return m!==r?m:void 0}it(Bg,"findNextItem");function Y3(t,n){return t.map((r,o)=>t[(n+o)%t.length])}it(Y3,"wrapArray");var gN=Object.defineProperty,Vr=(t,n)=>gN(t,"name",{value:n,configurable:!0}),Ug="Switch",[vN,QL]=pa(Ug),[bN,Yg]=vN(Ug);function X3(t){const{__scopeSwitch:n,checked:r,children:o,defaultChecked:l,disabled:c,form:u,name:d,onCheckedChange:m,required:v,value:b="on",internal_do_not_use_render:g}=t,[x,S]=Gi({prop:r,defaultProp:l??!1,onChange:m,caller:Ug}),[C,z]=y.useState(null),[E,T]=y.useState(null),[A,R]=y.useState(null),M=C?!!u||!!C.closest("form"):!0,N={checked:x,setChecked:S,disabled:c,control:C,setControl:z,name:d,form:u,value:b,userClick:A,onUserClick:R,required:v,defaultChecked:l,isFormControl:M,bubbleInput:E,setBubbleInput:T};return h.jsx(bN,{scope:n,...N,children:F3(g)?g(N):o})}Vr(X3,"SwitchProvider");var xN="SwitchTrigger",yN=y.forwardRef(Vr(function({__scopeSwitch:n,onClick:r,...o},l){const{control:c,form:u,value:d,disabled:m,checked:v,required:b,setControl:g,setChecked:x,onUserClick:S,isFormControl:C,bubbleInput:z}=Yg(xN,n),E=Ze(l,g),T=y.useRef(v);return y.useEffect(()=>{const A=u?c==null?void 0:c.ownerDocument.getElementById(u):c==null?void 0:c.form;if(A instanceof HTMLFormElement){const R=Vr(()=>x(T.current),"reset");return A.addEventListener("reset",R),()=>A.removeEventListener("reset",R)}},[c,u,x]),h.jsx(et.button,{type:"button",role:"switch","aria-checked":v,"aria-required":b,"data-state":Xg(v),"data-disabled":m?"":void 0,disabled:m,value:d,...o,ref:E,onClick:je(r,A=>{const R=A.isPropagationStopped();S({requestedChecked:!v,hasConsumerStoppedPropagation:R}),x(M=>!M),z&&C&&(R||A.stopPropagation())})})},"SwitchTrigger")),wN=y.forwardRef(Vr(function(n,r){const{__scopeSwitch:o,name:l,checked:c,defaultChecked:u,required:d,disabled:m,value:v,onCheckedChange:b,form:g,...x}=n;return h.jsx(X3,{__scopeSwitch:o,checked:c,defaultChecked:u,disabled:m,required:d,onCheckedChange:b,name:l,form:g,value:v,internal_do_not_use_render:({isFormControl:S})=>h.jsxs(h.Fragment,{children:[h.jsx(yN,{...x,ref:r,__scopeSwitch:o}),S&&h.jsx(EN,{__scopeSwitch:o})]})})},"Switch")),SN="SwitchThumb",CN=y.forwardRef(Vr(function(n,r){const{__scopeSwitch:o,...l}=n,c=Yg(SN,o);return h.jsx(et.span,{"data-state":Xg(c.checked),"data-disabled":c.disabled?"":void 0,...l,ref:r})},"SwitchThumb")),TN="SwitchBubbleInput",EN=y.forwardRef(Vr(function({__scopeSwitch:n,onClick:r,...o},l){const{control:c,userClick:u,checked:d,defaultChecked:m,required:v,disabled:b,name:g,value:x,form:S,bubbleInput:C,setBubbleInput:z}=Yg(TN,n),E=Ze(l,z),T=Td(c),A=y.useRef(!1),R=y.useRef(d),M=y.useRef(u),N=y.useRef(null);y.useEffect(()=>{const k=C;if(!k)return;const _=window.HTMLInputElement.prototype,I=Object.getOwnPropertyDescriptor(_,"checked").set;if(!I)return;const Y=R.current!==d;R.current=d;const U=u!==null&&u!==M.current;if(M.current=u,U)N.current=Y?null:u,Y&&I.call(k,d),k.dispatchEvent(new Event("click",{bubbles:!u.hasConsumerStoppedPropagation}));else if(Y){const de=N.current;N.current=null;const me=(de==null?void 0:de.requestedChecked)===d;A.current=!0,I.call(k,d),k.dispatchEvent(new Event("click",{bubbles:!(me&&de.hasConsumerStoppedPropagation)})),A.current=!1}},[C,d,u]);const D=y.useRef(d);return h.jsx(et.input,{type:"checkbox","aria-hidden":!0,defaultChecked:m??D.current,required:v,disabled:b,name:g,value:x,form:S,...o,tabIndex:-1,ref:E,onClick:je(r,k=>{A.current&&k.stopPropagation()}),style:{...o.style,...T,position:"absolute",pointerEvents:"none",opacity:0,margin:0,transform:"translateX(-100%)"}})},"SwitchBubbleInput"));function F3(t){return typeof t=="function"}Vr(F3,"isFunction");function Xg(t){return t?"checked":"unchecked"}Vr(Xg,"getState");var zN=Object.defineProperty,Qt=(t,n)=>zN(t,"name",{value:n,configurable:!0}),[Fg,JL]=pa("Tooltip",[xl]),Vd=xl(),MN="TooltipProvider",RN=700,Rm="tooltip.open",[AN,Gg]=Fg(MN),jN=Qt(t=>{const{__scopeTooltip:n,delayDuration:r=RN,skipDelayDuration:o=300,disableHoverableContent:l=!1,children:c}=t,u=y.useRef(!0),d=y.useRef(!1),m=y.useRef(0);return y.useEffect(()=>{const v=m.current;return()=>window.clearTimeout(v)},[]),h.jsx(AN,{scope:n,isOpenDelayedRef:u,delayDuration:r,onOpen:y.useCallback(()=>{o<=0||(window.clearTimeout(m.current),u.current=!1)},[o]),onClose:y.useCallback(()=>{o<=0||(window.clearTimeout(m.current),m.current=window.setTimeout(()=>u.current=!0,o))},[o]),isPointerInTransitRef:d,onPointerInTransitChange:y.useCallback(v=>{d.current=v},[]),disableHoverableContent:l,children:c})},"TooltipProvider"),Am="Tooltip",[NN,Xc]=Fg(Am),ON=Qt(t=>{const{__scopeTooltip:n,children:r,open:o,defaultOpen:l,onOpenChange:c,disableHoverableContent:u,delayDuration:d}=t,m=Gg(Am,t.__scopeTooltip),v=Vd(n),[b,g]=y.useState(null),[x,S]=y.useState(void 0),C=bi(),z=y.useRef(0),E=u??m.disableHoverableContent,T=d??m.delayDuration,A=y.useRef(!1),[R,M]=Gi({prop:o,defaultProp:l??!1,onChange:Qt(I=>{I?(m.onOpen(),document.dispatchEvent(new CustomEvent(Rm))):m.onClose(),c==null||c(I)},"onChange"),caller:Am}),N=y.useMemo(()=>R?A.current?"delayed-open":"instant-open":"closed",[R]),D=y.useCallback(()=>{window.clearTimeout(z.current),z.current=0,A.current=!1,M(!0)},[M]),k=y.useCallback(()=>{window.clearTimeout(z.current),z.current=0,M(!1)},[M]),_=y.useCallback(()=>{window.clearTimeout(z.current),z.current=window.setTimeout(()=>{A.current=!0,M(!0),z.current=0},T)},[T,M]);y.useEffect(()=>()=>{z.current&&(window.clearTimeout(z.current),z.current=0)},[]);const L=x??C;return h.jsx(jd,{...v,children:h.jsx(NN,{scope:n,contentId:L,setContentId:S,open:R,stateAttribute:N,trigger:b,onTriggerChange:g,onTriggerEnter:y.useCallback(()=>{m.isOpenDelayedRef.current?_():D()},[m.isOpenDelayedRef,_,D]),onTriggerLeave:y.useCallback(()=>{E?k():(window.clearTimeout(z.current),z.current=0)},[k,E]),onOpen:D,onClose:k,disableHoverableContent:E,children:r})})},"Tooltip"),Sy="TooltipTrigger",kN=y.forwardRef(Qt(function(n,r){const{__scopeTooltip:o,"aria-describedby":l,...c}=n,u=Xc(Sy,o),d=Gg(Sy,o),m=Vd(o),v=y.useRef(null),b=Ze(r,v,u.onTriggerChange),g=y.useRef(!1),x=y.useRef(!1),S=y.useCallback(()=>g.current=!1,[]);return y.useEffect(()=>()=>document.removeEventListener("pointerup",S),[S]),h.jsx(zg,{asChild:!0,...m,children:h.jsx(et.button,{"aria-describedby":u.open?t4(l,u.contentId):l,"data-state":u.stateAttribute,...c,ref:b,onPointerMove:je(n.onPointerMove,C=>{C.pointerType!=="touch"&&!x.current&&!d.isPointerInTransitRef.current&&(u.onTriggerEnter(),x.current=!0)}),onPointerLeave:je(n.onPointerLeave,()=>{u.onTriggerLeave(),x.current=!1}),onPointerDown:je(n.onPointerDown,()=>{u.open&&u.onClose(),g.current=!0,document.addEventListener("pointerup",S,{once:!0})}),onFocus:je(n.onFocus,()=>{g.current||u.onOpen()}),onBlur:je(n.onBlur,u.onClose),onClick:je(n.onClick,u.onClose)})})},"TooltipTrigger")),G3="TooltipPortal",[DN,_N]=Fg(G3,{forceMount:void 0}),$N=Qt(t=>{const{__scopeTooltip:n,forceMount:r,children:o,container:l}=t,c=Xc(G3,n);return h.jsx(DN,{scope:n,forceMount:r,children:h.jsx(Yr,{present:r||c.open,children:h.jsx(vg,{asChild:!0,container:l,children:o})})})},"TooltipPortal"),Oc="TooltipContent",LN=y.forwardRef(Qt(function(n,r){const o=_N(Oc,n.__scopeTooltip),{forceMount:l=o.forceMount,side:c="top",...u}=n,d=Xc(Oc,n.__scopeTooltip);return h.jsx(Yr,{present:l||d.open,children:d.disableHoverableContent?h.jsx(q3,{side:c,...u,ref:r}):h.jsx(PN,{side:c,...u,ref:r})})},"TooltipContent")),PN=y.forwardRef(Qt(function(n,r){const o=Xc(Oc,n.__scopeTooltip),l=Gg(Oc,n.__scopeTooltip),c=y.useRef(null),u=Ze(r,c),[d,m]=y.useState(null),{trigger:v,onClose:b}=o,g=c.current,{onPointerInTransitChange:x}=l,S=y.useCallback(()=>{m(null),x(!1)},[x]),C=y.useCallback((z,E)=>{const T=z.currentTarget,A={x:z.clientX,y:z.clientY},R=K3(A,T.getBoundingClientRect()),M=W3(A,R),N=Z3(E.getBoundingClientRect()),D=J3([...M,...N]);m(D),x(!0)},[x]);return y.useEffect(()=>()=>S(),[S]),y.useEffect(()=>{if(v&&g){const z=Qt(T=>C(T,g),"handleTriggerLeave"),E=Qt(T=>C(T,v),"handleContentLeave");return v.addEventListener("pointerleave",z),g.addEventListener("pointerleave",E),()=>{v.removeEventListener("pointerleave",z),g.removeEventListener("pointerleave",E)}}},[v,g,C,S]),y.useEffect(()=>{if(d){const z=Qt(E=>{const T=E.target,A={x:E.clientX,y:E.clientY},R=(v==null?void 0:v.contains(T))||(g==null?void 0:g.contains(T)),M=!Q3(A,d);R?S():M&&(S(),b())},"handleTrackPointerGrace");return document.addEventListener("pointermove",z),()=>document.removeEventListener("pointermove",z)}},[v,g,d,b,S]),h.jsx(q3,{...n,ref:u})},"TooltipContentHoverable")),IN=Xw("TooltipContent"),q3=y.forwardRef(Qt(function(n,r){const{__scopeTooltip:o,children:l,"aria-label":c,id:u,onEscapeKeyDown:d,onPointerDownOutside:m,...v}=n,b=Xc(Oc,o),g=Vd(o),{onClose:x}=b,[S,C]=y.useState(null),z=Ze(r,C);mg(S),y.useEffect(()=>(document.addEventListener(Rm,x),()=>document.removeEventListener(Rm,x)),[x]),y.useEffect(()=>{if(b.trigger){const T=Qt(A=>{A.target instanceof Node&&A.target.contains(b.trigger)&&x()},"handleScroll");return window.addEventListener("scroll",T,{capture:!0}),()=>window.removeEventListener("scroll",T,{capture:!0})}},[b.trigger,x]);const{setContentId:E}=b;return $t(()=>(E(u),()=>{E(void 0)}),[u,E]),h.jsx(pg,{asChild:!0,disableOutsidePointerEvents:!1,onEscapeKeyDown:d,onPointerDownOutside:m,onFocusOutside:T=>T.preventDefault(),onDismiss:x,children:h.jsxs(Mg,{"data-state":b.stateAttribute,role:c?void 0:"tooltip",id:c?void 0:b.contentId,...g,...v,ref:z,style:{...v.style,"--radix-tooltip-content-transform-origin":"var(--radix-popper-transform-origin)","--radix-tooltip-content-available-width":"var(--radix-popper-available-width)","--radix-tooltip-content-available-height":"var(--radix-popper-available-height)","--radix-tooltip-trigger-width":"var(--radix-popper-anchor-width)","--radix-tooltip-trigger-height":"var(--radix-popper-anchor-height)"},children:[h.jsx(IN,{children:l}),c?h.jsx(lM,{id:b.contentId,role:"tooltip",children:c}):null]})})},"TooltipContentImpl")),HN=y.forwardRef(Qt(function(n,r){const{__scopeTooltip:o,...l}=n,c=Vd(o);return h.jsx(UA,{...c,...l,ref:r})},"TooltipArrow"));function K3(t,n){const r=Math.abs(n.top-t.y),o=Math.abs(n.bottom-t.y),l=Math.abs(n.right-t.x),c=Math.abs(n.left-t.x);switch(Math.min(r,o,l,c)){case c:return"left";case l:return"right";case r:return"top";case o:return"bottom";default:throw new Error("unreachable")}}Qt(K3,"getExitSideFromRect");function W3(t,n,r=5){const o=[];switch(n){case"top":o.push({x:t.x-r,y:t.y+r},{x:t.x+r,y:t.y+r});break;case"bottom":o.push({x:t.x-r,y:t.y-r},{x:t.x+r,y:t.y-r});break;case"left":o.push({x:t.x+r,y:t.y-r},{x:t.x+r,y:t.y+r});break;case"right":o.push({x:t.x-r,y:t.y-r},{x:t.x-r,y:t.y+r});break}return o}Qt(W3,"getPaddedExitPoints");function Z3(t){const{top:n,right:r,bottom:o,left:l}=t;return[{x:l,y:n},{x:r,y:n},{x:r,y:o},{x:l,y:o}]}Qt(Z3,"getPointsFromRect");function Q3(t,n){const{x:r,y:o}=t;let l=!1;for(let c=0,u=n.length-1;c<n.length;u=c++){const d=n[c],m=n[u],v=d.x,b=d.y,g=m.x,x=m.y;b>o!=x>o&&r<(g-v)*(o-b)/(x-b)+v&&(l=!l)}return l}Qt(Q3,"isPointInPolygon");function J3(t){const n=t.slice();return n.sort((r,o)=>r.x<o.x?-1:r.x>o.x?1:r.y<o.y?-1:r.y>o.y?1:0),e4(n)}Qt(J3,"getHull");function e4(t){if(t.length<=1)return t.slice();const n=[];for(let o=0;o<t.length;o++){const l=t[o];for(;n.length>=2;){const c=n[n.length-1],u=n[n.length-2];if((c.x-u.x)*(l.y-u.y)>=(c.y-u.y)*(l.x-u.x))n.pop();else break}n.push(l)}n.pop();const r=[];for(let o=t.length-1;o>=0;o--){const l=t[o];for(;r.length>=2;){const c=r[r.length-1],u=r[r.length-2];if((c.x-u.x)*(l.y-u.y)>=(c.y-u.y)*(l.x-u.x))r.pop();else break}r.push(l)}return r.pop(),n.length===1&&r.length===1&&n[0].x===r[0].x&&n[0].y===r[0].y?n:n.concat(r)}Qt(e4,"getHullPresorted");function t4(...t){const n=new Set;for(const r of t)if(typeof r=="string")for(const o of String(r).trim().split(/\s+/))o&&n.add(o);return n.size>0?Array.from(n).join(" "):void 0}Qt(t4,"concatAriaDescribedby");function jm({delayDuration:t=0,...n}){return h.jsx(jN,{"data-slot":"tooltip-provider",delayDuration:t,...n})}function n4({...t}){return h.jsx(ON,{"data-slot":"tooltip",...t})}function a4({...t}){return h.jsx(kN,{"data-slot":"tooltip-trigger",...t})}function i4({className:t,sideOffset:n=0,children:r,...o}){return h.jsx($N,{children:h.jsxs(LN,{"data-slot":"tooltip-content",sideOffset:n,className:Ve("z-50 w-fit origin-(--radix-tooltip-content-transform-origin) animate-in rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",t),...o,children:[r,h.jsx(HN,{className:"z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground"})]})})}const VN=Et("figma/img.svg"),BN=Et("figma/imgImage1.png"),UN=Et("figma/imgGroup2363.svg"),YN=Et("figma/imgGroup2362.svg"),XN=Et("figma/img1.svg"),FN=Et("figma/imgGroup.svg"),GN=Et("figma/imgEllipse14299.svg"),qN=Et("figma/imgEllipse1.svg"),KN=Et("figma/imgDirectionCaretDown.svg"),WN=Et("figma/img2.svg"),ZN=Et("figma/imgSkillPuzzle.svg"),QN=Et("figma/imgTemplateLayout.svg"),JN=Et("figma/imgUpwardArrow.svg");function eO({className:t}){return h.jsx("div",{className:t||"relative size-[16px]","data-node-id":"1:38","data-name":"图标资产/方向/下",children:h.jsx("img",{alt:"",className:"absolute block inset-0 max-w-none size-full",src:VN})})}function tO({onAction:t,prompt:n,setPrompt:r,model:o,reportType:l,project:c,category:u,projectMode:m,collapsed:v,closedGroups:b,selectedReport:g,resourceFeedback:x,generatedReport:S,background:C,renderDropdown:z,renderComposer:E,projectTree:T,generating:A,mobile:R,sessionHeader,libraryPage,libraryContent,workflowActive:M=!1,attachmentCount:N=0,renderAttachmentButton:D,renderAttachments:k}){const _=w6();
-const workflowOrLibrary=M || Boolean(libraryPage);
+const workflowOrLibrary = M || Boolean(libraryPage);
+  const dockedClarification = M && !sessionHeader && !libraryPage;
 const projectsExpanded=R ? v : !v;
 const toggleLabel=projectsExpanded ? "收起项目列表" : "展开项目列表";
 const projectToggle=h.jsx(jm,{delayDuration:250,children:h.jsxs(n4,{children:[
@@ -265,10 +266,15 @@ const projectToggle=h.jsx(jm,{delayDuration:250,children:h.jsxs(n4,{children:[
 return y.useEffect(()=>{
   const panel=document.querySelector('[data-node-id="1:69"]');
   if(panel && workflowOrLibrary){panel.scrollTop=0;panel.dataset.resourceSticky="false";}
-},[workflowOrLibrary,libraryPage]),h.jsxs("div",{className:"bg-[#d8e7fc] relative size-full","data-node-id":"1:60","data-name":"高端智库","data-collapsed":v,"data-project-mode":m,children:[h.jsxs("main",{className:"absolute backdrop-blur-[8px] bg-[rgba(255,255,255,0.48)] border border-solid border-white content-stretch flex flex-col gap-[12px] h-[903px] items-start left-[200px] pb-[16px] pt-[12px] px-[16px] rounded-[8px] top-[61px] w-[1704px]","data-node-id":"1:61",children:[h.jsx("div",{className:"content-stretch flex gap-[2px] items-center py-px relative shrink-0","data-node-id":"1:62","data-name":"breadcrumb",children:h.jsx("p",{"data-node-id":"1:63",className:"font-normal leading-[20px] text-[#86909c] text-[12px] whitespace-nowrap",children:"智能创作报告"})}),h.jsxs("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"1:67",children:[h.jsx("div",{className:"bg-[rgba(255,255,255,0.48)] border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-0 mt-0 relative rounded-bl-[8px] rounded-tl-[8px] row-1 w-[1670px]","data-node-id":"1:68"}),h.jsx("div",{className:"bg-white border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-[248px] mt-0 relative rounded-[8px] row-1 w-[1422px]","data-node-id":"1:69","aria-label":"报告创作与资源",tabIndex:0,onScroll:L=>{const I=L.currentTarget;_(I);const Y=I.querySelector(".resource-header");I.dataset.resourceSticky=String(!!(!workflowOrLibrary&&Y&&I.scrollTop>0&&Y.getBoundingClientRect().top<=I.getBoundingClientRect().top+16.5))},children:h.jsxs("div",{className:"writing-scroll-content","data-workflow-active":workflowOrLibrary,"data-library-page":libraryPage || undefined,children:[
+},[workflowOrLibrary,libraryPage]),h.jsxs("div",{className:"bg-[#d8e7fc] relative size-full","data-node-id":"1:60","data-name":"高端智库","data-collapsed":v,"data-project-mode":m,children:[h.jsxs("main",{className:"absolute backdrop-blur-[8px] bg-[rgba(255,255,255,0.48)] border border-solid border-white content-stretch flex flex-col gap-[12px] h-[903px] items-start left-[200px] pb-[16px] pt-[12px] px-[16px] rounded-[8px] top-[61px] w-[1704px]","data-node-id":"1:61",children:[h.jsx("div",{className:"content-stretch flex gap-[2px] items-center py-px relative shrink-0","data-node-id":"1:62","data-name":"breadcrumb",children:h.jsx("p",{"data-node-id":"1:63",className:"font-normal leading-[20px] text-[#86909c] text-[12px] whitespace-nowrap",children:"智能创作报告"})}),h.jsxs("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"1:67",children:[h.jsx("div",{className:"bg-[rgba(255,255,255,0.48)] border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-0 mt-0 relative rounded-bl-[8px] rounded-tl-[8px] row-1 w-[1670px]","data-node-id":"1:68"}),h.jsx("div",{className:"bg-white border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-[248px] mt-0 relative rounded-[8px] row-1 w-[1422px]","data-node-id":"1:69","aria-label":"报告创作与资源",tabIndex:0,onScroll:L=>{const I=L.currentTarget;_(I);const Y=I.querySelector(".resource-header");I.dataset.resourceSticky=String(!!(!workflowOrLibrary&&Y&&I.scrollTop>0&&Y.getBoundingClientRect().top<=I.getBoundingClientRect().top+16.5))},children:h.jsxs("div",{className:"writing-scroll-content","data-workflow-active":workflowOrLibrary,"data-library-page":libraryPage||undefined,"data-docked-clarification":dockedClarification||undefined,children:[
   sessionHeader && h.jsxs("header",{className:"workbench-pane-bar",children:[projectToggle,sessionHeader]}),
-  libraryPage && h.jsx("div",{className:"workbench-library-view",children:libraryContent},libraryPage),
-  h.jsx("div",{id:"home-workflow-slot",className:"home-workflow-slot"}),C,h.jsxs("div",{className:"absolute content-stretch flex flex-col gap-[28px] items-start leading-[0] left-[780px] top-[228px] w-[800px]","data-node-id":"1:270",children:[h.jsx("div",{className:"grid-rows-[max-content] inline-grid place-items-start relative shrink-0 w-full","data-node-id":"1:76",children:h.jsxs("div",{className:"[word-break:break-word] col-1 content-stretch flex flex-col gap-[8px] items-center justify-center ml-0 mt-0 not-italic relative row-1 w-full whitespace-nowrap","data-node-id":"1:77",children:[h.jsxs("p",{className:"font-medium leading-[0] relative shrink-0 text-[#1d2129] text-[0px]","data-node-id":"1:78",children:[h.jsx("span",{className:"leading-[28px] text-[20px]",children:"让每一项战略判断，都有"}),h.jsx(y6,{})]}),h.jsx("p",{className:"font-normal leading-[22px] relative shrink-0 text-[#86909c] text-[14px]","data-node-id":"1:79",children:"整合权威数据、系统分析结论与专业方法，支持可追溯、可审阅的战略报告创作"})]})}),h.jsx("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid place-items-start relative shrink-0","data-node-id":"1:269",children:h.jsxs("div",{className:"bg-[#f2f3f5] col-1 content-stretch flex flex-col gap-[6px] items-start ml-0 mt-0 pb-[4px] pt-[6px] px-[4px] relative rounded-[16px] row-1 w-[800px]","data-node-id":"7:26",children:[z("project",h.jsxs("button",{type:"button",className:"content-stretch flex gap-[8px] items-center px-[8px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:260",children:[h.jsx("div",{className:"relative shrink-0 size-[20px]","data-node-id":"1:261","data-name":"文件夹",children:h.jsx("img",{alt:"",className:"project-folder-image",src:Lw})}),h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:267",children:h.jsx("p",{className:"leading-[22px]",children:c})})]})),h.jsx("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid place-items-start relative shrink-0","data-node-id":"1:304",children:E(h.jsxs("div",{className:"bg-white border border-[#e5e6eb] border-solid col-1 content-stretch flex flex-col h-[128px] items-start justify-between ml-0 mt-0 p-[12px] relative rounded-[12px] row-1 w-[792px]","data-node-id":"7:25",children:[h.jsxs("div",{className:"content-stretch flex gap-[12px] items-center relative shrink-0","data-node-id":"7:63",children:[z("reportType",h.jsxs("button",{type:"button","aria-label":"选择报告类型",className:"bg-[#f2f3f5] content-stretch flex gap-[8px] items-center px-[8px] py-[2px] relative rounded-[var(--最小值,4px)] shrink-0","data-node-id":"7:51","data-name":"Tag 标签",children:[h.jsx("p",{className:"[word-break:break-word] font-normal leading-[22px] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"I7:51;1907:7757",children:l}),h.jsx("div",{className:"relative shrink-0 size-[14px]","data-node-id":"I7:51;1907:7792","data-name":"图标资产/方向/下",children:h.jsx("img",{alt:"",className:"absolute block inset-0 max-w-none size-full",src:WN})})]})),h.jsx("textarea",{"data-node-id":"7:62","aria-label":"报告需求",value:n,onChange:L=>r(L.target.value),onKeyDown:L=>{(L.metaKey||L.ctrlKey)&&L.key==="Enter"&&(L.preventDefault(),t("send"))},placeholder:"示例：分析深圳低空经济产业链现状，识别未来三年值得重点布局的方向，并提出产业培育建议",rows:3,className:"prompt-input font-normal leading-[22px] text-[#1d2129] text-[14px]"})]}),h.jsxs("div",{className:"content-stretch flex items-center justify-between relative shrink-0 w-[768px]","data-node-id":"1:334",children:[h.jsxs("div",{className:"content-stretch flex gap-[16px] items-center relative shrink-0","data-node-id":"1:333",children:[D,z("skills",h.jsxs("button",{type:"button",className:"content-stretch flex gap-[4px] items-center px-[4px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:324",children:[h.jsx("div",{className:"relative shrink-0 size-[16px]","data-node-id":"4:26","data-name":"技能图标",children:h.jsx("div",{className:"absolute left-0 size-[16px] top-0","data-node-id":"6:26","data-name":"Skill · 拼图",children:h.jsx("div",{className:"absolute left-0 overflow-clip size-[16px] top-0","data-node-id":"6:100","data-name":"Frame",children:h.jsx("div",{className:"absolute inset-[13.75%]","data-node-id":"6:101","data-name":"skill-puzzle",children:h.jsx("div",{className:"absolute inset-[-5.17%]",children:h.jsx("img",{alt:"",className:"block max-w-none size-full",src:ZN})})})})})}),h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:320",children:h.jsx("p",{className:"leading-[22px]",children:"技能"})})]})),z("templates",h.jsxs("button",{type:"button",className:"content-stretch flex gap-[4px] items-center px-[4px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:328",children:[h.jsx("div",{className:"relative shrink-0 size-[16px]","data-node-id":"5:26","data-name":"模板",children:h.jsx("div",{className:"absolute left-0 overflow-clip size-[16px] top-0","data-node-id":"5:44","data-name":"Frame",children:h.jsx("div",{className:"absolute inset-[11.88%]","data-node-id":"5:45","data-name":"template-layout",children:h.jsx("img",{alt:"",className:"absolute block inset-0 max-w-none size-full",src:QN})})})}),h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:330",children:h.jsx("p",{className:"leading-[22px]",children:"模板选择"})})]}))]}),h.jsxs("div",{className:"content-stretch flex gap-[16px] items-center relative shrink-0","data-node-id":"1:313",children:[z("model",h.jsxs("button",{type:"button","aria-label":"选择模型",className:"content-stretch flex gap-[8px] items-center px-[4px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:314",children:[h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:315",children:h.jsx("p",{className:"leading-[22px]",children:o})}),h.jsx(eO,{className:"relative shrink-0 size-[16px]"})]})),h.jsxs("button",{type:"button",onClick:()=>t("send",""),"aria-label":"发送报告需求",disabled:!n.trim()&&!N||A,className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"7:43",children:[h.jsx("div",{className:"bg-[#2a2a2a] col-1 ml-0 mt-0 relative rounded-[8px] row-1 size-[28px]","data-node-id":"1:317"}),h.jsx("div",{className:"col-1 ml-[6px] mt-[6px] relative row-1 size-[16px]","data-node-id":"8:52","data-name":"发送 / 向上箭头",children:h.jsx("div",{className:"absolute left-0 overflow-clip size-[16px] top-0","data-node-id":"8:78","data-name":"Frame",children:h.jsx("div",{className:"absolute inset-[12.5%_18.75%]","data-node-id":"8:81","data-name":"upward-arrow",children:h.jsx("div",{className:"absolute inset-[-6.67%_-8%]",children:h.jsx("img",{alt:"",className:"block max-w-none size-full",src:JN})})})})})]})]})]})]}))}),k]})})]}),h.jsxs("div",{className:"col-1 content-stretch flex flex-col gap-[24px] items-start ml-[359px] mt-[458px] relative row-1 w-[1200px]","data-node-id":"7:100",children:[h.jsxs("div",{className:"resource-header",children:[h.jsx("div",{className:"font-medium leading-[24px] text-[16px]","data-node-id":"7:67",children:h.jsx("button",{
+  libraryPage && h.jsx("div",{className:"workbench-library-view",children:libraryContent},libraryPage),dockedClarification && h.jsxs("div", {
+    className: "clarification-workspace",
+    children: [
+      h.jsx("div", {id: "home-conversation-history", className: "home-conversation-history"}),
+      h.jsx("div", {id: "white-clarification-dock", className: "white-clarification-dock"})
+    ]
+  }),h.jsx("div",{id:"home-workflow-slot",className:"home-workflow-slot"}),C,h.jsxs("div",{className:"absolute content-stretch flex flex-col gap-[28px] items-start leading-[0] left-[780px] top-[228px] w-[800px]","data-node-id":"1:270",children:[h.jsx("div",{className:"grid-rows-[max-content] inline-grid place-items-start relative shrink-0 w-full","data-node-id":"1:76",children:h.jsxs("div",{className:"[word-break:break-word] col-1 content-stretch flex flex-col gap-[8px] items-center justify-center ml-0 mt-0 not-italic relative row-1 w-full whitespace-nowrap","data-node-id":"1:77",children:[h.jsxs("p",{className:"font-medium leading-[0] relative shrink-0 text-[#1d2129] text-[0px]","data-node-id":"1:78",children:[h.jsx("span",{className:"leading-[28px] text-[20px]",children:"让每一项战略判断，都有"}),h.jsx(y6,{})]}),h.jsx("p",{className:"font-normal leading-[22px] relative shrink-0 text-[#86909c] text-[14px]","data-node-id":"1:79",children:"整合权威数据、系统分析结论与专业方法，支持可追溯、可审阅的战略报告创作"})]})}),h.jsx("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid place-items-start relative shrink-0","data-node-id":"1:269",children:h.jsxs("div",{className:"bg-[#f2f3f5] col-1 content-stretch flex flex-col gap-[6px] items-start ml-0 mt-0 pb-[4px] pt-[6px] px-[4px] relative rounded-[16px] row-1 w-[800px]","data-node-id":"7:26",children:[z("project",h.jsxs("button",{type:"button",className:"content-stretch flex gap-[8px] items-center px-[8px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:260",children:[h.jsx("div",{className:"relative shrink-0 size-[20px]","data-node-id":"1:261","data-name":"文件夹",children:h.jsx("img",{alt:"",className:"project-folder-image",src:Lw})}),h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:267",children:h.jsx("p",{className:"leading-[22px]",children:c})})]})),h.jsx("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid place-items-start relative shrink-0","data-node-id":"1:304",children:E(h.jsxs("div",{className:"bg-white border border-[#e5e6eb] border-solid col-1 content-stretch flex flex-col h-[128px] items-start justify-between ml-0 mt-0 p-[12px] relative rounded-[12px] row-1 w-[792px]","data-node-id":"7:25",children:[h.jsxs("div",{className:"content-stretch flex gap-[12px] items-center relative shrink-0","data-node-id":"7:63",children:[z("reportType",h.jsxs("button",{type:"button","aria-label":"选择报告类型",className:"bg-[#f2f3f5] content-stretch flex gap-[8px] items-center px-[8px] py-[2px] relative rounded-[var(--最小值,4px)] shrink-0","data-node-id":"7:51","data-name":"Tag 标签",children:[h.jsx("p",{className:"[word-break:break-word] font-normal leading-[22px] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"I7:51;1907:7757",children:l}),h.jsx("div",{className:"relative shrink-0 size-[14px]","data-node-id":"I7:51;1907:7792","data-name":"图标资产/方向/下",children:h.jsx("img",{alt:"",className:"absolute block inset-0 max-w-none size-full",src:WN})})]})),h.jsx("textarea",{"data-node-id":"7:62","aria-label":"报告需求",value:n,onChange:L=>r(L.target.value),onKeyDown:L=>{(L.metaKey||L.ctrlKey)&&L.key==="Enter"&&(L.preventDefault(),t("send"))},placeholder:"示例：分析深圳低空经济产业链现状，识别未来三年值得重点布局的方向，并提出产业培育建议",rows:3,className:"prompt-input font-normal leading-[22px] text-[#1d2129] text-[14px]"})]}),h.jsxs("div",{className:"content-stretch flex items-center justify-between relative shrink-0 w-[768px]","data-node-id":"1:334",children:[h.jsxs("div",{className:"content-stretch flex gap-[16px] items-center relative shrink-0","data-node-id":"1:333",children:[D,z("skills",h.jsxs("button",{type:"button",className:"content-stretch flex gap-[4px] items-center px-[4px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:324",children:[h.jsx("div",{className:"relative shrink-0 size-[16px]","data-node-id":"4:26","data-name":"技能图标",children:h.jsx("div",{className:"absolute left-0 size-[16px] top-0","data-node-id":"6:26","data-name":"Skill · 拼图",children:h.jsx("div",{className:"absolute left-0 overflow-clip size-[16px] top-0","data-node-id":"6:100","data-name":"Frame",children:h.jsx("div",{className:"absolute inset-[13.75%]","data-node-id":"6:101","data-name":"skill-puzzle",children:h.jsx("div",{className:"absolute inset-[-5.17%]",children:h.jsx("img",{alt:"",className:"block max-w-none size-full",src:ZN})})})})})}),h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:320",children:h.jsx("p",{className:"leading-[22px]",children:"技能"})})]})),z("templates",h.jsxs("button",{type:"button",className:"content-stretch flex gap-[4px] items-center px-[4px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:328",children:[h.jsx("div",{className:"relative shrink-0 size-[16px]","data-node-id":"5:26","data-name":"模板",children:h.jsx("div",{className:"absolute left-0 overflow-clip size-[16px] top-0","data-node-id":"5:44","data-name":"Frame",children:h.jsx("div",{className:"absolute inset-[11.88%]","data-node-id":"5:45","data-name":"template-layout",children:h.jsx("img",{alt:"",className:"absolute block inset-0 max-w-none size-full",src:QN})})})}),h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:330",children:h.jsx("p",{className:"leading-[22px]",children:"模板选择"})})]}))]}),h.jsxs("div",{className:"content-stretch flex gap-[16px] items-center relative shrink-0","data-node-id":"1:313",children:[z("model",h.jsxs("button",{type:"button","aria-label":"选择模型",className:"content-stretch flex gap-[8px] items-center px-[4px] py-[3px] relative rounded-[8px] shrink-0","data-node-id":"1:314",children:[h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:315",children:h.jsx("p",{className:"leading-[22px]",children:o})}),h.jsx(eO,{className:"relative shrink-0 size-[16px]"})]})),h.jsxs("button",{type:"button",onClick:()=>t("send",""),"aria-label":"发送报告需求",disabled:!n.trim()&&!N||A,className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"7:43",children:[h.jsx("div",{className:"bg-[#2a2a2a] col-1 ml-0 mt-0 relative rounded-[8px] row-1 size-[28px]","data-node-id":"1:317"}),h.jsx("div",{className:"col-1 ml-[6px] mt-[6px] relative row-1 size-[16px]","data-node-id":"8:52","data-name":"发送 / 向上箭头",children:h.jsx("div",{className:"absolute left-0 overflow-clip size-[16px] top-0","data-node-id":"8:78","data-name":"Frame",children:h.jsx("div",{className:"absolute inset-[12.5%_18.75%]","data-node-id":"8:81","data-name":"upward-arrow",children:h.jsx("div",{className:"absolute inset-[-6.67%_-8%]",children:h.jsx("img",{alt:"",className:"block max-w-none size-full",src:JN})})})})})]})]})]})]}))}),k]})})]}),h.jsxs("div",{className:"col-1 content-stretch flex flex-col gap-[24px] items-start ml-[359px] mt-[458px] relative row-1 w-[1200px]","data-node-id":"7:100",children:[h.jsxs("div",{className:"resource-header",children:[h.jsx("div",{className:"font-medium leading-[24px] text-[16px]","data-node-id":"7:67",children:h.jsx("button",{
   type:"button",onClick:()=>t("library","技能广场"),"aria-pressed":true,
   className:"relative shrink-0 text-[#1d2129]","data-node-id":"7:64",children:"技能广场"
 })}),h.jsx("div",{className:"content-stretch flex gap-[4px] items-center relative shrink-0 w-full","data-node-id":"7:75",children:h.jsxs(h.Fragment,{children:[h.jsx("button",{type:"button",onClick:()=>t("category","全部"),"aria-pressed":u==="全部",className:"bg-[#f2f3f5] content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:69",children:h.jsx("p",{className:"[word-break:break-word] font-medium leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:68",children:"全部"})}),h.jsx("button",{type:"button",onClick:()=>t("category","战略分析"),"aria-pressed":u==="战略分析",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:72",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:73",children:"战略分析"})}),h.jsx("button",{type:"button",onClick:()=>t("category","产业研究"),"aria-pressed":u==="产业研究",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:82",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:83",children:"产业研究"})}),h.jsx("button",{type:"button",onClick:()=>t("category","技术研判"),"aria-pressed":u==="技术研判",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:85",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:86",children:"技术研判"})}),h.jsx("button",{type:"button",onClick:()=>t("category","政策分析"),"aria-pressed":u==="政策分析",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:88",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:89",children:"政策分析"})}),h.jsx("button",{type:"button",onClick:()=>t("category","证据核验"),"aria-pressed":u==="证据核验",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:91",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:92",children:"证据核验"})}),h.jsx("button",{type:"button",onClick:()=>t("category","观点论证"),"aria-pressed":u==="观点论证",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:94",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:95",children:"观点论证"})}),h.jsx("button",{type:"button",onClick:()=>t("category","报告写作"),"aria-pressed":u==="报告写作",className:"content-stretch flex items-center justify-center px-[16px] py-[4px] relative rounded-[80px] shrink-0","data-node-id":"7:97",children:h.jsx("p",{className:"[word-break:break-word] font-normal leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"7:98",children:"报告写作"})})]})})]}),x]})]})}),h.jsx("div",{id:"home-workflow-toolbar",className:"home-workflow-toolbar","data-visible":M}),!sessionHeader && projectToggle,h.jsxs("aside",{id:"writing-project-panel",className:"col-1 content-stretch flex flex-col gap-[8px] items-start ml-[16px] mt-[16px] relative row-1 w-[216px]","data-node-id":"1:82",children:[h.jsxs("div",{className:"content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-full","data-node-id":"1:83",children:[h.jsxs("div",{className:"content-stretch flex items-center justify-between relative shrink-0 w-full","data-node-id":"1:84",children:[h.jsx("div",{className:"content-stretch flex gap-[8px] items-center relative shrink-0","data-node-id":"1:85",children:h.jsx("p",{className:"[word-break:break-word] font-medium leading-[24px] not-italic relative shrink-0 text-[#1d2129] text-[16px] whitespace-nowrap","data-node-id":"1:86",children:"写作项目"})}),h.jsxs("div",{className:"bg-[#f2f3f5] content-stretch flex h-[32px] items-center pl-[3px] py-[3px] relative rounded-[2px] shrink-0","data-node-id":"1:88","data-name":"按钮样式",children:[h.jsx("button",{type:"button",onClick:()=>t("projectMode","项目"),"aria-pressed":m==="项目",className:"bg-white content-stretch flex items-center justify-center px-[12px] py-[2px] relative rounded-[2px] shrink-0","data-node-id":"I1:88;1736:167","data-name":"单选框/按钮类型",children:h.jsx("div",{className:"[word-break:break-word] flex flex-col font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"I1:88;1736:167;1736:154",children:h.jsx("p",{className:"leading-[22px]",children:"项目"})})}),h.jsx("button",{type:"button",onClick:()=>t("projectMode","最近"),"aria-pressed":m==="最近",className:"content-stretch flex items-center justify-center px-[12px] py-[2px] relative rounded-[2px] shrink-0","data-node-id":"I1:88;1736:170","data-name":"单选框/按钮类型",children:h.jsx("div",{className:"[word-break:break-word] flex flex-col font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#4e5969] text-[14px] whitespace-nowrap","data-node-id":"I1:88;1736:170;1736:159",children:h.jsx("p",{className:"leading-[22px]",children:"最近"})})})]})]}),h.jsxs("div",{className:"sidebar-actions",children:[
@@ -2162,9 +2168,31 @@ ${libraryMarkdownOutline(se) || `## 一、研究背景与目标
 .kokonut-ai-wave { animation: kokonut-ai-wave 1.6s ease-in-out infinite both; }
 @media (prefers-reduced-motion: reduce) { .kokonut-ai-wave { animation: none; } }
 `;function V$({text:t}){return h.jsxs(h.Fragment,{children:[h.jsx("style",{href:"kokonut-ai-wave",precedence:"default",children:H$}),Array.from(t).map((n,r)=>h.jsx("span",{className:"kokonut-ai-wave whitespace-pre",style:{animationDelay:`${r*.05}s`},children:n},r))]})}const B$=t=>t<1e4?`${(t/1e3).toFixed(1)}秒`:`${Math.round(t/1e3)}秒`;function U$(t){const[n,r]=y.useState({}),o=y.useRef({});return y.useEffect(()=>{var m;const l=Date.now(),c=o.current,u={};let d=!1;for(const v of t){if(v.status==="pending"){delete c[v.id],d||(d=v.id in n);continue}v.status==="running"&&v.id in n&&(c[v.id]=l,d=!0),c[m=v.id]??(c[m]=l),(v.status==="done"||v.status==="error")&&(u[v.id]=n[v.id]??l-c[v.id],d||(d=!(v.id in n)))}d&&r(u)},[t,n]),n}const Y$={pending:"text-zinc-400 dark:text-zinc-500",running:"text-zinc-900 dark:text-zinc-100",done:"text-zinc-500 dark:text-zinc-400",error:"text-red-600 dark:text-red-400"};function X$({step:t,time:n,isLast:r}){var o;return h.jsxs("li",{className:"relative flex gap-3 pt-3.5",children:[!r&&h.jsx("span",{"aria-hidden":"true",className:"absolute top-[34px] bottom-[-10px] left-[7.5px] w-px overflow-hidden bg-zinc-200 dark:bg-zinc-800",children:h.jsx("span",{className:Ve("block h-full w-full origin-top bg-emerald-500/60 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] dark:bg-emerald-400/50",t.status==="done"?"scale-y-100":"scale-y-0")})}),h.jsx(L$,{status:t.status}),h.jsxs("div",{className:"-mt-0.5 min-w-0 flex-1",children:[h.jsxs("div",{className:"flex items-baseline gap-2",children:[h.jsx("p",{className:Ve("min-w-0 truncate text-sm transition-colors duration-200",Y$[t.status]),children:t.status==="running"?h.jsxs(h.Fragment,{children:[h.jsx("span",{className:"sr-only",children:t.label}),h.jsx("span",{"aria-hidden":"true",children:h.jsx(V$,{text:t.label})})]}):t.label}),n!==void 0&&h.jsx(Si.span,{animate:{opacity:1},className:"ml-auto shrink-0 text-xs text-zinc-400 tabular-nums dark:text-zinc-500",initial:{opacity:0},transition:{duration:.2,ease:Pc},children:B$(n)})]}),t.status==="running"&&((o=t.detail)!=null&&o.length)?h.jsx("div",{className:"mt-1",children:h.jsx(P$,{lines:t.detail})}):null]})]})}function aw({steps:t,collapseWhenDone:n=!0,className:r}){const o=y.useRef(null),l=$$(t===void 0,o),c=t??l,u=y.useId(),d=c.find(R=>R.status==="running"),m=c.find(R=>R.status==="error"),v=c.length>0&&c.every(R=>R.status==="done"),b=!!d,g=I$(b,v),x=U$(c),S=v&&n,[C,z]=y.useState(!S),[E,T]=y.useState(S);E!==S&&(T(S),z(!S));let A="准备处理任务";return m?A=`处理中断：${m.label}`:v?A=g>0?`已完成 · ${nw(g)}`:"已完成":d&&(A=d.label),h.jsx("div",{className:Ve("flex w-full items-center justify-center",r),ref:o,children:h.jsx(w1,{reducedMotion:"user",children:h.jsxs("div",{className:"w-full max-w-sm",children:[h.jsxs("button",{"aria-controls":u,"aria-expanded":C,className:"group/header flex w-full items-center gap-2 rounded-md py-1 text-left font-medium text-sm text-zinc-600 outline-hidden focus-visible:ring-2 focus-visible:ring-zinc-400/40 dark:text-zinc-300",onClick:()=>z(R=>!R),type:"button",children:[h.jsx("output",{className:"min-w-0 truncate",children:A}),b&&h.jsx("span",{className:"text-zinc-400 tabular-nums dark:text-zinc-500",children:nw(g)}),v&&h.jsxs("span",{className:"text-zinc-400 dark:text-zinc-500",children:["· ",c.length,"个步骤"]}),h.jsx(xd,{"aria-hidden":"true",className:Ve("ml-auto size-4 text-zinc-400 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/header:text-zinc-600 dark:group-hover/header:text-zinc-300",C&&"rotate-180")})]}),h.jsx(Kc,{initial:!1,children:C&&h.jsx(Si.ol,{animate:{height:"auto",opacity:1},className:"overflow-hidden",exit:{height:0,opacity:0},id:u,initial:{height:0,opacity:0},transition:{duration:.25,ease:Pc},children:c.map((R,M)=>h.jsx(X$,{isLast:M===c.length-1,step:R,time:x[R.id]},R.id))})})]})})})}function tm(t,n,r){return t+(n-t)*r}function rT(t){return t-Math.floor(t)}function nm(t,n){const r=Math.floor(t),o=Math.floor(n);let l=t-r,c=n-o;l=l*l*(3-2*l),c=c*c*(3-2*c);const u=ja(r,o),d=ja(r+1,o),m=ja(r,o+1),v=ja(r+1,o+1);return u+(d-u)*l+(m-u)*c+(u-d-m+v)*l*c}function ja(t,n){const r=Math.sin(t*12.9898+n*78.233)*43758.5453;return r-Math.floor(r)}function O1(t,n){const r=Math.PI*(3-Math.sqrt(5)),o=1-2*(t+.5)/n,l=Math.sqrt(1-o*o),c=t*r;return[l*Math.cos(c),o,l*Math.sin(c)]}function F$(t,n){return Math.atan2(Math.sin(t-n),Math.cos(t-n))}function Qo(t,n,r,o,l){const c=Math.sin(n),u=Math.cos(n),d=Math.sin(t),m=Math.cos(t);return(v,b,g)=>{const x=v*m+g*d,S=-v*d+g*m,C=b*u-S*c,z=b*c+S*u;return[r+x*l,o-C*l,z]}}function G$(t,n,r,o=.3){for(const l of n){const c=l.a??1,u=Math.min(1,Math.max(0,l.white)),d=Math.round((r?1-u:u)*255);t.fillStyle=`rgba(${d},${d},${d},${c})`,t.beginPath(),t.arc(l.x,l.y,l.r,0,Math.PI*2),t.fill()}}function q$(t,n,r){for(const o of n){const l=o.a??1,c=Math.min(1,Math.max(0,o.white)),u=Math.round((r?1-c:c)*255);t.strokeStyle=`rgba(${u},${u},${u},${l})`,t.lineWidth=o.w,t.beginPath(),t.moveTo(o.x1,o.y1),t.lineTo(o.x2,o.y2),t.stroke()}}function Kr(t,n,r=.3){const o=[];for(const l of t)(l.a??1)<.02||(l.r=Math.max(r,l.r),o.push(l));return o.sort((l,c)=>l.z-c.z),{dots:o,lines:n.filter(l=>(l.a??1)>=.02)}}function K$(t,n,r){n.lines.length&&q$(t,n.lines,r),G$(t,n.dots,r)}function Jo(t,n){return(t/300)**n}const W$=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.76,u=Qo(n*.4,.3,o,l,1),d=Jo(t,r.rsPow??.6),m=[],v=r.ghostN??150;for(let x=0;x<v;x++){const S=O1(x,v),[C,z,E]=u(S[0]*c,S[1]*c,S[2]*c),T=(E/c+1)/2;m.push({x:C,y:z,z:E,r:.8*d,white:.78,a:.1+.22*T})}const b=r.strandN??52,g=r.turns??3;for(let x=0;x<3;x++){const S=x/3*2*Math.PI;for(let C=0;C<b;C++){const z=(rT(C/b+n*.045)*2-1)*.96,E=Math.sqrt(Math.max(0,1-z*z)),T=Math.min(1,(1-Math.abs(z))/.1),A=z*Math.PI*g+S,R=1+.075*Math.sin(z*Math.PI*g*2+S*2+n*.8),M=E*c*R,[N,D,k]=u(Math.cos(A)*M,z*c*R,Math.sin(A)*M),_=(k/c+1)/2;m.push({x:N,y:D,z:k,r:((r.rBase??1.2)+(r.rDepth??1.8)*_)*d,white:.55-.45*_,a:T*(.45+.55*_)})}}return Kr(m,[],r.rMin)};function Z$(t,n,r,o){const l=2*n*r+o,c=t%l,u=new Array(n).fill(0);let d=-1;if(c<2*n*r){const m=Math.floor(c/r),v=(c-m*r)/r,b=1-(1-Math.min(1,v/.7))**3;if(m<n){for(let g=0;g<m;g++)u[g]=1;u[m]=b,d=m}else{const g=2*n-1-m;for(let x=0;x<g;x++)u[x]=1;u[g]=1-b,d=g}}return{amount:u,active:d}}function Q$(t,n,r){let[o,l,c]=t,u=!1;for(let d=0;d<n.length;d++){if(r.amount[d]<=0)continue;const m=n[d],v=m.axis===0?o:m.axis===1?l:c;if(v<m.lo||v>=m.hi)continue;d===r.active&&(u=!0);const b=m.ang*r.amount[d],g=Math.cos(b),x=Math.sin(b);if(m.axis===0){const S=l*g-c*x;c=l*x+c*g,l=S}else if(m.axis===1){const S=o*g+c*x;c=-o*x+c*g,o=S}else{const S=o*g-l*x;l=o*x+l*g,o=S}}return[o,l,c,u]}function J$(t){const n=[];for(let r=0;r<t;r++){const o=Math.min(2,Math.floor(ja(r,2.3)*3)),l=-1+.5*Math.min(3,Math.floor(ja(r,5.9)*4)),c=ja(r,7.7)<.5?1:-1;n.push({axis:o,lo:l,hi:l+.5,ang:c*Math.PI/2})}return n}const eL=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.82,u=.4+.06*Math.sin(n*.35),d=Qo(n*.5,u,o,l,c),m=n*(.5+(1.7-.5)*(r.scanMul??1)),v=Jo(t,r.rsPow??.6),b=r.dimBase??1,g=[],x=r.latRings??17,S=r.lonDensity??44;for(let C=0;C<=x;C++){const z=-Math.PI/2+C/x*Math.PI,E=Math.cos(z),T=Math.sin(z),A=Math.max(1,Math.round(Math.abs(E)*S));for(let R=0;R<A;R++){const M=R/A*2*Math.PI,[N,D,k]=d(E*Math.cos(M),T,E*Math.sin(M)),_=(k+1)/2,L=F$(M+n*.5,m),I=Math.exp(-(L*L)/.18)*Math.max(0,k);g.push({x:N,y:D,z:k,r:((r.rBase??.6)+(r.rDepth??1.7)*_+(r.rBoost??1)*I)*v,white:(r.inkFar??.62)-(r.inkSpan??.54)*_,a:b+(1-b)*Math.min(1,I)})}}return Kr(g,[],r.rMin)},tL=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.82,u=Qo(n*.55,.35+.1*Math.sin(n*.9),o,l,c),d=Jo(t,r.rsPow??.6),m=r.moveCount??14,v=J$(m),b=Z$(n,m,.42,1.2),g=[],x=r.latRings??15,S=r.lonDensity??40;for(let C=0;C<=x;C++){const z=-Math.PI/2+C/x*Math.PI,E=Math.cos(z),T=Math.sin(z),A=Math.max(1,Math.round(Math.abs(E)*S));for(let R=0;R<A;R++){const M=R/A*2*Math.PI,[N,D,k,_]=Q$([E*Math.cos(M),T,E*Math.sin(M)],v,b),[L,I,Y]=u(N,D,k),U=(Y+1)/2;g.push({x:L,y:I,z:Y,r:((r.rBase??.6)+(r.rDepth??1.7)*U+(_?r.rActive??.3:0))*d,white:(r.inkFar??.62)-(r.inkSpan??.54)*U-(_?.14:0)})}}return Kr(g,[],r.rMin)},nL=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.874,u=Qo(n*.18,.38,o,l,1),d=Jo(t,r.rsPow??.6),m=[],v=r.rings??15,b=r.lonDensity??40;for(let g=0;g<=v;g++){const x=-Math.PI/2+g/v*Math.PI,S=Math.cos(x),C=Math.sin(x),z=.62*Math.sin(n*2.1-g*.52)+.38*Math.sin(n*1.27+g*.83),E=c*(.88+.105*z),T=Math.max(1,Math.round(Math.abs(S)*b));for(let A=0;A<T;A++){const R=A/T*2*Math.PI,[M,N,D]=u(S*Math.cos(R)*E,C*E,S*Math.sin(R)*E),k=(D/c+1)/2,_=Math.max(0,z);m.push({x:M,y:N,z:D,r:((r.rBase??.6)+(r.rDepth??1.7)*k)*(1+.4*_)*d,white:.66-.56*k-.1*_})}}return Kr(m,[],r.rMin)};function aL(t){return t*t*(3-2*t)}function oT(t){const n=t.length,r=[];let o=0;for(let l=0;l<n;l++){const c=t[l],u=t[(l+1)%n],d=Math.hypot(u[0]-c[0],u[1]-c[1]);r.push(d),o+=d}return l=>{let c=l*o,u=0;for(;c>r[u]&&u<n-1;)c-=r[u],u++;const d=t[u],m=t[(u+1)%n],v=r[u]?Math.min(1,c/r[u]):0;return[d[0]+(m[0]-d[0])*v,d[1]+(m[1]-d[1])*v]}}const iL=t=>{const n=-Math.PI/2+t*2*Math.PI;return[Math.cos(n)*.24,Math.sin(n)*.24]},rL=oT([[0,-.26],[.24,.16],[-.24,.16]]),oL=oT([[0,-.2],[.2,-.2],[.2,.2],[-.2,.2],[-.2,-.2]]),am=[iL,rL,oL];function sL(t){return Math.max(6,Math.round(34*t))}const rg=1.4,sT=.9,im=rg+sT,lL=(t,n,r)=>{const o=am.length,l=n%(im*o),c=Math.floor(l/im),u=l-c*im,d=u>rg?aL((u-rg)/sT):0,m=r.spread??1,v=am[c],b=am[(c+1)%o],g=160,x=[];for(let D=0;D<g;D++){const k=D/g,_=v(k),L=b(k);x.push([(_[0]+(L[0]-_[0])*d)*m,(_[1]+(L[1]-_[1])*d)*m])}const S=[];let C=0;for(let D=0;D<g;D++){const k=x[D],_=x[(D+1)%g],L=Math.hypot(_[0]-k[0],_[1]-k[1]);S.push(L),C+=L}const z=sL(r.iconD??1),E=(r.rDot??.021)*1.35*m,T=1+.02*Math.sin(u*3.1),A=[],R=t/2;let M=0,N=0;for(let D=0;D<z;D++){const k=D/z*C;for(;N+S[M]<k&&M<g-1;)N+=S[M],M++;const _=x[M],L=x[(M+1)%g],I=S[M]?Math.min(1,(k-N)/S[M]):0,Y=(_[0]+(L[0]-_[0])*I)*T,U=(_[1]+(L[1]-_[1])*I)*T;A.push({x:R+Y*t,y:R+U*t,z:0,r:Math.max(.35,E*t),white:.1})}return Kr(A,[],r.rMin)},cL=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.82,u=Qo(n*.12,.3,o,l,1),d=Jo(t,r.rsPow??.6),m=[],v=r.orbitN??12,b=r.ghostN??40,g=r.particles??3;for(let x=0;x<v;x++){const S=ja(x,1.7),C=ja(x,5.2),z=ja(x,8.9),E=c*(.45+.52*S),T=S*2*Math.PI,A=Math.acos(2*C-1),R=Math.sin(A)*Math.cos(T),M=Math.cos(A),N=Math.sin(A)*Math.sin(T);let D=-M,k=R;const _=0,L=Math.max(1e-6,Math.sqrt(D*D+k*k));D/=L,k/=L;const I=M*_-N*k,Y=N*D-R*_,U=R*k-M*D,de=(.25+.55*z)*(z>.5?1:-1);for(let me=0;me<b;me++){const ue=me/b*2*Math.PI,[X,le,Q]=u((D*Math.cos(ue)+I*Math.sin(ue))*E,(k*Math.cos(ue)+Y*Math.sin(ue))*E,(_*Math.cos(ue)+U*Math.sin(ue))*E),ce=(Q/E+1)/2;m.push({x:X,y:le,z:Q,r:(r.ghostR??.9)*d,white:.72,a:(r.ghostA??.5)*(.4+.6*ce)})}for(let me=0;me<g;me++){const ue=n*de+me/g*2*Math.PI+C*6,[X,le,Q]=u((D*Math.cos(ue)+I*Math.sin(ue))*E,(k*Math.cos(ue)+Y*Math.sin(ue))*E,(_*Math.cos(ue)+U*Math.sin(ue))*E),ce=(Q/E+1)/2;m.push({x:X,y:le,z:Q,r:((r.partR??1.2)+(r.partRDepth??1.6)*ce)*d,white:.3-.22*ce})}}return Kr(m,[],r.rMin)},iw=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.78,u=r.spin??1,d=.3,m=Qo(n*.1*u,d,o,l,1),v=Jo(t,r.rsPow??.6),b=[],g=r.ghostN??150;for(let U=0;U<g;U++){const de=O1(U,g),[me,ue,X]=m(de[0]*c,de[1]*c,de[2]*c),le=(X/c+1)/2;b.push({x:me,y:ue,z:X,r:.8*v,white:.78,a:.1+.22*le})}const x=n*.24*u,S=r.faceOn?-d:.55+.3*Math.sin(n*.18)*u,C=Math.cos(x),z=0,E=Math.sin(x),T=-E*Math.sin(S),A=Math.cos(S),R=C*Math.sin(S),M=z*R-E*A,N=E*T-C*R,D=C*A-z*T,k=.23*(r.wobMul??1),_=r.faceOn?c/(1+.85*k):c,L=r.lanes??5,I=r.segs??88,Y=Math.max(1,Math.round(L*(r.bandMul??1)));for(let U=0;U<Y;U++){const de=(U-(Y-1)/2)*.075,me=Math.abs(U-(Y-1)/2)/Math.max(1,(Y-1)/2);for(let ue=0;ue<I;ue++){const X=ue/I*2*Math.PI,le=(.16*Math.sin(X*3-n*1.7+U*.22)+.07*Math.sin(X*5+n*1.1))*(r.wobMul??1),Q=r.faceOn?1+le:1,ce=r.faceOn?de:de+le,ee=C*Math.cos(X)+T*Math.sin(X)+M*ce,xe=z*Math.cos(X)+A*Math.sin(X)+N*ce,oe=E*Math.cos(X)+R*Math.sin(X)+D*ce,Be=Math.sqrt(ee*ee+xe*xe+oe*oe),O=_*Q,[Z,J,re]=m(ee/Be*O,xe/Be*O,oe/Be*O),Ce=(re/c+1)/2;b.push({x:Z,y:J,z:re,r:((r.rBase??1.1)+(r.rDepth??1.7)*Ce)*(1-.25*me)*v,white:.52-.44*Ce+.18*me,a:.4+.6*Ce})}}return Kr(b,[],r.rMin)},uL=(t,n,r)=>{const o=t/2,l=t/2,c=t/2*.8*(r.spread??1),u=Qo(n*.12,.32,o,l,c),d=Jo(t,r.rsPow??.6),m=r.nodeN??30,v=r.thr??.72,b=r.nodeR??1.4,g=r.nodeRDepth??1.8,x=[];for(let E=0;E<m;E++){const T=O1(E,m),A=T[0]+.3*(nm(E*.31+9,n*.24)-.5)*2,R=T[1]+.3*(nm(E*.53+27,n*.21)-.5)*2,M=T[2]+.3*(nm(E*.77+55,n*.27)-.5)*2,N=Math.sqrt(A*A+R*R+M*M);x.push([A/N,R/N,M/N])}const S=[],C=[];for(let E=0;E<m;E++)for(let T=E+1;T<m;T++){const A=x[E][0]-x[T][0],R=x[E][1]-x[T][1],M=x[E][2]-x[T][2],N=Math.sqrt(A*A+R*R+M*M);if(N>=v)continue;const[D,k,_]=u(x[E][0],x[E][1],x[E][2]),[L,I,Y]=u(x[T][0],x[T][1],x[T][2]),U=((_+Y)/2+1)/2;S.push({x1:D,y1:k,x2:L,y2:I,white:.42,a:(1-N/v)*(.3+.55*U),w:Math.max(.6,(r.lineW??.8)*d)})}for(let E=0;E<m;E++){const[T,A,R]=u(x[E][0],x[E][1],x[E][2]),M=(R+1)/2,N=1+.25*Math.sin(n*1.4+E*2.7);C.push({x:T,y:A,z:R,r:(b+g*M)*N*d,white:.55-.45*M})}const z=r.signals??5;for(let E=0;E<z;E++){const T=Math.floor(n*.55+E*7.31),A=Math.floor(ja(T,E*3.1+1.7)*m),R=Math.floor(ja(T,E*5.7+4.2)*m);if(A===R)continue;const M=rT(n*.55+E*7.31),N=tm(x[A][0],x[R][0],M),D=tm(x[A][1],x[R][1],M),k=tm(x[A][2],x[R][2],M),_=Math.max(1e-6,Math.sqrt(N*N+D*D+k*k)),[L,I,Y]=u(N/_,D/_,k/_),U=(Y+1)/2;C.push({x:L,y:I,z:Y,r:(b*1.5+g*U)*d,white:.05,a:.5+.5*U})}return Kr(C,S,r.rMin)},fL={orbits:cL,globe:eL,rubik:tL,wave:nL,web:uL,braid:W$,ribbon:iw,ring:iw,morph:lL},dL=Object.fromEntries(Object.entries(fL).map(([t,n])=>[t,(r,o,l,c,u)=>K$(r,n(o,l,u),c)])),pL=[["latRings","lonDensity"],["rings","lonDensity"],["lanes","segs"]],hL=["orbitN","ghostN","nodeN","strandN","signals"],mL=["iconD"],gL=["rBase","rDepth","rActive","rDot","ghostR","partR","partRDepth","nodeR","nodeRDepth"];function vL(t,n){const r={...t},o=new Set,l=Math.sqrt(n);for(const[c,u]of pL){const d=r[c],m=r[u];d!=null&&m!=null&&!o.has(c)&&!o.has(u)&&(r[c]=Math.max(2,Math.round(d*l)),r[u]=Math.max(2,Math.round(m*l)),o.add(c),o.add(u))}for(const c of hL){const u=r[c];u!=null&&u!==0&&!o.has(c)&&(r[c]=Math.max(1,Math.round(u*n)))}for(const c of mL){const u=r[c];u!=null&&(r[c]=Math.max(.02,u*n))}return r}function bL(t,n){const r={...t};for(const o of gL){const l=r[o];l!=null&&(r[o]=l*n)}return r.rSizeMul=(r.rSizeMul??1)*n,r}const xL={globe:{latRings:17,lonDensity:44,rBase:.6,rDepth:1.7,rBoost:1,inkFar:.62,inkSpan:.54,rsPow:.6,rMin:.3},orbits:{orbitN:12,ghostN:40,ghostR:.9,ghostA:.5,particles:3,partR:1.2,partRDepth:1.6,rsPow:.6,rMin:.3},rubik:{latRings:15,lonDensity:40,moveCount:14,rBase:.6,rDepth:1.7,rActive:.3,inkFar:.62,inkSpan:.54,rsPow:.6,rMin:.3},wave:{rings:15,lonDensity:40,rBase:.6,rDepth:1.7,rsPow:.6,rMin:.3},web:{nodeN:30,thr:.72,signals:5,nodeR:1.4,nodeRDepth:1.8,lineW:.8,rsPow:.6,rMin:.3},braid:{strandN:52,turns:3,ghostN:150,rBase:1.2,rDepth:1.8,rsPow:.6,rMin:.3},ribbon:{lanes:5,segs:88,ghostN:150,rBase:1.1,rDepth:1.7,rsPow:.6,rMin:.3},ring:{lanes:5,segs:88,ghostN:0,faceOn:1,rBase:1.1,rDepth:1.7,rsPow:.6,rMin:.3},morph:{rDot:.021,iconD:1,rMin:.25}},yL={working:"orbits",searching:"globe",solving:"rubik",listening:"wave",connecting:"web",weaving:"braid",composing:"ribbon",breathing:"ring",shaping:"morph"},wL={orbits:{64:{speed:1.885,count:1,size:1},20:{speed:3.9,count:.238,size:2.4}},globe:{64:{speed:2.015,count:.42,size:1.15,extra:{scanMul:4.08,dimBase:.45}},20:{speed:2.665,count:.105,size:1.75,extra:{scanMul:4.335,dimBase:.45}}},rubik:{64:{speed:1.82,count:.35,size:1.05},20:{speed:1.95,count:.088,size:1.9}},wave:{64:{speed:4.388,count:.341,size:1},20:{speed:3.998,count:.105,size:1.6}},web:{64:{speed:3.315,count:1.35,size:.95},20:{speed:6.63,count:.25,size:1.52}},braid:{64:{speed:1.625,count:.5,size:1},20:{speed:2.75,count:.1125,size:1.36}},ribbon:{64:{speed:2.34,count:.25,size:.85,extra:{spin:0,bandMul:3.9,wobMul:1}},20:{speed:3.12,count:.051,size:1.073,extra:{spin:0,bandMul:4.94,wobMul:1}}},ring:{64:{speed:3.24,count:.25,size:.956,extra:{spin:0,bandMul:3.627,wobMul:.368}},20:{speed:3.78,count:.028,size:1.622,extra:{spin:0,bandMul:3.968,wobMul:.565}}},morph:{64:{speed:2.405,count:.702,size:.395,extra:{spread:1.45}},20:{speed:2.08,count:.53,size:1.011,extra:{spread:1.45}}}},rw=new Map;function SL(t,n){const r=`${t}-${n}`,o=rw.get(r);if(o)return o;const l=yL[t],c=wL[l][n];let u={...xL[l]};c.count!==1&&(u=vL(u,c.count)),c.size!==1&&(u=bL(u,c.size)),c.extra&&(u={...u,...c.extra});const d={mode:l,speed:c.speed,opts:u};return rw.set(r,d),d}function CL(t){let n=t;for(;n;){const r=n.getAttribute("data-theme");if(r==="dark")return!0;if(r==="light")return!1;if(n.classList.contains("dark"))return!0;if(n.classList.contains("light"))return!1;n=n.parentElement}return null}function TL(){return typeof matchMedia>"u"||matchMedia("(prefers-color-scheme: dark)").matches}function EL(t,n){const[r,o]=y.useState(!0);return y.useEffect(()=>{if(t==="dark"){o(!0);return}if(t==="light"){o(!1);return}const l=()=>{const m=CL(n.current);o(m??TL())};l();const c=typeof matchMedia<"u"?matchMedia("(prefers-color-scheme: dark)"):null,u=()=>l();c==null||c.addEventListener("change",u);let d=null;return typeof MutationObserver<"u"&&n.current&&(d=new MutationObserver(l),d.observe(document.documentElement,{attributes:!0,attributeFilter:["class","data-theme"],subtree:!0})),()=>{c==null||c.removeEventListener("change",u),d==null||d.disconnect()}},[t,n]),r}function zL(){const[t,n]=y.useState(!1);return y.useEffect(()=>{if(typeof matchMedia>"u")return;const r=matchMedia("(prefers-reduced-motion: reduce)");n(r.matches);const o=l=>n(l.matches);return r.addEventListener("change",o),()=>r.removeEventListener("change",o)},[]),t}const ML={working:"Working…",searching:"Searching…",solving:"Solving…",listening:"Listening…",connecting:"Connecting…",weaving:"Weaving…",composing:"Composing…",breathing:"Thinking…",shaping:"Shaping…"};function RL({state:t="working",size:n=64,theme:r="auto",speed:o=1,paused:l=!1,style:c,"aria-label":u,...d}){const m=y.useRef(null),v=EL(r,m),b=zL();return y.useEffect(()=>{const g=m.current;if(!g)return;const x=Math.min(2,typeof devicePixelRatio<"u"&&devicePixelRatio||1);g.width=Math.round(n*x),g.height=Math.round(n*x);const S=g.getContext("2d");if(!S)return;const{mode:C,speed:z,opts:E}=SL(t,n),T=dL[C],A=z*o,R=U=>{S.setTransform(x,0,0,x,0,0),S.clearRect(0,0,n,n),T(S,n,U,v,E)};if(b){R(.6);return}let M=0,N=!1;const D=()=>{R(performance.now()/1e3*A),N&&(M=requestAnimationFrame(D))},k=()=>{N||l||(N=!0,M=requestAnimationFrame(D))},_=()=>{N=!1,cancelAnimationFrame(M)};R(performance.now()/1e3*A);let L=!0;const I=typeof IntersectionObserver<"u"?new IntersectionObserver(([U])=>{L=U.isIntersecting,L&&document.visibilityState!=="hidden"?k():_()}):null;I==null||I.observe(g);const Y=()=>{document.visibilityState==="hidden"?_():L&&k()};return document.addEventListener("visibilitychange",Y),I||k(),()=>{_(),I==null||I.disconnect(),document.removeEventListener("visibilitychange",Y)}},[t,n,v,o,l,b]),h.jsx("canvas",{ref:m,role:"img","aria-label":u??ML[t],style:{width:n,height:n,display:"block",...c},...d})}function AL(t,n=0,r=0,o="initial"){return t==="processing"?n===0?{state:o==="round"?"weaving":"connecting",label:"正在整理本次输入材料",speed:.85}:n===1?{state:"searching",label:"正在提取研究需求",speed:.85}:{state:"solving",label:"正在判断信息缺口与冲突",speed:.85}:t==="questions"?{state:"listening",label:"等待你的回答",speed:.75}:t==="round-review"?{state:"weaving",label:"等待你确认本轮信息",speed:.6}:t==="final-review"?{state:"shaping",label:"等待你确认最终任务",speed:.6}:t==="final-edit"?{state:"listening",label:"正在接收任务修改",speed:.75}:t==="outline-review"?{state:"shaping",label:"等待确认报告大纲",speed:.6}:t==="executing"?r<=20?{state:"connecting",label:"正在接收写作任务",speed:.85}:r<=60?{state:"working",label:"正在分章节撰写正文",speed:.85}:{state:"composing",label:"正在准备报告草稿",speed:.85}:t==="complete"?{state:"breathing",label:"任务已完成",speed:.45}:{state:"listening",label:"等待新的任务输入",speed:.75}}const jL=["F01","F02","F03","F04"],el={F01:{label:"研究主题",name:"战略研究主题与对象"},F02:{label:"研究目标",name:"核心研究目标与关键问题"},F03:{label:"研究范围",name:"研究范围"},F04:{label:"目标读者",name:"目标读者与决策场景"}},lT="通用专业读者表达",zc=()=>({option:"",text:"",skipped:!1,customOpen:!1}),Ic=[{id:"complete",title:"信息完整",description:"四项信息齐全，直接进入最终确认。",prompt:"帮我撰写一份中国新能源汽车行业的战略研究报告，重点分析未来三年的市场发展趋势、竞争格局及主要企业的发展机会与风险，报告主要用于企业管理层制定下一阶段的业务发展战略。",values:["中国新能源汽车行业","分析市场发展趋势、竞争格局及主要企业的发展机会与风险","中国市场；未来三年；市场发展趋势、竞争格局及主要企业","企业管理层；制定下一阶段的业务发展战略"],attachments:[]},{id:"partial",title:"部分信息缺失",description:"主题与范围已明确，只询问研究目标；读者采用适用默认值。",prompt:"帮我分析中国新能源汽车行业未来三年的发展趋势。",values:["中国新能源汽车行业","","中国市场；未来三年；发展趋势",""],attachments:[]},{id:"conflict",title:"任务与附件冲突",description:"研究对象和范围不一致，逐项选择最终采用的信息。",prompt:"研究主题：中国新能源汽车行业。研究目标：比较主要企业的发展机会与风险。研究范围：中国市场，未来三年。目标读者：企业管理层，用于业务发展战略。",values:["中国新能源汽车行业","比较主要企业的发展机会与风险","中国市场；未来三年","企业管理层；业务发展战略"],attachments:[{name:"研究说明.txt",text:`研究主题：传统燃油汽车行业
-研究范围：欧洲市场，未来五年`}]},{id:"default",title:"使用默认读者",description:"未提出定制要求，最终确认中明确标记系统默认。",prompt:"请撰写中国半导体行业战略研究报告，重点分析产业链竞争格局和企业发展机会，范围为中国市场、未来五年。",values:["中国半导体行业","分析产业链竞争格局和企业发展机会","中国市场；未来五年；产业链竞争格局及企业发展机会",""],attachments:[]},{id:"four",title:"四项都需澄清",description:"要求内部定制，但四项信息均不充分；本轮四题。",prompt:"我要一份用于内部定制汇报的战略报告，请帮我先明确研究需求。",values:["","","",""],customReader:!0,attachments:[]},{id:"skip",title:"跳过剩余澄清",description:"确认跳过后保留信息空缺，仍需最终确认才能执行。",prompt:"帮我写一份战略研究报告。",values:["","","",""],attachments:[]},{id:"max",title:"第三轮仍有缺口",description:"前两轮回答“暂不确定”，第三轮后不再生成新问题。",prompt:"我要一份用于内部定制汇报的战略报告，请帮我先明确研究需求。",values:["","","",""],customReader:!0,attachments:[]}];function ow(t){const n=t.trim();return!!n&&!/^(不知道|不确定|暂不确定|还不确定|尚不确定|暂时不知道|同上|随便|还没定)[。.!！\s]*$/.test(n)}function ol(t,n){for(const r of n){const o=t.match(new RegExp(`(?:^|[\\n。；;])\\s*${r}[：:]\\s*([^\\n。]+)`));if(o)return o[1].trim()}return""}const NL=/(?:中国|全球|欧洲|美国|深圳|大湾区)?(?:新能源(?:汽车)?|传统燃油汽车|半导体|低空经济|具身智能|人工智能|储能|光伏|医药|机器人)(?:行业|产业|市场)?/;function og(t){var n;return((n=t.match(NL))==null?void 0:n[0])||""}function Io(t){var n;return((n=t.match(/中国|全球|欧洲|美国|深圳|大湾区|亚太/))==null?void 0:n[0])||""}function Ho(t){var n;return((n=t.match(/未来[一二两三四五六七八九十\d]+年|过去[一二两三四五六七八九十\d]+年|近[一二两三四五六七八九十\d]+年|20\d{2}[—–-]20\d{2}年?/))==null?void 0:n[0])||""}function OL(t){var u,d,m,v;const n=ol(t,["研究主题","研究对象"])||og(t),r=ol(t,["研究目标","核心研究目标"])||((d=(u=t.match(/(?:重点分析|重点研究|重点解决|核心目标是)([^。]+?)(?=，报告|，面向|，用于|。|$)/))==null?void 0:u[1])==null?void 0:d.trim())||"",l=ol(t,["研究范围"])||[Io(t),Ho(t)].filter(Boolean).join("；"),c=ol(t,["目标读者","读者与场景"])||((v=(m=t.match(/(?:面向|供|主要用于)([^。]+?)(?=。|$)/))==null?void 0:m[1])==null?void 0:v.trim())||"";return[n,r,l,c]}function sw(t,n,r){if(n===r||n.includes(r)||r.includes(n))return!0;if(t==="F01"){const o=og(n).replace(/中国|全球|欧洲|美国|深圳|大湾区|行业|产业|市场/g,""),l=og(r).replace(/中国|全球|欧洲|美国|深圳|大湾区|行业|产业|市场/g,"");return!!(o&&l&&o===l)}return t==="F03"?!(Io(n)&&Io(r)&&Io(n)!==Io(r))&&!(Ho(n)&&Ho(r)&&Ho(n)!==Ho(r)):!1}function lw(t){const n=[];return Io(t)||n.push("地域范围"),Ho(t)||n.push("时间范围"),n.join("、")}function cw(t){return t=t.replace(/^(?:面向|给|供|报告用于)\s*/,""),t===lT?"":t?/用于|制定|决策|战略|投资|布局|技术|研判|汇报|发展|管理/.test(t)?/管理层|委员会|部门|读者|董事会|研究人员|公众|投资人|团队|专家|企业/.test(t)?/^(企业)?管理层$|^董事会$|^投资委员会$|^研究部门$|^内部$/.test(t)?"实际用途":"":"阅读对象":"实际用途":"阅读对象和实际用途"}function kL(t){const n=Ic.find(d=>d.prompt===t.prompt),r=n?[...n.values]:OL(t.prompt),o=Object.values(t.answers).filter(d=>d&&!d.skipped).map(d=>d.text).join(`
+研究范围：欧洲市场，未来五年`}]},{id:"default",title:"使用默认读者",description:"未提出定制要求，最终确认中明确标记系统默认。",prompt:"请撰写中国半导体行业战略研究报告，重点分析产业链竞争格局和企业发展机会，范围为中国市场、未来五年。",values:["中国半导体行业","分析产业链竞争格局和企业发展机会","中国市场；未来五年；产业链竞争格局及企业发展机会",""],attachments:[]},{id:"four",title:"四项都需澄清",description:"要求内部定制，但四项信息均不充分；本轮四题。",prompt:"我要一份用于内部定制汇报的战略报告，请帮我先明确研究需求。",values:["","","",""],customReader:!0,attachments:[]},{id:"skip",title:"跳过剩余澄清",description:"确认跳过后保留信息空缺，仍需最终确认才能执行。",prompt:"帮我写一份战略研究报告。",values:["","","",""],attachments:[]},{id:"max",title:"第二轮仍有缺口",description:"第一轮的两项回答暂未明确，第二轮继续澄清。",prompt:"请撰写面向企业管理层、用于业务规划的中国新能源汽车行业战略研究报告。",values:["中国新能源汽车行业","","","企业管理层；用于业务规划"],customReader:!0,attachments:[]}];function ow(t){const n=t.trim();return!!n&&!/^(不知道|不确定|暂不确定|还不确定|尚不确定|暂时不知道|同上|随便|还没定)[。.!！\s]*$/.test(n)}function ol(t,n){for(const r of n){const o=t.match(new RegExp(`(?:^|[\\n。；;])\\s*${r}[：:]\\s*([^\\n。]+)`));if(o)return o[1].trim()}return""}const NL=/(?:中国|全球|欧洲|美国|深圳|大湾区)?(?:新能源(?:汽车)?|传统燃油汽车|半导体|低空经济|具身智能|人工智能|储能|光伏|医药|机器人)(?:行业|产业|市场)?/;function og(t){var n;return((n=t.match(NL))==null?void 0:n[0])||""}function Io(t){var n;return((n=t.match(/中国|全球|欧洲|美国|深圳|大湾区|亚太/))==null?void 0:n[0])||""}function Ho(t){var n;return((n=t.match(/未来[一二两三四五六七八九十\d]+年|过去[一二两三四五六七八九十\d]+年|近[一二两三四五六七八九十\d]+年|20\d{2}[—–-]20\d{2}年?/))==null?void 0:n[0])||""}function OL(t){var u,d,m,v;const n=ol(t,["研究主题","研究对象"])||og(t),r=ol(t,["研究目标","核心研究目标"])||((d=(u=t.match(/(?:重点分析|重点研究|重点解决|核心目标是)([^。]+?)(?=，报告|，面向|，用于|。|$)/))==null?void 0:u[1])==null?void 0:d.trim())||"",l=ol(t,["研究范围"])||[Io(t),Ho(t)].filter(Boolean).join("；"),c=ol(t,["目标读者","读者与场景"])||((v=(m=t.match(/(?:面向|供|主要用于)([^。]+?)(?=。|$)/))==null?void 0:m[1])==null?void 0:v.trim())||"";return[n,r,l,c]}function sw(t,n,r){if(n===r||n.includes(r)||r.includes(n))return!0;if(t==="F01"){const o=og(n).replace(/中国|全球|欧洲|美国|深圳|大湾区|行业|产业|市场/g,""),l=og(r).replace(/中国|全球|欧洲|美国|深圳|大湾区|行业|产业|市场/g,"");return!!(o&&l&&o===l)}return t==="F03"?!(Io(n)&&Io(r)&&Io(n)!==Io(r))&&!(Ho(n)&&Ho(r)&&Ho(n)!==Ho(r)):!1}function lw(t){const n=[];return Io(t)||n.push("地域范围"),Ho(t)||n.push("时间范围"),n.join("、")}function cw(t){return t=t.replace(/^(?:面向|给|供|报告用于)\s*/,""),t===lT?"":t?/用于|制定|决策|战略|投资|布局|技术|研判|汇报|发展|管理/.test(t)?/管理层|委员会|部门|读者|董事会|研究人员|公众|投资人|团队|专家|企业/.test(t)?/^(企业)?管理层$|^董事会$|^投资委员会$|^研究部门$|^内部$/.test(t)?"实际用途":"":"阅读对象":"实际用途":"阅读对象和实际用途"}function kL(t){const n=Ic.find(d=>d.prompt===t.prompt),r=n?[...n.values]:OL(t.prompt),o=Object.values(t.answers).filter(d=>d&&!d.skipped).map(d=>d.text).join(`
 `),l=[t.prompt,...t.attachments.map(d=>d.text),o].join(`
-`),c=!!(n!=null&&n.customReader)||/定制|内部|董事会|委员会|管理层|汇报/.test(l),u={F01:["研究主题","研究对象"],F02:["研究目标","核心研究目标"],F03:["研究范围"],F04:["目标读者","读者与场景"]};return jL.map((d,m)=>{var A,R;let v=r[m]||"",b=[],g=v?"input":"unprovided",x="";for(const M of t.attachments){const N=ol(M.text,u[d]);N&&(v&&!sw(d,v,N)?b=[...new Set([...b,v,N])]:(v=v&&v!==N&&!v.includes(N)?`${v}；${N}`:N.length>v.length?N:v,g="input"))}const S=d==="F04"?(A=o.match(/(?:面向|给|供|报告用于)\s*((?:企业)?管理层|董事会|投资委员会|研究部门)([^。\n]*)/))==null?void 0:A[0]:"",C=ol(o,u[d])||S||"";C&&(v&&!sw(d,v,C)?b=[...new Set([...b,v,C])]:(v=v&&!C.includes(v)&&!v.includes(C)?`${v}；${C}`:C.length>v.length?C:v,g="answer"));const z=t.answers[d];if(z&&!z.skipped){const M=[z.option,z.text.trim()].filter(Boolean).join("；补充：");ow(M)&&(v=(d==="F03"&&!!lw(v)||d==="F04"&&!!cw(v))&&v&&!M.includes(v)?`${v}；${M}`:M,g="answer",b=[])}Object.prototype.hasOwnProperty.call(t.edits,d)&&(v=((R=t.edits[d])==null?void 0:R.trim())||"",g=v?"answer":"unprovided",b=[]);let E=b.length?"CONFLICTED":ow(v)?"VALID":"MISSING";d==="F03"&&E!=="CONFLICTED"&&(x=lw(v),x&&(E="MISSING")),d==="F04"&&E!=="CONFLICTED"&&(x=cw(v),x&&(E="MISSING")),!v&&!x&&(x=d==="F01"?"研究主题与对象":d==="F02"?"希望解决的关键问题":"");let T=E==="VALID"?"SKIP":"ASK";return d==="F04"&&E==="MISSING"&&!v&&!c&&!Object.prototype.hasOwnProperty.call(t.edits,d)&&(v=lT,g="default",T="DEFAULT",x=""),{id:d,...el[d],value:v,judge:E,decision:T,origin:g,missing:x,candidates:b}})}function DL(t){if(t.judge==="CONFLICTED")return{id:t.id,title:`${t.label}应以哪份信息为准？`,description:"任务与附件的表述存在差异，请选择这次研究实际采用的信息。",options:[t.candidates[0],t.candidates[1],`比较研究：${t.candidates[0]}与${t.candidates[1]}`],partial:!1};if(t.id==="F01")return{id:t.id,title:"这次战略研究要围绕什么主题或对象？",description:"目前还没有明确研究对象，确定主题后才能组织后续分析。",options:["新能源汽车行业","低空经济产业","具身智能产业"],partial:!1};if(t.id==="F02")return{id:t.id,title:"本次研究最希望重点解决什么问题？",description:"请明确这份报告要帮助你作出什么判断。",options:["行业发展趋势","行业竞争格局","企业发展机会"],partial:!1};if(t.id==="F03"){const n=Io(t.value),r=Ho(t.value);return n&&!r?{id:t.id,title:"研究希望关注哪个时间周期？",description:`已保留${n}的地域信息，只补充时间范围。`,options:["未来一年","未来三年","未来五年"],partial:!0}:r&&!n?{id:t.id,title:"研究将覆盖哪个地域范围？",description:`已保留${r}的时间信息，只补充地域范围。`,options:["中国市场","全球市场","欧洲市场"],partial:!0}:{id:t.id,title:"本次研究的地域与时间范围是什么？",description:"请明确地域、业务边界以及需要关注的时间范围。",options:["中国市场；未来三年","全球市场；未来三年","欧洲市场；未来五年"],partial:!1}}return t.value&&t.missing==="实际用途"?{id:t.id,title:"这份报告将支持什么具体决策？",description:`已保留“${t.value}”，只需要补充实际用途。`,options:["制定业务发展战略","评估投资布局","选择技术路线"],partial:!0}:{id:t.id,title:"谁会阅读这份报告，用于什么决策？",description:"你提出了定制要求，需要明确阅读对象和实际使用场景。",options:["企业管理层；制定业务发展战略","投资委员会；评估投资布局","研究部门；选择技术路线"],partial:!1}}function Hc(t="",n=[]){return{phase:"compose",material:{prompt:t,attachments:n,answers:{},edits:{}},fields:[],questions:[],round:0,index:0,answers:{},history:[],error:"",ending:!1,processReason:"initial",editId:null,editText:"",definition:null,executionProgress:0,extractionCount:0}}function Ht(t,n){var r,o,l;if(n.type==="LOAD")return n.state;if(n.type==="PROMPT")return{...t,material:{...t.material,prompt:n.value},error:""};if(n.type==="ATTACHMENTS")return{...t,material:{...t.material,attachments:n.value},error:""};if(n.type==="SUBMIT")return!t.material.prompt.trim()&&!t.material.attachments.length?{...t,error:"请填写报告需求或添加一份资料。"}:{...Hc(t.material.prompt,t.material.attachments),phase:"processing"};if(n.type==="PROCESSED"&&t.phase==="processing"){const c=kL(t.material),u=c.filter(m=>m.decision==="ASK").map(DL),d=t.processReason!=="initial"&&t.round>=3;return!u.length||t.ending||d?{...t,phase:"final-review",fields:c,questions:u,answers:{},index:0,error:"",extractionCount:t.extractionCount+4}:{...t,phase:"questions",fields:c,questions:u,round:t.processReason==="initial"?1:t.round+1,index:0,answers:{},error:"",extractionCount:t.extractionCount+4}}if(t.phase==="questions"){const c=(r=t.questions[t.index])==null?void 0:r.id;if(!c)return t;const u=t.answers[c]||zc(),d=m=>({...t,answers:{...t.answers,[c]:m},error:""});if(n.type==="OPTION")return d({...u,option:n.value,skipped:!1});if(n.type==="TEXT")return d({...u,text:n.value,skipped:!1});if(n.type==="CUSTOM")return d({...u,customOpen:!u.customOpen});if(n.type==="CLEAR_OPTION")return d({...u,option:"",customOpen:!0,skipped:!1});if(n.type==="NEXT"||n.type==="SKIP"){if(n.type==="NEXT"&&!u.option&&!u.text.trim())return{...t,error:"请选择一个推荐选项，或填写自定义回答。"};const m=n.type==="SKIP"?{...zc(),skipped:!0}:{...u,skipped:!1};return{...t,answers:{...t.answers,[c]:m},phase:t.index===t.questions.length-1?"round-review":"questions",index:Math.min(t.index+1,t.questions.length-1),error:""}}if(n.type==="BACK")return{...t,index:Math.max(0,t.index-1),error:""};if(n.type==="END_REMAINING"){const m={...t.answers};return t.questions.slice(t.index).forEach(v=>{m[v.id]={...zc(),skipped:!0}}),{...t,answers:m,phase:"round-review",ending:!0,error:""}}}if(t.phase==="round-review"){if(n.type==="BACK")return{...t,phase:"questions",index:n.index??0,ending:!1,error:""};if(n.type==="CONFIRM_ROUND"){const c={...t.material.answers},u={...t.material.edits};return t.questions.forEach(d=>{var v;const m=t.answers[d.id];if(m&&!m.skipped){const b=((v=t.fields.find(g=>g.id===d.id))==null?void 0:v.value)||"";c[d.id]=d.partial&&b?{...m,option:"",text:`${b}；${sg(m)}`}:{...m},delete u[d.id]}}),{...t,phase:"processing",material:{...t.material,answers:c,edits:u},processReason:"round",ending:t.ending||!!n.end,history:[...t.history,{round:t.round,questions:t.questions,answers:t.answers}],error:""}}}if(t.phase==="final-review"){if(n.type==="EDIT_FINAL")return{...t,phase:"final-edit",editId:n.id,editText:((o=t.fields.find(c=>c.id===n.id))==null?void 0:o.value)||"",error:""};if(n.type==="CONFIRM_FINAL"){const c={fields:t.fields.map(u=>({id:u.id,name:u.name,value:u.judge==="CONFLICTED"?null:u.value||null,origin:u.decision==="ASK"?"unprovided":u.origin,unresolved:u.decision==="ASK"?u.judge==="CONFLICTED"?`输入仍有冲突：${u.candidates.join(" / ")}`:u.missing||"信息尚未明确":null})),prompt:t.material.prompt,attachments:t.material.attachments,consent:!0};const outline=window.sessionOutline.propose({definition:c,launch:n.launch});
+`),c=!!(n!=null&&n.customReader)||/定制|内部|董事会|委员会|管理层|汇报/.test(l),u={F01:["研究主题","研究对象"],F02:["研究目标","核心研究目标"],F03:["研究范围"],F04:["目标读者","读者与场景"]};return jL.map((d,m)=>{var A,R;let v=r[m]||"",b=[],g=v?"input":"unprovided",x="";for(const M of t.attachments){const N=ol(M.text,u[d]);N&&(v&&!sw(d,v,N)?b=[...new Set([...b,v,N])]:(v=v&&v!==N&&!v.includes(N)?`${v}；${N}`:N.length>v.length?N:v,g="input"))}const S=d==="F04"?(A=o.match(/(?:面向|给|供|报告用于)\s*((?:企业)?管理层|董事会|投资委员会|研究部门)([^。\n]*)/))==null?void 0:A[0]:"",C=ol(o,u[d])||S||"";C&&(v&&!sw(d,v,C)?b=[...new Set([...b,v,C])]:(v=v&&!C.includes(v)&&!v.includes(C)?`${v}；${C}`:C.length>v.length?C:v,g="answer"));const z=t.answers[d];if(z&&!z.skipped){const M=[z.option,z.text.trim()].filter(Boolean).join("；补充：");ow(M)&&(v=(d==="F03"&&!!lw(v)||d==="F04"&&!!cw(v))&&v&&!M.includes(v)?`${v}；${M}`:M,g="answer",b=[])}Object.prototype.hasOwnProperty.call(t.edits,d)&&(v=((R=t.edits[d])==null?void 0:R.trim())||"",g=v?"answer":"unprovided",b=[]);let E=b.length?"CONFLICTED":ow(v)?"VALID":"MISSING";d==="F03"&&E!=="CONFLICTED"&&(x=lw(v),x&&(E="MISSING")),d==="F04"&&E!=="CONFLICTED"&&(x=cw(v),x&&(E="MISSING")),!v&&!x&&(x=d==="F01"?"研究主题与对象":d==="F02"?"希望解决的关键问题":"");let T=E==="VALID"?"SKIP":"ASK";return d==="F04"&&E==="MISSING"&&!v&&!c&&!Object.prototype.hasOwnProperty.call(t.edits,d)&&(v=lT,g="default",T="DEFAULT",x=""),{id:d,...el[d],value:v,judge:E,decision:T,origin:g,missing:x,candidates:b}})}function DL(t){if(t.judge==="CONFLICTED")return{id:t.id,title:`${t.label}应以哪份信息为准？`,description:"任务与附件的表述存在差异，请选择这次研究实际采用的信息。",options:[t.candidates[0],t.candidates[1],`比较研究：${t.candidates[0]}与${t.candidates[1]}`],partial:!1};if(t.id==="F01")return{id:t.id,title:"这次战略研究要围绕什么主题或对象？",description:"目前还没有明确研究对象，确定主题后才能组织后续分析。",options:["新能源汽车行业","低空经济产业","具身智能产业"],partial:!1};if(t.id==="F02")return{id:t.id,title:"本次研究最希望重点解决什么问题？",description:"请明确这份报告要帮助你作出什么判断。",options:["行业发展趋势","行业竞争格局","企业发展机会"],partial:!1};if(t.id==="F03"){const n=Io(t.value),r=Ho(t.value);return n&&!r?{id:t.id,title:"研究希望关注哪个时间周期？",description:`已保留${n}的地域信息，只补充时间范围。`,options:["未来一年","未来三年","未来五年"],partial:!0}:r&&!n?{id:t.id,title:"研究将覆盖哪个地域范围？",description:`已保留${r}的时间信息，只补充地域范围。`,options:["中国市场","全球市场","欧洲市场"],partial:!0}:{id:t.id,title:"本次研究的地域与时间范围是什么？",description:"请明确地域、业务边界以及需要关注的时间范围。",options:["中国市场；未来三年","全球市场；未来三年","欧洲市场；未来五年"],partial:!1}}return t.value&&t.missing==="实际用途"?{id:t.id,title:"这份报告将支持什么具体决策？",description:`已保留“${t.value}”，只需要补充实际用途。`,options:["制定业务发展战略","评估投资布局","选择技术路线"],partial:!0}:{id:t.id,title:"谁会阅读这份报告，用于什么决策？",description:"你提出了定制要求，需要明确阅读对象和实际使用场景。",options:["企业管理层；制定业务发展战略","投资委员会；评估投资布局","研究部门；选择技术路线"],partial:!1}}function Hc(t="",n=[]){return{phase:"compose",material:{prompt:t,attachments:n,answers:{},edits:{}},fields:[],questions:[],round:0,index:0,answers:{},history:[],error:"",ending:!1,processReason:"initial",editId:null,editText:"",definition:null,executionProgress:0,extractionCount:0}}const MAX_CLARIFICATION_QUESTIONS = 4;
+const MAX_CLARIFICATION_ROUNDS = 2;
+function Ht(t,n){var r,o,l;if(n.type==="LOAD")return n.state;if(n.type==="PROMPT")return{...t,material:{...t.material,prompt:n.value},error:""};if(n.type==="ATTACHMENTS")return{...t,material:{...t.material,attachments:n.value},error:""};if(n.type==="SUBMIT")return!t.material.prompt.trim()&&!t.material.attachments.length?{...t,error:"请填写报告需求或添加一份资料。"}:{...Hc(t.material.prompt,t.material.attachments),phase:"processing"};if (n.type === "PROCESSED" && t.phase === "processing") {
+    const fields = kL(t.material);
+    const asked = t.history.reduce((count, round) => count + round.questions.length, 0);
+    const remaining = Math.max(0, MAX_CLARIFICATION_QUESTIONS - asked);
+    const questions = t.ending || t.round >= MAX_CLARIFICATION_ROUNDS
+      ? []
+      : fields.filter(field => field.decision === "ASK").slice(0, remaining).map(DL);
+    return {
+      ...t,
+      phase: questions.length ? "questions" : "final-review",
+      fields,
+      questions,
+      round: questions.length ? t.round + 1 : t.round,
+      index: 0,
+      answers: {},
+      error: "",
+      extractionCount: t.extractionCount + fields.length
+    };
+  }
+if(t.phase==="questions"){const c=(r=t.questions[t.index])==null?void 0:r.id;if(!c)return t;const u=t.answers[c]||zc(),d=m=>({...t,answers:{...t.answers,[c]:m},error:""});if(n.type==="OPTION")return d({...u,option:n.value,skipped:!1});if(n.type==="TEXT")return d({...u,text:n.value,skipped:!1});if(n.type==="CUSTOM")return d({...u,customOpen:!u.customOpen});if(n.type==="CLEAR_OPTION")return d({...u,option:"",customOpen:!0,skipped:!1});if(n.type==="NEXT"||n.type==="SKIP"){if(n.type==="NEXT"&&!u.option&&!u.text.trim())return{...t,error:"请选择一个推荐选项，或填写自定义回答。"};const m=n.type==="SKIP"?{...zc(),skipped:!0}:{...u,skipped:!1};return{...t,answers:{...t.answers,[c]:m},phase:t.index===t.questions.length-1?"round-review":"questions",index:Math.min(t.index+1,t.questions.length-1),error:""}}if(n.type==="BACK")return{...t,index:Math.max(0,t.index-1),error:""};}if(t.phase==="round-review"){if(n.type==="BACK")return{...t,phase:"questions",index:n.index??0,ending:!1,error:""};if(n.type==="CONFIRM_ROUND"){const c={...t.material.answers},u={...t.material.edits};return t.questions.forEach(d=>{var v;const m=t.answers[d.id];if(m&&!m.skipped){const b=((v=t.fields.find(g=>g.id===d.id))==null?void 0:v.value)||"";c[d.id]=d.partial&&b?{...m,option:"",text:`${b}；${sg(m)}`}:{...m},delete u[d.id]}}),{...t,phase:"processing",material:{...t.material,answers:c,edits:u},processReason:"round",ending:t.ending||!!n.end,history:[...t.history,{round:t.round,questions:t.questions,answers:t.answers}],error:""}}}if(t.phase==="final-review"){if(n.type==="EDIT_FINAL")return{...t,phase:"final-edit",editId:n.id,editText:((o=t.fields.find(c=>c.id===n.id))==null?void 0:o.value)||"",error:""};if(n.type==="CONFIRM_FINAL"){const c={fields:t.fields.map(u=>({id:u.id,name:u.name,value:u.judge==="CONFLICTED"?null:u.value||null,origin:u.decision==="ASK"?"unprovided":u.origin,unresolved:u.decision==="ASK"?u.judge==="CONFLICTED"?`输入仍有冲突：${u.candidates.join(" / ")}`:u.missing||"信息尚未明确":null})),prompt:t.material.prompt,attachments:t.material.attachments,consent:!0};if (n.preview) return {...t,phase:"executing",definition:c,executionProgress:0,error:""};
+      const outline = window.sessionOutline.propose({ definition:c, launch:n.launch });
     return {...t,phase:"outline-review",definition:{...c,outline,outlineConfirmed:false},executionProgress:0,error:""};
   }}
   if(t.phase==="outline-review"){
@@ -2177,7 +2205,7 @@ ${libraryMarkdownOutline(se) || `## 一、研究背景与目标
       return {...t,phase:"executing",definition:{...t.definition,outline:window.sessionOutline.normalize(rows),outlineConfirmed:true},executionProgress:0,error:""};
     }
   }
-  if(t.phase==="final-edit"){if(n.type==="EDIT_TEXT")return{...t,editText:n.value};if(n.type==="CANCEL_FINAL_EDIT")return{...t,phase:"final-review",editId:null,error:""};if(n.type==="SAVE_FINAL_EDIT"&&t.editId)return{...t,phase:"processing",material:{...t.material,edits:{...t.material.edits,[t.editId]:t.editText.trim()}},editId:null,processReason:"edit",ending:!1,error:""}}if(n.type==="EXECUTION_TICK"&&t.phase==="executing"&&((l=t.definition)!=null&&l.consent)){const c=Math.min(100,t.executionProgress+10);return{...t,executionProgress:c,phase:c===100?"complete":"executing"}}return t}function rm(t,n){let r=t;for(;r.phase==="questions";)r=n==="skip"?Ht(r,{type:"SKIP"}):Ht(Ht(r,n==="unknown"?{type:"TEXT",value:"暂不确定"}:{type:"OPTION",value:r.questions[r.index].options[0]}),{type:"NEXT"});return r}function uw(t,n="questions"){const r=Ic.find(l=>l.id===t)||Ic[1];let o=Hc(r.prompt,r.attachments);if(n==="compose"||(o=Ht(o,{type:"SUBMIT"}),n==="processing"))return o;if(o=Ht(o,{type:"PROCESSED"}),t==="max")for(let l=0;l<2;l++)o=Ht(Ht(rm(o,"unknown"),{type:"CONFIRM_ROUND"}),{type:"PROCESSED"});if(n==="custom"&&o.phase==="questions")return Ht(o,{type:"CUSTOM"});if(n==="questions"||n==="custom"||(o.phase==="questions"&&(o=rm(o,t==="skip"?"skip":t==="max"?"unknown":"answer")),n==="round-review"))return o;for(;o.phase==="round-review";)o=Ht(Ht(o,{type:"CONFIRM_ROUND",end:t==="skip"}),{type:"PROCESSED"}),o.phase==="questions"&&(o=rm(o,"answer"));return o}function sg(t){return!t||t.skipped?"未作答 / 已跳过":[t.option,t.text.trim()].filter(Boolean).join("；补充：")}function _L(t){return t.decision==="ASK"?`${t.judge==="CONFLICTED"?"输入仍有冲突；":t.missing?t.missing+"未提供；":""}将由 Agent 基于现有信息自行执行`:t.origin==="default"?"系统默认":t.origin==="answer"?"用户已补充":"已从本次资料中识别"}const cT="gkx-writing-prototype:clarification-launch";function $L(){try{return JSON.parse(sessionStorage.getItem(cT)||"null")}catch{return null}}function fw(launch){
+  if(t.phase==="final-edit"){if(n.type==="EDIT_TEXT")return{...t,editText:n.value};if(n.type==="CANCEL_FINAL_EDIT")return{...t,phase:"final-review",editId:null,error:""};if(n.type==="SAVE_FINAL_EDIT"&&t.editId)return{...t,phase:"processing",material:{...t.material,edits:{...t.material.edits,[t.editId]:t.editText.trim()}},editId:null,processReason:"edit",ending:!1,error:""}}if(n.type==="EXECUTION_TICK"&&t.phase==="executing"&&((l=t.definition)!=null&&l.consent)){const c=Math.min(100,t.executionProgress+10);return{...t,executionProgress:c,phase:c===100?"complete":"executing"}}return t}function rm(t,n){let r=t;for(;r.phase==="questions";)r=n==="skip"?Ht(r,{type:"SKIP"}):Ht(Ht(r,n==="unknown"?{type:"TEXT",value:"暂不确定"}:{type:"OPTION",value:r.questions[r.index].options[0]}),{type:"NEXT"});return r}function uw(t,n="questions"){const r=Ic.find(l=>l.id===t)||Ic[1];let o=Hc(r.prompt,r.attachments);if(n==="compose"||(o=Ht(o,{type:"SUBMIT"}),n==="processing"))return o;if(o=Ht(o,{type:"PROCESSED"}),t==="max"&&o.phase==="questions")o=Ht(Ht(rm(o,"unknown"),{type:"CONFIRM_ROUND"}),{type:"PROCESSED"});if(n==="custom"&&o.phase==="questions")return Ht(o,{type:"CUSTOM"});if(n==="questions"||n==="custom"||(o.phase==="questions"&&(o=rm(o,t==="skip"?"skip":t==="max"?"unknown":"answer")),n==="round-review"))return o;for(;o.phase==="round-review";)o=Ht(Ht(o,{type:"CONFIRM_ROUND",end:t==="skip"}),{type:"PROCESSED"}),o.phase==="questions"&&(o=rm(o,"answer"));return o}function sg(t){return!t||t.skipped?"未作答 / 已跳过":[t.option,t.text.trim()].filter(Boolean).join("；补充：")}function _L(t){return t.decision==="ASK"?`${t.judge==="CONFLICTED"?"输入仍有冲突；":t.missing?t.missing+"未提供；":""}将由 Agent 基于现有信息自行执行`:t.origin==="default"?"系统默认":t.origin==="answer"?"用户已补充":"已从本次资料中识别"}const cT="gkx-writing-prototype:clarification-launch";function $L(){try{return JSON.parse(sessionStorage.getItem(cT)||"null")}catch{return null}}function fw(launch){
   try {
     const draft=sessionStorage.getItem(composerSkillDraftKey);
     if(draft!==null) sessionStorage.removeItem(composerSkillDraftKey);
@@ -2264,48 +2292,1620 @@ ${(t.outlineConfirmed ? window.sessionOutline.markdown(t.outline) : libraryMarkd
 ## 战略判断与建议
 待完成研究后形成判断。`}
 `}function BL({small:t=!1,visual:n={state:"breathing",label:"战略报告 Agent",speed:.65}}){return t?h.jsx("span",{className:"cf-thinking-avatar",children:h.jsx(RL,{state:n.state,size:64,theme:"light",speed:n.speed,paused:!1,style:{width:30,height:30},"aria-label":n.label})}):h.jsx("span",{className:t?"cf-agent-mark cf-agent-mark-small":"cf-agent-mark","aria-hidden":"true",children:h.jsx(p6,{})})}function UL({fields:t,onEdit:n}){return h.jsx("div",{className:"cf-field-results",children:t.map(r=>h.jsxs("div",{className:"cf-field-row","data-confirmed-field":r.id,children:[h.jsxs("div",{className:"cf-field-label",children:[h.jsx("span",{children:r.label}),n&&h.jsx(Mn,{variant:"ghost",size:"icon-sm","aria-label":`修改${r.label}`,onClick:()=>n(r.id),children:h.jsx(Rw,{})})]}),h.jsxs("div",{className:"cf-field-value",children:[h.jsx("div",{children:r.judge==="CONFLICTED"?`尚未确定，资料中存在不同描述：${r.candidates.join(" / ")}`:r.value||"未提供，将由 Agent 基于现有信息自行执行"}),h.jsxs("div",{className:"cf-field-source",children:[h.jsx(ig,{variant:"outline","data-source":r.decision==="ASK"?"unprovided":r.origin,children:r.decision==="ASK"?r.judge==="CONFLICTED"?"仍有冲突":"部分未提供":r.origin==="default"?"系统默认":r.origin==="answer"?"已补充":"已识别"}),r.value&&r.decision==="ASK"&&h.jsx("span",{children:_L(r)})]})]})]},r.id))})}const OutlineReview=createOutlineReview(y,h);
-function YL({initialLaunch:t,onExit:n,embedded:r=!1,active:o=!0,onActivate:l,onComposePreview:c,onConfirmUnbound}){const u=UC(),[d,m]=y.useReducer(Ht,t,F=>F?(window.sessionReports.restore(F)||Ht(Hc(F.prompt,F.attachments||[]),{type:"SUBMIT"})):uw("partial")),[v,b]=y.useState(t?"live":"partial"),[g,x]=y.useState(t?"processing":"questions"),[S,C]=y.useState(!!t),[z,E]=y.useState(!0),[T,A]=y.useState(!1),[R,M]=y.useState(null),[N,D]=y.useState(null),[k,_]=y.useState(0),[L,I]=y.useState(!1),[Y,U]=y.useState(""),[de,me]=y.useState(null),ue=y.useRef(null),X=y.useRef(null),le=y.useRef(null),Q=y.useRef(t),ce=y.useRef(t);y.useEffect(()=>{r&&(M(document.getElementById("home-workflow-slot")),D(document.getElementById("home-workflow-toolbar")))},[r]),y.useEffect(()=>{r&&t&&t!==ce.current&&(ce.current=t,Q.current=t,m({type:"LOAD",state:Ht(Hc(t.prompt,t.attachments||[]),{type:"SUBMIT"})}),C(!0),b("live"),x("processing"),E(!0),me(null))},[t,r]);const ee=Ic.find(F=>F.id===v),xe=d.questions[d.index],oe=xe&&d.answers[xe.id]||zc(),Be=!!(oe.option||oe.text.trim()),O=d.questions.length>0&&d.questions.every(F=>{var ne;return(ne=d.answers[F.id])==null?void 0:ne.skipped}),Z=S&&d.phase==="executing",J=d.fields.filter(F=>F.decision==="ASK").length;y.useEffect(()=>{if(d.phase!=="processing"||r&&!o||(_(0),!z))return;const F=setInterval(()=>_(ze=>Math.min(2,ze+1)),550),ne=setTimeout(()=>m({type:"PROCESSED"}),1750);return()=>{clearInterval(F),clearTimeout(ne)}},[d.phase,d.material.prompt,d.history.length,z,o,r]),y.useEffect(()=>{if(d.phase!=="executing"||!z||t?.sessionId)return;const F=setInterval(()=>m({type:"EXECUTION_TICK"}),600);return()=>clearInterval(F)},[d.phase,z]),y.useEffect(()=>{if(!S || !o || v!=="live" || !t) return;
-  if(t.sessionId){
-    try {if(!window.sessionReports.save(t,d)) U("本次会话未能保存，请返回项目后重新打开。");}
-    catch {U("本机保存失败，请检查浏览器存储空间。");}
-  } else if(de && d.definition && !PL(de,d.executionProgress,d.definition,Q.current)){
-    U("本机未能保存最新草稿进度，请检查存储空间；仍可下载本次报告结构。");
+function dockedFlowReducer(flow, action) {
+  if (action.type === "FOLLOW_UP") {
+    if (flow.phase !== "thinking" || flow.thinkingDoneAt != null) return flow;
+    return {
+      ...flow,
+      followUps: [...(flow.followUps || []), action.value]
+    };
   }
-},[d,t,o,S,v,de]),y.useEffect(()=>{var F,ne;r?(F=document.querySelector('[data-node-id="1:69"]'))==null||F.scrollTo({top:0,behavior:"instant"}):(ne=ue.current)==null||ne.scrollTo({top:0,behavior:"instant"})},[d.phase,d.index,v]),y.useEffect(()=>{var F;oe.customOpen&&((F=le.current)==null||F.focus({preventScroll:!0}))},[oe.customOpen,xe==null?void 0:xe.id]);function re(F,ne){const ze=F==="live"&&t?HL(t,ne):uw(F,ne);if(b(F),x(ze.phase==="final-review"?"final-review":ne),C(!1),me(null),E(ne!=="processing"),U(""),m({type:"LOAD",state:ze}),ne==="compose"&&c){c({prompt:ze.material.prompt,attachments:ze.material.attachments,skills:F==="live"?t?.skills:[]});return}l==null||l()}async function Ce(F){const ne=[...F.target.files||[]];if(ne.length){if(ne.some(ze=>!/(\.txt|\.md|\.markdown)$/i.test(ze.name))){U("请选择 TXT 或 Markdown 格式的资料。"),F.target.value="";return}I(!0),U("");try{const ze=await Promise.all(ne.map(async Ne=>({name:Ne.name,text:await Ne.text()})));m({type:"ATTACHMENTS",value:[...d.material.attachments,...ze]})}catch{U("资料读取失败，请重新选择文件。")}finally{I(!1),F.target.value=""}}}function Me(){
-    const source=S && v==="live" ? t : null;
-    const launch=source ? {...source,templateSpec:libraryTemplate(source)} : null;
-    const next=Ht(d,{type:"CONFIRM_FINAL",launch});
-    if(next.phase!=="outline-review") return;
-    if(!source?.sessionId || !source.runId){
-      if(!onConfirmUnbound?.(source,next)) U("本次任务未能保存，请重试。");
+  if (action.questionId && action.questionId !== flow.questions[flow.index]?.id) return flow;
+  const next = action.type === "PICK_OPTION"
+    ? Ht(Ht(flow, {type: "OPTION", value: action.value}), {type: "NEXT"})
+    : Ht(flow, action);
+  if (next.phase === "round-review") {
+    return Ht(Ht(next, {
+      type: "CONFIRM_ROUND"
+    }), {
+      type: "PROCESSED"
+    });
+  }
+  if (action.type === "SAVE_FINAL_EDIT" && next.phase === "processing") {
+    return {
+      ...Ht({
+        ...next,
+        ending: true
+      }, {
+        type: "PROCESSED"
+      }),
+      flashId: flow.editId,
+      flashKey: (flow.flashKey || 0) + 1,
+      focusFieldId: flow.editId
+    };
+  }
+  if (action.type === "CANCEL_FINAL_EDIT" && flow.phase === "final-edit") {
+    return {
+      ...next,
+      flashId: null,
+      focusFieldId: flow.editId
+    };
+  }
+  if (action.type === "EDIT_FINAL") {
+    return {
+      ...next,
+      flashId: null,
+      focusFieldId: null
+    };
+  }
+  if (action.type === "CONFIRM_FINAL" && next.phase === "executing") {
+    return {
+      ...next,
+      phase: "thinking",
+      thinkingStartedAt: action.now,
+      thinkingDoneAt: null,
+      thinkingDoneMs: null
+    };
+  }
+  if (action.type === "THINKING_DONE" && flow.phase === "thinking" && flow.thinkingDoneAt == null) {
+    return {
+      ...flow,
+      thinkingDoneAt: action.now,
+      thinkingDoneMs: action.now - flow.thinkingStartedAt
+    };
+  }
+  return next;
+}
+
+function CfAutoHeight({
+  className,
+  initialHeight = null,
+  children
+}) {
+  const innerRef = y.useRef(null);
+  const reducedMotion = UC();
+  const [height, setHeight] = y.useState(reducedMotion ? null : initialHeight);
+  y.useLayoutEffect(() => {
+    const el = innerRef.current;
+    if (!el) return;
+    let ready = reducedMotion || initialHeight == null,
+      frame = 0;
+    const measure = () => {
+      if (ready) setHeight(el.offsetHeight);
+    };
+    if (ready) measure();else frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        ready = true;
+        measure();
+      });
+    });
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, []);
+  return h.jsx("div", {
+    className: "cf-autoheight" + (className ? " " + className : ""),
+    style: height == null ? void 0 : {
+      height
+    },
+    children: h.jsx("div", {
+      ref: innerRef,
+      className: "cf-autoheight-inner",
+      children
+    })
+  });
+}
+
+const CfIconScanSearch = rn({
+  name: "scan-search",
+  size: 24,
+  node: [["path", {
+    d: "M3 7V5a2 2 0 0 1 2-2h2",
+    key: "a"
+  }], ["path", {
+    d: "M17 3h2a2 2 0 0 1 2 2v2",
+    key: "b"
+  }], ["path", {
+    d: "M21 17v2a2 2 0 0 1-2 2h-2",
+    key: "c"
+  }], ["path", {
+    d: "M7 21H5a2 2 0 0 1-2-2v-2",
+    key: "d"
+  }], ["circle", {
+    cx: "12",
+    cy: "12",
+    r: "3",
+    key: "e"
+  }], ["path", {
+    d: "m16 16-1.9-1.9",
+    key: "f"
+  }]]
+});
+
+const CfIconListChecks = rn({
+  name: "list-checks",
+  size: 24,
+  node: [["path", {
+    d: "m3 17 2 2 4-4",
+    key: "a"
+  }], ["path", {
+    d: "m3 7 2 2 4-4",
+    key: "b"
+  }], ["path", {
+    d: "M13 6h8",
+    key: "c"
+  }], ["path", {
+    d: "M13 12h8",
+    key: "d"
+  }], ["path", {
+    d: "M13 18h8",
+    key: "e"
+  }]]
+});
+
+const CfIconTarget = rn({
+  name: "target",
+  size: 24,
+  node: [["circle", {
+    cx: "12",
+    cy: "12",
+    r: "10",
+    key: "a"
+  }], ["circle", {
+    cx: "12",
+    cy: "12",
+    r: "6",
+    key: "b"
+  }], ["circle", {
+    cx: "12",
+    cy: "12",
+    r: "2",
+    key: "c"
+  }]]
+});
+
+const CfIconSearch = rn({
+  name: "search",
+  size: 24,
+  node: [["path", {
+    d: "m21 21-4.34-4.34",
+    key: "a"
+  }], ["circle", {
+    cx: "11",
+    cy: "11",
+    r: "8",
+    key: "b"
+  }]]
+});
+
+const CfIconLayoutList = rn({
+  name: "layout-list",
+  size: 24,
+  node: [["rect", {
+    width: "7",
+    height: "7",
+    x: "3",
+    y: "3",
+    rx: "1",
+    key: "a"
+  }], ["rect", {
+    width: "7",
+    height: "7",
+    x: "3",
+    y: "14",
+    rx: "1",
+    key: "b"
+  }], ["path", {
+    d: "M14 4h7",
+    key: "c"
+  }], ["path", {
+    d: "M14 9h7",
+    key: "d"
+  }], ["path", {
+    d: "M14 15h7",
+    key: "e"
+  }], ["path", {
+    d: "M14 20h7",
+    key: "f"
+  }]]
+});
+
+const CfIconPenLine = rn({
+  name: "pen-line",
+  size: 24,
+  node: [["path", {
+    d: "M12 20h9",
+    key: "a"
+  }], ["path", {
+    d: "M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z",
+    key: "b"
+  }]]
+});
+
+function cfSeconds(ms) {
+  return ms == null ? "" : `${Math.max(1, Math.round(ms / 1000))} 秒`;
+}
+
+function CfStepTrace({
+  title,
+  doneTitle,
+  steps,
+  done,
+  elapsedMs,
+  label,
+  orb
+}) {
+  const [open, setOpen] = y.useState(!done);
+  const wasDone = y.useRef(done);
+  y.useEffect(() => {
+    if (done !== wasDone.current) {
+      wasDone.current = done;
+      setOpen(!done);
+    }
+  }, [done]);
+  const visible = steps.filter(s => s.status !== "pending");
+  const meta = done ? [`${steps.length} 个步骤`, cfSeconds(elapsedMs)].filter(Boolean).join(" · ") : cfSeconds(elapsedMs);
+  const working = !done && orb;
+  return h.jsxs("section", {
+    className: "cf-steps",
+    "data-done": done || void 0,
+    "aria-label": label,
+    children: [h.jsxs("button", {
+      type: "button",
+      className: "cf-steps-head",
+      "aria-expanded": open,
+      onClick: () => setOpen(v => !v),
+      children: [working && h.jsx("span", {
+        className: "cf-steps-lead",
+        "data-working": true,
+        children: h.jsx(RL, {
+          state: orb.state,
+          size: 64,
+          theme: "light",
+          speed: orb.speed,
+          paused: !1,
+          style: {
+            width: 22,
+            height: 22
+          },
+          "aria-label": orb.label
+        }, "orb")
+      }), h.jsx("span", {
+        className: "cf-steps-title",
+        "data-active": !done || void 0,
+        children: done ? doneTitle : title
+      }), meta ? h.jsx("span", {
+        className: "cf-steps-meta",
+        children: meta
+      }) : null, h.jsx(xd, {
+        className: "cf-steps-chevron",
+        "aria-hidden": true
+      })]
+    }), h.jsx(CfAutoHeight, {
+      className: "cf-steps-body",
+      children: open && visible.length ? h.jsx("ol", {
+        className: "cf-step-list",
+        children: visible.map(step => h.jsxs("li", {
+          className: "cf-step",
+          "data-step": step.id,
+          "data-status": step.status,
+          children: [h.jsx("span", {
+            className: "cf-step-icon",
+            children: h.jsx(step.icon, {
+              "aria-hidden": true
+            })
+          }), h.jsxs("span", {
+            className: "cf-step-main",
+            children: [h.jsx("span", {
+              className: "cf-step-label",
+              children: step.label
+            }), step.status === "done" && step.result ? h.jsx("span", {
+              className: "cf-step-result",
+              children: step.result
+            }) : null, step.status === "running" && step.detail ? h.jsx("span", {
+              className: "cf-step-detail",
+              children: step.detail
+            }) : null]
+          })]
+        }, step.id))
+      }) : null
+    })]
+  });
+}
+
+function cfRecognitionSteps({
+  material,
+  fields,
+  asked,
+  step,
+  done
+}) {
+  const labels = list => list.map(f => f.label).join("、");
+  const known = fields.filter(f => !asked.includes(f.id) && f.origin !== "default");
+  const defaults = fields.filter(f => !asked.includes(f.id) && f.origin === "default");
+  const missing = fields.filter(f => asked.includes(f.id));
+  const files = material.attachments.length;
+  const recognised = [known.length ? `已识别 ${labels(known)}` : "", defaults.length ? `默认 ${labels(defaults)}` : ""].filter(Boolean).join("；");
+  const status = i => done || i < step ? "done" : i === step ? "running" : "pending";
+  return [{
+    id: "read",
+    icon: Df,
+    label: "整理本次输入材料",
+    detail: files ? `任务描述与 ${files} 份资料` : "任务描述",
+    result: files ? `任务描述与 ${files} 份资料` : "任务描述",
+    status: status(0)
+  }, {
+    id: "identify",
+    icon: CfIconScanSearch,
+    label: "识别四项研究需求",
+    detail: "研究主题、研究目标、研究范围、目标读者",
+    result: fields.length === 4 && !missing.length && !defaults.length ? "四项均已识别" : recognised,
+    status: status(1)
+  }, {
+    id: "gaps",
+    icon: CfIconListChecks,
+    label: "确定需要补充的信息",
+    detail: "已有信息保留，只问缺少的部分",
+    result: missing.length ? `待确认 ${labels(missing)}` : "无需补充",
+    status: status(2)
+  }];
+}
+
+const CF_THINK_MS = [1800, 2400, 2000, 2600];
+
+const CfIconDownload = rn({
+  name: "download",
+  size: 24,
+  node: [["path", {
+    d: "M12 15V3",
+    key: "a"
+  }], ["path", {
+    d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4",
+    key: "b"
+  }], ["path", {
+    d: "m7 10 5 5 5-5",
+    key: "c"
+  }]]
+});
+
+const CF_REPORT_SECTIONS = [{
+  title: "研究背景与关键问题",
+  note: "待按已确认的研究需求展开"
+}, {
+  title: "资料、证据与分析",
+  note: "待补充真实资料与可核验来源"
+}, {
+  title: "战略判断与建议",
+  note: "待完成研究后形成判断"
+}];
+
+function cfThinkingState(startedAt, now) {
+  const elapsed = Math.max(0, now - startedAt);
+  let acc = 0;
+  for (let i = 0; i < CF_THINK_MS.length; i++) {
+    if (elapsed < acc + CF_THINK_MS[i]) return {
+      active: i,
+      elapsed,
+      stepStart: acc,
+      done: false
+    };
+    acc += CF_THINK_MS[i];
+  }
+  return {
+    active: CF_THINK_MS.length,
+    elapsed,
+    stepStart: acc,
+    done: true
+  };
+}
+
+function cfReportFields(flow) {
+  return flow.definition && flow.definition.fields || flow.fields.map(f => ({
+    id: f.id,
+    name: f.name,
+    value: f.value || null,
+    origin: f.origin,
+    unresolved: null
+  }));
+}
+
+function cfReportTitle(flow) {
+  const topic = ((cfReportFields(flow).find(f => f.id === "F01") || {}).value || "").replace(/战略研究报告$|研究报告$|报告$/, "");
+  return `${topic}战略研究报告`;
+}
+
+function cfFieldText(f) {
+  return f.value ? f.value + (f.origin === "default" ? "（系统默认）" : "") : "未提供";
+}
+
+function cfReportMarkdown(flow, title) {
+  const fields = cfReportFields(flow);
+  return `# ${title}\n\n> 交互原型生成的报告结构，未执行真实研究，内容待补充。\n\n## 研究需求\n\n${fields.map(f => `- ${el[f.id].label}：${cfFieldText(f)}`).join("\n")}\n\n${CF_REPORT_SECTIONS.map((s, i) => `## ${["一", "二", "三", "四", "五"][i]}、${s.title}\n\n${s.note}。`).join("\n\n")}\n`;
+}
+
+function CfResultCard({
+  flow,
+  generating,
+  progressMs,
+  launch
+}) {
+  const [progress, setProgress] = y.useState(generating ? 0 : 100);
+  const [downloaded, setDownloaded] = y.useState(false);
+  const [iconExpanded, setIconExpanded] = y.useState(false);
+  y.useEffect(() => {
+    if (!downloaded) return;
+    const timer = setTimeout(() => setDownloaded(false), 1600);
+    return () => clearTimeout(timer);
+  }, [downloaded]);
+  y.useEffect(() => {
+    if (!generating) {
+      setProgress(100);
       return;
     }
-    if(!window.sessionReports.save(source,next)){U("大纲未能保存，请重新打开会话后重试。");return;}
-    U("");m({type:"LOAD",state:next});
+    const frame = requestAnimationFrame(() => requestAnimationFrame(() => setProgress(92)));
+    return () => cancelAnimationFrame(frame);
+  }, [generating]);
+  const title = cfReportTitle(flow);
+  return h.jsxs("div", {
+    className: "cf-result-card",
+    "data-hovered": iconExpanded || undefined,
+    onPointerEnter: event => {
+      if (event.pointerType === "mouse") setIconExpanded(true);
+    },
+    onPointerLeave: () => setIconExpanded(false),
+    "data-generating": generating || void 0,
+    children: [h.jsxs("div", {
+      className: "cf-result-head",
+      children: [h.jsxs("div", {
+        className: "cf-result-main",
+        children: [h.jsx("span", {
+          className: "cf-result-icon",
+          children: h.jsx("report-hover-icon", {
+            "aria-hidden": "true",
+            expanded: iconExpanded ? "" : undefined
+          })
+        }), h.jsxs("span", {
+          className: "cf-result-text",
+          children: [h.jsx("span", {
+            className: "cf-result-title",
+            children: title
+          }), h.jsx("span", {
+            className: "cf-result-meta",
+            children: generating ? "正在撰写报告初稿…" : `报告初稿 · Markdown · ${librarySections(launch).length || CF_REPORT_SECTIONS.length} 个章节`
+          }, generating ? "generating" : "done")]
+        })]
+      }), generating ? null : h.jsx("button", {
+        type: "button",
+        className: "cf-result-download",
+        "data-done": downloaded || void 0,
+        "aria-label": downloaded ? "已开始下载" : "下载报告初稿",
+        title: downloaded ? "已开始下载" : "下载 Markdown",
+        onClick: event => {
+          if (!event.nativeEvent?.isTrusted) return;
+          const filename = title.replace(/[\/\\:*?"<>|]/g, "_") + ".md";
+          const markdown = librarySections(launch).length ? VL(flow.definition, launch) : cfReportMarkdown(flow, title);
+          const url = URL.createObjectURL(new Blob([markdown], {type: "text/markdown;charset=utf-8"}));
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = filename;
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          setDownloaded(true);
+        },
+        children: downloaded ? h.jsx(sm, {
+          "aria-hidden": true
+        }, "ok") : h.jsx(CfIconDownload, {
+          "aria-hidden": true
+        }, "dl")
+      }), h.jsx("span", {
+        className: "sr-only",
+        "aria-live": "polite",
+        children: downloaded ? "已开始下载报告初稿" : ""
+      })]
+    }), h.jsx("span", {
+      className: "cf-result-progress",
+      "aria-hidden": true,
+      children: h.jsx("span", {
+        style: {
+          width: progress + "%",
+          transitionDuration: (generating ? progressMs : 300) + "ms"
+        }
+      })
+    })]
+  });
+}
+
+function CfThinkingThread({
+  flow,
+  now,
+  launch,
+  message
+}) {
+  const startedAt = flow.thinkingStartedAt || 0;
+  const state = startedAt ? cfThinkingState(startedAt, now) : {
+    active: 0,
+    elapsed: 0,
+    stepStart: 0,
+    done: false
+  };
+  const done = state.done || flow.thinkingDoneAt != null;
+  const fields = cfReportFields(flow);
+  const topic = (fields.find(f => f.id === "F01") || {}).value || "";
+  const steps = [{
+    id: "understand",
+    icon: CfIconTarget,
+    label: "理解研究需求",
+    detail: "研究主题、目标、范围与读者",
+    result: `${fields.filter(f => f.value).length} 项研究需求`
+  }, {
+    id: "search",
+    icon: CfIconSearch,
+    label: "检索相关资料",
+    detail: topic,
+    result: topic
+  }, {
+    id: "outline",
+    icon: CfIconLayoutList,
+    label: "规划报告结构",
+    detail: "按研究目标组织章节",
+    result: `${librarySections(launch).length || CF_REPORT_SECTIONS.length} 个章节`
+  }, {
+    id: "draft",
+    icon: CfIconPenLine,
+    label: "撰写报告初稿",
+    detail: "按章节撰写",
+    result: "已生成"
+  }].map((step, i) => ({
+    ...step,
+    status: done || i < state.active ? "done" : i === state.active ? "running" : "pending"
+  }));
+  const total = CF_THINK_MS.reduce((a, b) => a + b, 0);
+  const elapsedMs = done ? flow.thinkingDoneMs || total : state.elapsed >= 1000 ? state.elapsed : null;
+  const showCard = done || state.active >= CF_THINK_MS.length - 1;
+  const followUps = flow.followUps || [];
+  const closing = `报告初稿已生成。${followUps.length ? `生成过程中补充的 ${followUps.length} 条说明已记录。` : ""}`;
+  return h.jsxs(h.Fragment, {
+    children: [h.jsx("div", {
+      className: "cf-agent-turn cf-msg",
+      role: done ? void 0 : "status",
+      "aria-label": done ? "思考完成" : "模型正在思考",
+      children: h.jsx(CfStepTrace, {
+        title: "正在思考",
+        doneTitle: "思考完成",
+        steps,
+        done,
+        elapsedMs,
+        label: "思考过程",
+        orb: done ? null : {
+          state: "working",
+          label: "模型正在思考",
+          speed: .7
+        }
+      })
+    }), followUps.map((message, index) => h.jsx("div", {
+      className: "cf-user-message cf-msg",
+      children: h.jsx("p", {
+        children: message
+      })
+    }, "follow-" + index)), showCard ? h.jsxs("div", {
+      className: "cf-agent-turn cf-msg cf-result-turn",
+      children: [h.jsx(CfResultCard, {
+        flow,
+        generating: !done,
+        progressMs: CF_THINK_MS[CF_THINK_MS.length - 1],
+        launch
+      }), done ? h.jsx("p", {
+        className: "cf-agent-text cf-agent-closing",
+        children: message || closing
+      }) : null]
+    }) : null]
+  });
+}
+
+function ClarificationHeader({
+  title,
+  controls,
+  headingRef
+}) {
+  return h.jsxs("header", {
+    className: "cf-dock-header",
+    children: [h.jsx("h2", {
+      id: "cf-active-question",
+      tabIndex: -1,
+      ref: headingRef,
+      children: title
+    }), controls || null]
+  });
+}
+
+function ClarificationSteps({
+  flow,
+  question,
+  answer,
+  dispatch,
+  reducedMotion
+}) {
+  const headingRef = y.useRef(null);
+  const customInputRef = y.useRef(null);
+  const timerRef = y.useRef(0);
+  const [picked, setPicked] = y.useState(null);
+  const hasText = !!answer.text.trim();
+  const chosen = picked || answer.option;
+  const canContinue = !!(answer.option || hasText);
+  const total = flow.questions.length;
+  const action = type => dispatch({
+    type,
+    questionId: question.id
+  });
+  const pick = value => {
+    if (timerRef.current) return;
+    setPicked(value);
+    const commit = () => dispatch({
+      type: "PICK_OPTION",
+      questionId: question.id,
+      value
+    });
+    if (reducedMotion) commit();else timerRef.current = window.setTimeout(commit, 140);
+  };
+  y.useEffect(() => () => window.clearTimeout(timerRef.current), []);
+  y.useEffect(() => {
+    if (answer.customOpen) customInputRef.current?.focus({
+      preventScroll: true
+    });else headingRef.current?.focus({
+      preventScroll: true
+    });
+  }, [question.id, flow.round, answer.customOpen]);
+  return h.jsxs("div", {
+    className: "cf-dock-panel",
+    "data-clarification-question": true,
+    "data-busy": picked ? true : void 0,
+    onKeyDown: event => {
+      if (event.target.closest("textarea") || event.altKey || event.ctrlKey || event.metaKey || event.repeat || event.nativeEvent.isComposing) return;
+      const option = question.options[Number(event.key) - 1];
+      if (/^[1-9]$/.test(event.key) && option) {
+        event.preventDefault();
+        pick(option);
+      }
+    },
+    children: [h.jsx(ClarificationHeader, {
+      title: question.title,
+      headingRef,
+      controls: total > 1 ? h.jsxs("div", {
+        className: "cf-dock-nav",
+        children: [h.jsx(Mn, {
+          variant: "ghost",
+          size: "icon-sm",
+          "aria-label": "上一题",
+          disabled: flow.index === 0,
+          onClick: () => action("BACK"),
+          children: h.jsx(wh, {})
+        }), h.jsx("span", {
+          className: "cf-dock-count",
+          "aria-label": `第 ${flow.index + 1} 题，共 ${total} 题`,
+          children: `${flow.index + 1} / ${total}`
+        }), h.jsx(Mn, {
+          variant: "ghost",
+          size: "icon-sm",
+          "aria-label": "下一题",
+          disabled: !canContinue,
+          onClick: () => action("NEXT"),
+          children: h.jsx(wh, {
+            className: "cf-arrow-forward"
+          })
+        })]
+      }) : null
+    }), h.jsx("div", {
+      className: "cf-dock-body",
+      children: h.jsxs("ul", {
+        className: "cf-dock-options",
+        "aria-labelledby": "cf-active-question",
+        children: [question.options.map((option, index) => h.jsx("li", {
+          children: h.jsxs("button", {
+            type: "button",
+            className: "cf-dock-option",
+            "aria-keyshortcuts": String(index + 1),
+            "aria-pressed": chosen === option,
+            "data-chosen": chosen === option,
+            onClick: () => pick(option),
+            children: [h.jsx("kbd", {
+              "aria-hidden": true,
+              children: index + 1
+            }), h.jsx("span", {
+              className: "cf-dock-option-text",
+              children: option
+            }), chosen === option ? h.jsx(sm, {
+              "aria-hidden": true
+            }) : h.jsx(Mo, {
+              "aria-hidden": true
+            })]
+          })
+        }, option)), h.jsx("li", {
+          children: h.jsxs("label", {
+            className: "cf-dock-custom",
+            "data-filled": hasText,
+            children: [h.jsx(Rw, {
+              "aria-hidden": true
+            }), h.jsx(Qh, {
+              ref: customInputRef,
+              rows: 1,
+              value: answer.text,
+              "aria-label": "自定义回答",
+              placeholder: "填写其他答案",
+              onChange: event => dispatch({
+                type: "TEXT",
+                value: event.target.value
+              }),
+              onKeyDown: event => {
+                if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing && hasText) {
+                  event.preventDefault();
+                  action("NEXT");
+                }
+              }
+            })]
+          })
+        }, "custom")]
+      })
+    }), h.jsx("div", {
+      className: "cf-dock-footer",
+      children: h.jsx(Mn, {
+        disabled: !canContinue,
+        onClick: () => action("NEXT"),
+        children: "继续"
+      })
+    })]
+  });
+}
+
+function cfFieldView(field) {
+  if (field.judge === "CONFLICTED") return {
+    text: `资料中存在不同描述：${field.candidates.join(" / ")}`,
+    badge: {
+      tone: "danger",
+      text: "仍有冲突"
+    },
+    note: ""
+  };
+  if (field.decision === "ASK" && !field.value) return {
+    text: "",
+    badge: {
+      tone: "danger",
+      text: "未提供"
+    },
+    note: ""
+  };
+  if (field.decision === "ASK") return {
+    text: field.value,
+    badge: {
+      tone: "danger",
+      text: "部分未提供"
+    },
+    note: field.missing ? `待补充${field.missing}` : ""
+  };
+  if (field.origin === "default") return {
+    text: field.value,
+    badge: {
+      tone: "neutral",
+      text: "系统默认"
+    },
+    note: ""
+  };
+  return {
+    text: field.value,
+    badge: null,
+    note: ""
+  };
+}
+
+function cfRevealInBody(el) {
+  const body = el && el.closest(".cf-dock-body");
+  if (!body) return;
+  const rect = el.getBoundingClientRect(),
+    box = body.getBoundingClientRect();
+  if (rect.bottom > box.bottom) body.scrollTop += rect.bottom - box.bottom + 8;else if (rect.top < box.top) body.scrollTop -= box.top - rect.top + 8;
+}
+
+function CfFieldRow({
+  field,
+  flash,
+  focus,
+  disabled,
+  onEdit
+}) {
+  const ref = y.useRef(null);
+  const view = cfFieldView(field);
+  y.useEffect(() => {
+    if (focus && ref.current) {
+      ref.current.focus({
+        preventScroll: true
+      });
+      cfRevealInBody(ref.current);
+    }
+  }, []);
+  return h.jsxs("button", {
+    ref,
+    type: "button",
+    className: "cf-field-row",
+    "data-confirmed-field": field.id,
+    "data-flash": flash || void 0,
+    disabled,
+    "aria-label": `修改${field.label}：${view.text || (view.badge ? view.badge.text : "")}`,
+    onClick: () => onEdit(field.id),
+    children: [h.jsx("span", {
+      className: "cf-field-label",
+      children: field.label
+    }), h.jsxs("span", {
+      className: "cf-field-value",
+      children: [view.text ? h.jsx("span", {
+        className: "cf-field-text",
+        children: view.text
+      }) : null, view.badge || view.note ? h.jsxs("span", {
+        className: "cf-field-source",
+        children: [view.badge ? h.jsx("span", {
+          className: "cf-badge",
+          "data-tone": view.badge.tone,
+          children: view.badge.text
+        }) : null, view.note ? h.jsx("span", {
+          className: "cf-field-note",
+          children: view.note
+        }) : null]
+      }) : null]
+    }), h.jsx(Rw, {
+      className: "cf-field-edit",
+      "aria-hidden": true
+    })]
+  });
+}
+
+function CfFieldEditRow({
+  field,
+  text,
+  dispatch
+}) {
+  const ref = y.useRef(null);
+  y.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.focus({
+      preventScroll: true
+    });
+    const end = el.value.length;
+    el.setSelectionRange(end, end);
+    cfRevealInBody(el.closest(".cf-field-row"));
+  }, []);
+  const save = () => dispatch({
+    type: "SAVE_FINAL_EDIT"
+  });
+  const cancel = () => dispatch({
+    type: "CANCEL_FINAL_EDIT"
+  });
+  return h.jsxs("div", {
+    className: "cf-field-row cf-field-row-editing",
+    "data-confirmed-field": field.id,
+    children: [h.jsx("label", {
+      className: "cf-field-label",
+      htmlFor: `cf-field-input-${field.id}`,
+      children: field.label
+    }), h.jsxs("div", {
+      className: "cf-field-value",
+      children: [h.jsx(Qh, {
+        ref,
+        id: `cf-field-input-${field.id}`,
+        className: "cf-field-input",
+        rows: 2,
+        value: text,
+        placeholder: `填写${field.label}`,
+        onChange: event => dispatch({
+          type: "EDIT_TEXT",
+          value: event.target.value
+        }),
+        onKeyDown: event => {
+          if (event.nativeEvent.isComposing) return;
+          if (event.key === "Escape") {
+            event.preventDefault();
+            cancel();
+          } else if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+            event.preventDefault();
+            save();
+          }
+        }
+      }), h.jsxs("div", {
+        className: "cf-field-edit-actions",
+        children: [h.jsx(Mn, {
+          variant: "ghost",
+          size: "sm",
+          onClick: cancel,
+          children: "取消"
+        }), h.jsx(Mn, {
+          size: "sm",
+          onClick: save,
+          children: "保存"
+        })]
+      })]
+    })]
+  });
+}
+
+function CfFieldList({
+  flow,
+  dispatch
+}) {
+  const editId = flow.phase === "final-edit" ? flow.editId : null;
+  return h.jsx("div", {
+    className: "cf-field-results",
+    children: flow.fields.map(field => field.id === editId ? h.jsx(CfFieldEditRow, {
+      field,
+      text: flow.editText,
+      dispatch
+    }, field.id + "-edit") : h.jsx(CfFieldRow, {
+      field,
+      flash: field.id === flow.flashId,
+      focus: field.id === flow.focusFieldId,
+      disabled: Boolean(editId),
+      onEdit: id => dispatch({
+        type: "EDIT_FINAL",
+        id
+      })
+    }, field.id + (field.id === flow.flashId ? "-" + flow.flashKey : "")))
+  });
+}
+
+function ClarificationConfirm({
+  flow,
+  dispatch,
+  message,
+  onConfirm
+}) {
+  const headingRef = y.useRef(null);
+  const editing = flow.phase === "final-edit";
+  y.useEffect(() => {
+    if (!editing && !flow.focusFieldId) headingRef.current?.focus({
+      preventScroll: true
+    });
+  }, [editing]);
+  return h.jsxs("div", {
+    className: "cf-dock-panel",
+    "data-final-review": editing ? void 0 : true,
+    "data-editing": editing || void 0,
+    children: [h.jsx(ClarificationHeader, {
+      headingRef,
+      title: "确认研究需求"
+    }), h.jsx("div", {
+      className: "cf-dock-body",
+      children: h.jsx(CfFieldList, {flow, dispatch})
+    }), h.jsxs("div", {
+      className: "cf-dock-footer cf-dock-confirm",
+      children: [h.jsx("span", {
+        className: "cf-dock-hint",
+        "aria-live": "polite",
+        children: editing ? "保存或取消修改后再提交" : message
+      }), h.jsx(Mn, {
+        "data-confirm-final": true,
+        disabled: editing,
+        onClick: onConfirm,
+        children: "确认并提交"
+      })]
+    })]
+  });
+}
+
+function FollowUpComposer({
+  onSend,
+  disabled = false,
+  placeholder = "输入消息…"
+}) {
+  const [value, setValue] = y.useState("");
+  function send(event) {
+    event.preventDefault();
+    if (disabled || !value.trim()) return;
+    onSend(value.trim());
+    setValue("");
   }
-  function startWriting(){
-    const next=Ht(d,{type:"CONFIRM_OUTLINE"});
-    if(next.phase!=="executing"){m({type:"LOAD",state:next});return;}
-    if(!window.sessionReports.save(t,next)){U("确认未保存，请重新打开会话后重试。");return;}
-    U("");window.sessionReports.openSession(t.sessionId);
+  return h.jsxs("form", {
+    className: "cf-follow-up",
+    "aria-label": "对话输入框",
+    onSubmit: send,
+    children: [h.jsx(Qh, {
+      value,
+      rows: 1,
+      disabled,
+      "aria-label": "输入消息",
+      placeholder,
+      onChange: event => setValue(event.target.value),
+      onKeyDown: event => {
+        if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) send(event);
+      }
+    }), h.jsx("button", {
+      type: "submit",
+      className: "cf-send",
+      disabled: disabled || !value.trim(),
+      "aria-label": "发送消息",
+      children: h.jsx(wh, {
+        className: "cf-arrow-up",
+        "aria-hidden": true
+      })
+    })]
+  });
+}
+
+function ClarificationStage({
+  reducedMotion,
+  contentKey,
+  initialHeight,
+  children
+}) {
+  return h.jsx(CfAutoHeight, {
+    className: "cf-dock-surface",
+    initialHeight,
+    children: h.jsx(Si.div, {
+      className: "cf-dock-content",
+      initial: reducedMotion ? false : {
+        opacity: 0,
+        y: 8
+      },
+      animate: {
+        opacity: 1,
+        y: 0
+      },
+      transition: {
+        duration: reducedMotion ? 0 : .2,
+        ease: [.22, 1, .36, 1]
+      },
+      children
+    }, contentKey)
+  });
+}
+
+function YL({
+  initialLaunch: launch,
+  embedded = !1,
+  active = !0,
+  onActivate: onActivate,
+  onComposePreview: onComposePreview,
+  onConfirmUnbound
+}) {
+  const reducedMotion = UC(),
+    [flow, dispatch] = y.useReducer(dockedFlowReducer, launch, input => input ? window.sessionReports.restore(input) || Ht(Hc(input.prompt, input.attachments || []), {
+      type: "SUBMIT"
+    }) : uw("partial")),
+    [scenario, setScenario] = y.useState(launch ? "live" : "partial"),
+    [previewPhase, setPreviewPhase] = y.useState(launch ? "processing" : "questions"),
+    [autoAdvance, setAutoAdvance] = y.useState(!0),
+    [controlsOpen, setControlsOpen] = y.useState(!1),
+    [dockTarget, setDockTarget] = y.useState(null),
+    [historyTarget, setHistoryTarget] = y.useState(null),
+    [shouldSaveReport, setShouldSaveReport] = y.useState(Boolean(launch)),
+    [clock, setClock] = y.useState(Date.now),
+    pausedAt = y.useRef(null),
+    pausedTime = y.useRef(0),
+    confirmedReport = y.useRef(false),
+    [recognitionStep, setRecognitionStep] = y.useState(0),
+    [readingFiles, setReadingFiles] = y.useState(!1),
+    [message, setMessage] = y.useState(""),
+    fileInput = y.useRef(null),
+    previousLaunch = y.useRef(launch);
+  y.useEffect(() => {
+    if (embedded) {
+      setDockTarget(document.getElementById("white-clarification-dock"));
+      setHistoryTarget(document.getElementById("home-conversation-history"));
+    }
+  }, [embedded, active]), y.useLayoutEffect(() => {
+    embedded && launch && launch !== previousLaunch.current && (previousLaunch.current = launch, confirmedReport.current = false, setShouldSaveReport(true), setMessage(""), dispatch({
+      type: "LOAD",
+      state: window.sessionReports.restore(launch) || Ht(Hc(launch.prompt, launch.attachments || []), {
+        type: "SUBMIT"
+      })
+    }), setScenario("live"), setPreviewPhase("processing"), setAutoAdvance(!0));
+  }, [launch, embedded]);
+  const question = flow.questions[flow.index],
+    answer = question && flow.answers[question.id] || zc(),
+    thinking = flow.phase === "thinking",
+    generating = thinking && flow.thinkingDoneAt == null,
+    totalDuration = CF_THINK_MS.reduce((sum, duration) => sum + duration, 0);
+  y.useEffect(() => {
+    if (!generating) return;
+    if (!autoAdvance) {
+      pausedAt.current ??= Date.now();
+      return;
+    }
+    if (pausedAt.current != null) {
+      pausedTime.current += Date.now() - pausedAt.current;
+      pausedAt.current = null;
+    }
+    const update = () => {
+      const now = Date.now() - pausedTime.current;
+      setClock(now);
+      if (now - flow.thinkingStartedAt >= totalDuration) dispatch({
+        type: "THINKING_DONE",
+        now
+      });
+    };
+    const timer = setInterval(update, 200);
+    update();
+    return () => clearInterval(timer);
+  }, [generating, autoAdvance, flow.thinkingStartedAt, totalDuration]);
+  y.useEffect(() => {
+    if (!active || !shouldSaveReport || !launch?.sessionId || !launch.runId) return;
+    try {
+      if (window.sessionReports.save(launch, flow)) return;
+    } catch {}
+    setMessage("本次会话未能保存，请返回项目后重试。");
+  }, [active, shouldSaveReport, launch, flow]);
+
+  function saveOutlineState(next) {
+    try {
+      if (window.sessionReports.save(launch, next)) return true;
+    } catch {}
+    setMessage("本次修改未能保存，请重新打开会话后重试。");
+    return false;
   }
-  const se=["整理本次输入材料","识别四项研究需求","确定需要补充的信息"].map((F,ne)=>({id:`identify-${ne}`,label:F,status:ne<k?"done":ne===k?"running":"pending",detail:ne===0?[`已接收任务描述${d.material.attachments.length?`与 ${d.material.attachments.length} 份资料`:""}`]:ne===1?["检查研究主题、研究目标、研究范围与目标读者"]:["已有的信息会保留，只提问需要补充的部分"]})),ve=d.definition?.outlineConfirmed ? d.definition.outline.map((section,index,chapters)=>{
-  const fraction=d.executionProgress*chapters.length/100;
-  const status=d.phase==="complete"||index+1<=fraction?"done":index<=fraction?"running":"pending";
-  return {id:"chapter-"+index,label:section.title,status,detail:[status==="done"?"本章已生成":status==="running"?"正在按确认的大纲写作":"等待写作"]};
-}) : ["接收已确认的任务定义","组织研究与报告结构","生成报告草稿"].map((F,ne)=>({id:`execute-${ne}`,label:F,status:d.phase==="complete"||d.executionProgress>[20,60,95][ne]?"done":ne===0&&d.executionProgress<=20||ne===1&&d.executionProgress>20&&d.executionProgress<=60||ne===2&&d.executionProgress>60?"running":"pending",detail:ne===0?["四项任务信息及未提供部分已保留"]:ne===1?["围绕已确认的研究目标组织章节"]:["正在准备报告草稿结构"]})),be=d.phase==="compose"?"先说说你想研究什么":d.phase==="processing"?"正在识别这次研究需求":d.phase==="questions"?`还有 ${d.questions.length} 项信息需要你补充`:d.phase==="round-review"?"确认本轮回答":d.phase==="final-review"?"最后确认这次研究任务":d.phase==="final-edit"?"修改任务信息":d.phase==="outline-review"?"报告大纲已生成":d.phase==="executing"?"正在分章节写作":"任务交接已完成",ye=h.jsx("section",{className:"cf-product","aria-label":"战略报告需求澄清","data-product-surface":!0,children:h.jsx("main",{className:"cf-conversation",ref:ue,"data-flow-phase":d.phase,children:h.jsxs("div",{className:"cf-conversation-inner",children:[d.phase!=="compose"&&h.jsxs("div",{className:"cf-user-message",children:[d.material.prompt&&h.jsx("p",{children:d.material.prompt}),d.material.attachments.length>0&&h.jsx("div",{className:"cf-attachments",children:d.material.attachments.map((F,ne)=>h.jsxs("details",{className:"cf-attachment-detail",children:[h.jsxs("summary",{children:[h.jsx(Df,{}),F.name]}),h.jsx("pre",{children:F.text})]},`${F.name}-${ne}`))})]}),d.history.length>0&&h.jsx("div",{className:"cf-round-traces",children:d.history.map(F=>h.jsxs("details",{className:"cf-trace",children:[h.jsxs("summary",{children:[h.jsx(sm,{}),h.jsxs("span",{children:["第 ",F.round," 轮信息已确认"]}),h.jsxs("small",{children:[F.questions.length," 项"]}),h.jsx(xd,{})]}),h.jsx("dl",{children:F.questions.map(ne=>h.jsxs("div",{children:[h.jsx("dt",{children:el[ne.id].label}),h.jsx("dd",{children:sg(F.answers[ne.id])})]},ne.id))})]},F.round))}),h.jsxs("div",{className:"cf-agent-note",children:[h.jsx(BL,{small:!0,visual:AL(d.phase,k,d.executionProgress,d.processReason)}),h.jsxs("div",{children:[h.jsx("strong",{children:be}),h.jsx("p",{children:d.phase==="questions"?"逐题补充后，我们会请你先确认本轮信息。":d.phase==="round-review"?"这里只展示本轮问过的内容。确认后会重新检查全部研究信息。":d.phase==="final-review"?"确认研究需求后，系统将生成本次报告的大纲。":d.phase==="compose"?"提交任务描述和资料，我们会先识别信息缺口。":d.phase==="outline-review"?"你可以调整章节及顺序，确认后开始写作。":d.phase==="executing"?(d.definition?.outlineConfirmed?"正在按已确认的章节顺序生成正文。":"正在生成报告正文。"):d.phase==="complete"?(S&&t?.sessionId?"报告已存入本项目会话，可查看正文。":"你可以查看已确认任务，或下载报告结构。"):d.phase==="final-edit"?"保存后会重新检查全部四项任务信息。":"已有信息会保留，只有需要补充的部分才会提问。"})]})]}),h.jsx(Kc,{mode:"wait",initial:!1,children:h.jsxs(Si.div,{initial:{opacity:0,y:6},animate:{opacity:1,y:0},exit:{opacity:0,y:-4},transition:{duration:.18,ease:[.22,1,.36,1]},children:[d.phase==="compose"&&h.jsxs(yc,{className:"cf-action-panel cf-compose-panel",children:[h.jsxs(_o,{children:[h.jsx($o,{role:"heading","aria-level":2,children:"描述你的战略研究任务"}),h.jsx(rl,{children:"主题、目标、范围和读者能说清多少，就先写多少。"})]}),h.jsxs(Zs,{children:[h.jsx(il,{children:h.jsxs(kr,{children:[h.jsx(Dr,{htmlFor:"cf-prompt",className:"sr-only",children:"报告任务描述"}),h.jsx(Qh,{id:"cf-prompt",placeholder:"例如：帮我分析中国新能源汽车行业未来三年的发展趋势。",rows:5,value:d.material.prompt,onChange:F=>m({type:"PROMPT",value:F.target.value}),onKeyDown:F=>{(F.ctrlKey||F.metaKey)&&F.key==="Enter"&&(F.preventDefault(),L||m({type:"SUBMIT"}))}})]})}),h.jsx("input",{ref:X,type:"file",accept:".txt,.md,.markdown,text/plain,text/markdown",multiple:!0,hidden:!0,onChange:Ce}),h.jsx("div",{className:"cf-compose-attachments",children:d.material.attachments.map((F,ne)=>h.jsxs("span",{children:[h.jsx(Df,{}),F.name,h.jsx(Mn,{variant:"ghost",size:"icon-xs","aria-label":`移除${F.name}`,onClick:()=>m({type:"ATTACHMENTS",value:d.material.attachments.filter((ze,Ne)=>Ne!==ne)}),children:h.jsx($w,{})})]},`${F.name}-${ne}`))}),(d.error||Y)&&h.jsx("p",{className:"cf-error",role:"alert",children:d.error||Y})]}),h.jsxs(Qs,{className:"cf-panel-footer",children:[h.jsxs(Mn,{variant:"ghost",size:"sm",onClick:()=>{var F;return(F=X.current)==null?void 0:F.click()},disabled:L,children:[h.jsx(zw,{"data-icon":"inline-start"}),L?"读取资料中":"添加资料"]}),h.jsxs(Mn,{onClick:()=>m({type:"SUBMIT"}),disabled:L,children:["提交并识别",h.jsx(Mo,{"data-icon":"inline-end"})]})]}),h.jsx("p",{className:"cf-format-note",children:"可添加 TXT 或 Markdown 资料 · Ctrl / ⌘ + Enter 提交"})]}),d.phase==="processing"&&h.jsxs("div",{className:"cf-processing-message","data-processing-message":!0,"data-paused":!z,children:[h.jsx(aw,{className:"cf-loading",steps:se,collapseWhenDone:!1}),h.jsx("p",{className:"cf-status-caption",children:"任务尚未开始执行；识别完成后会确认是否需要补充信息。"})]}),d.phase==="questions"&&xe&&h.jsxs(yc,{className:"cf-action-panel","data-clarification-question":!0,children:[h.jsxs(_o,{children:[h.jsxs("div",{className:"cf-panel-meta",children:[h.jsxs("span",{children:["第 ",d.round," 轮澄清"]}),h.jsxs("span",{children:["第 ",d.index+1," 题 / 共 ",d.questions.length," 题"]})]}),h.jsx($o,{role:"heading","aria-level":2,children:xe.title})]}),h.jsxs(Zs,{children:[h.jsx(R$,{value:oe.option,onValueChange:F=>m({type:"OPTION",value:F}),"aria-label":"推荐选项",className:"cf-options",children:xe.options.map((F,ne)=>h.jsx(Dr,{htmlFor:`cf-option-${xe.id}-${ne}`,className:"cf-choice","data-selected":oe.option===F,children:h.jsxs(kr,{orientation:"horizontal",children:[h.jsx(a$,{children:F}),h.jsx(A$,{id:`cf-option-${xe.id}-${ne}`,value:F,"aria-label":F})]})},F))}),h.jsx(il,{className:"cf-inline-custom",children:h.jsxs(kr,{children:[h.jsx(Dr,{htmlFor:"cf-free-text",className:"sr-only",children:"自定义回答"}),h.jsx(Qh,{ref:le,id:"cf-free-text",rows:1,"data-expanded":oe.customOpen||!!oe.text,value:oe.text,"aria-label":"自定义回答",placeholder:"自定义回答，或补充已选选项…",onFocus:()=>{oe.customOpen||m({type:"CUSTOM"})},onBlur:()=>{oe.customOpen&&!oe.text&&m({type:"CUSTOM"})},onChange:F=>m({type:"TEXT",value:F.target.value})})]})}),oe.option&&oe.text.trim()&&h.jsx(Mn,{variant:"link",size:"sm",className:"cf-custom-only",onClick:()=>m({type:"CLEAR_OPTION"}),children:"只使用自定义回答"}),d.error&&h.jsx("p",{className:"cf-error",role:"alert",children:d.error})]}),h.jsxs(Qs,{className:"cf-panel-footer",children:[h.jsx("div",{className:"cf-footer-secondary",children:d.index>0&&h.jsxs(Mn,{variant:"ghost",size:"sm",onClick:()=>m({type:"BACK"}),children:[h.jsx(wh,{"data-icon":"inline-start"}),"上一题"]})}),h.jsx(Mn,{className:"cf-question-continue",disabled:!Be,onClick:()=>m({type:"NEXT"}),children:"确认并继续"})]})]}),d.phase==="round-review"&&h.jsxs(yc,{className:"cf-action-panel","data-round-review":!0,children:[h.jsxs(_o,{children:[h.jsxs("div",{className:"cf-panel-meta",children:[h.jsxs("span",{children:["第 ",d.round," 轮澄清"]}),h.jsxs("span",{children:[d.questions.length," 项本轮信息"]})]}),h.jsx($o,{role:"heading","aria-level":2,children:"这些回答与你的需求一致吗？"}),h.jsx(rl,{children:d.ending||O?"本轮未回答的部分将保留为空。确认结束澄清后，还需进行最终确认。":"确认本轮后，会重新检查研究主题、目标、范围和读者。"})]}),h.jsxs(Zs,{children:[h.jsx("div",{className:"cf-round-results",children:d.questions.map((F,ne)=>{var ze;return h.jsxs("div",{className:"cf-round-result","data-round-field":F.id,children:[h.jsxs("div",{children:[h.jsx("span",{children:el[F.id].label}),h.jsx("p",{"data-skipped":(ze=d.answers[F.id])==null?void 0:ze.skipped,children:sg(d.answers[F.id])})]}),h.jsx(Mn,{variant:"ghost",size:"icon-sm","aria-label":`修改本轮${el[F.id].label}`,onClick:()=>m({type:"BACK",index:ne}),children:h.jsx(Rw,{})})]},F.id)})}),d.round===3&&h.jsx("div",{className:"cf-notice",children:"这是第三轮澄清。仍未明确的部分会在最终确认中标为未提供。"})]}),h.jsxs(Qs,{className:"cf-panel-footer",children:[h.jsxs(Mn,{variant:"ghost",onClick:()=>m({type:"BACK"}),children:[h.jsx(wh,{"data-icon":"inline-start"}),"返回修改"]}),h.jsxs(Mn,{onClick:()=>m({type:"CONFIRM_ROUND",end:d.ending||O}),children:[d.ending||O?"确认并结束澄清":"确认本轮信息",h.jsx(Mo,{"data-icon":"inline-end"})]})]})]}),d.phase==="final-review"&&h.jsxs(yc,{className:"cf-action-panel","data-final-review":!0,children:[h.jsxs(_o,{children:[h.jsxs("div",{className:"cf-panel-meta",children:[h.jsx("span",{children:"需求澄清"}),h.jsx("span",{children:"4 项任务信息"})]}),h.jsx($o,{role:"heading","aria-level":2,children:"确认本次研究需求"}),h.jsx(rl,{children:J?"未明确的部分已保留，Agent 将基于现有信息自行执行。":d.history.length?"已合并本次输入与澄清回答。你仍可修改任何一项。":"本次信息已足够，请核对研究目标与范围。"})]}),h.jsxs(Zs,{children:[v==="live"&&Q.current?.template_id&&h.jsx("p",{className:"cf-confirmation-note",children:"报告模板："+Q.current.template+" · V"+Q.current.template_version}),v==="live"&&validTaskSkills(Q.current?.skills).length>0&&h.jsx("p",{className:"cf-confirmation-note",children:"任务技能："+validTaskSkills(Q.current.skills).join("、")}),h.jsx(UL,{fields:d.fields,onEdit:F=>m({type:"EDIT_FINAL",id:F})}),Y&&h.jsx("p",{className:"cf-error",role:"alert",children:Y})]}),h.jsxs(Qs,{className:"cf-panel-footer",children:[h.jsx("span",{className:"cf-confirmation-note",children:"下一步：确认报告大纲"}),h.jsxs(Mn,{onClick:Me,"data-confirm-final":!0,children:["确认需求，生成大纲",h.jsx(Mo,{"data-icon":"inline-end"})]})]})]}),d.phase==="outline-review"&&h.jsx(OutlineReview,{
-      outline:d.definition.outline,topic:d.definition.fields.find(field=>field.id==="F01")?.value,
-      templateName:t?.template,error:d.error || Y,
-      onChange:outline=>m({type:"EDIT_OUTLINE",outline}),onConfirm:startWriting
-    }),d.phase==="final-edit"&&d.editId&&h.jsxs(yc,{className:"cf-action-panel",children:[h.jsxs(_o,{children:[h.jsxs($o,{role:"heading","aria-level":2,children:["修改",el[d.editId].label]}),h.jsx(rl,{children:"你可以修改自动识别的内容、默认值或先前的回答。"})]}),h.jsx(Zs,{children:h.jsx(il,{children:h.jsxs(kr,{children:[h.jsx(Dr,{htmlFor:"cf-final-edit",children:el[d.editId].name}),h.jsx(Qh,{id:"cf-final-edit",rows:4,value:d.editText,onChange:F=>m({type:"EDIT_TEXT",value:F.target.value}),autoFocus:!0})]})})}),h.jsxs(Qs,{className:"cf-panel-footer",children:[h.jsxs(Mn,{variant:"ghost",onClick:()=>m({type:"CANCEL_FINAL_EDIT"}),children:[h.jsx(wh,{"data-icon":"inline-start"}),"返回确认"]}),h.jsxs(Mn,{onClick:()=>m({type:"SAVE_FINAL_EDIT"}),children:["保存并重新检查",h.jsx(Mo,{"data-icon":"inline-end"})]})]})]}),(d.phase==="executing"||d.phase==="complete")&&d.definition&&h.jsxs(h.Fragment,{children:[h.jsx(aT,{className:"cf-confirmation-trace",calls:[{id:"confirmed-report",tool:"战略报告 Agent",title:"研究任务已确认",input:Object.fromEntries(d.definition.fields.map(F=>[F.name,`${F.value||"未提供"}${F.origin==="default"?"（系统默认）":""}${F.unresolved?"；"+F.unresolved:""}`])),state:d.phase==="complete"?"output-available":"approval-responded",icon:h.jsx(sm,{}),output:d.definition.fields.map(F=>`${F.name}：${F.value||"未提供，将由 Agent 基于现有信息执行"}`)}]}),h.jsxs("div",{className:"cf-execution-message","data-agent-execution":!0,children:[h.jsx(aw,{className:"cf-loading",steps:ve}),d.phase==="executing"&&h.jsx(KC,{className:"cf-execution-beam",size:"line",colorVariant:"mono",theme:"light",strength:.45,active:!u&&z,children:h.jsxs("div",{className:"cf-execution-progress",children:[h.jsxs("div",{children:[h.jsx("span",{children:"报告生成进度"}),h.jsxs("span",{children:[d.executionProgress,"%"]})]}),h.jsx(O$,{value:d.executionProgress,"aria-label":"报告生成进度"})]})}),d.phase==="complete"&&h.jsxs("div",{className:"cf-report-result",children:[
-    h.jsx("header",{className:"cf-result-heading",children:h.jsx("p",{children:Y || "报告已生成",role:Y?"alert":undefined})}),d.definition.outlineConfirmed ? h.jsxs("details",{className:"cf-approved-outline",children:[
-      h.jsx("summary",{children:"已确认大纲 · "+d.definition.outline.length+" 章"}),
-      h.jsx("div",{className:"lib-generated-outline",children:h.jsx(LibraryOutline,{sections:d.definition.outline})})
-    ]}) : v==="live"&&librarySections(Q.current).length>0&&h.jsx("div",{className:"lib-generated-outline",children:h.jsx(LibraryOutline,{context:Q.current})}),h.jsxs("div",{children:[h.jsxs(Mn,{variant:"outline",onClick:event=>downloadReviewedReport(event,"战略报告-任务定义.json",JSON.stringify(launchedTaskDefinition(d.definition,v==="live"?Q.current:null),null,2)),children:[h.jsx(Df,{"data-icon":"inline-start"}),"下载任务定义"]}),h.jsxs(Mn,{onClick:event=>downloadReviewedReport(event,"战略报告-草稿结构.md",VL(d.definition,v==="live"?Q.current:null)),children:["下载报告结构",h.jsx(Mo,{"data-icon":"inline-end"})]}),
-      h.jsxs(Mn,{type:"button",className:"cf-view-report",onClick:()=>{
-        if(!window.sessionReports.showReport(t?.sessionId || de)) U("当前会话的报告未能读取，请重新打开会话。");
-      },children:["查看报告",h.jsx(Mo,{"data-icon":"inline-end"})]})
-    ]})]})]})]})]},`${d.phase}-${d.index}-${v}`)})]})})}),Se=h.jsxs("aside",{className:"cf-demo-panel","data-open":T,"data-demo-controls":!0,"aria-label":"演示控制台",children:[h.jsxs("button",{className:"cf-demo-heading",onClick:()=>A(F=>!F),"aria-expanded":T,"aria-controls":"cf-demo-content","aria-label":T?"收起演示控制台":"展开演示控制台",children:[h.jsx(d6,{}),h.jsx("span",{children:"演示控制台"}),h.jsx(xw,{"data-open":T})]}),h.jsxs("div",{className:"cf-demo-content",id:"cf-demo-content",children:[h.jsxs("div",{className:"cf-demo-intro",children:[h.jsx("span",{children:"页面之外的场景选择"}),h.jsx("p",{children:"选择不同任务情况，查看对应的界面与分支。"})]}),h.jsxs(il,{children:[h.jsxs(kr,{children:[h.jsx(Dr,{htmlFor:"cf-scenario",children:"任务情况"}),h.jsxs(Z5,{value:v,onValueChange:F=>re(F,g),disabled:Z,children:[h.jsx(ew,{id:"cf-scenario",className:"w-full","data-scenario-trigger":!0,children:h.jsx(J5,{})}),h.jsx(tw,{position:"popper","data-cf-menu":!0,children:h.jsxs(Q5,{children:[t&&h.jsx(Jh,{value:"live",children:"本次首页需求"}),Ic.map(F=>h.jsx(Jh,{value:F.id,children:F.title},F.id))]})})]}),h.jsx("p",{className:"cf-scenario-description",children:(ee==null?void 0:ee.description)||"保留从首页提交的本次任务描述。"})]}),h.jsxs(kr,{children:[h.jsx(Dr,{htmlFor:"cf-preview",children:"预览起始状态"}),h.jsxs(Z5,{value:g,onValueChange:F=>re(v,F),disabled:Z,children:[h.jsx(ew,{id:"cf-preview",className:"w-full","data-preview-trigger":!0,children:h.jsx(J5,{})}),h.jsx(tw,{position:"popper","data-cf-menu":!0,children:h.jsx(Q5,{children:IL.map(F=>h.jsx(Jh,{value:F.value,children:F.label},F.value))})})]})]})]}),h.jsxs("div",{className:"cf-demo-switch",children:[h.jsxs("div",{children:[h.jsx("span",{children:"自动推进"}),h.jsx("small",{children:"识别与执行进度"})]}),h.jsx(tT,{id:"cf-auto-advance",checked:z,onCheckedChange:E,"aria-label":"自动推进演示"})]}),h.jsxs("div",{className:"cf-demo-state",children:[h.jsx("span",{className:"cf-demo-led","data-playing":z}),z?"演示正在按流程推进":"演示已暂停，可开启自动推进",d.round>0&&h.jsxs("small",{children:["当前第 ",d.round," 轮 / 最多 3 轮"]})]}),h.jsxs(Mn,{variant:"outline",className:"w-full",disabled:Z,onClick:()=>re(v,g),children:[h.jsx(u6,{"data-icon":"inline-start"}),"重置当前演示"]}),h.jsxs("div",{className:"cf-demo-boundary",children:[h.jsx("strong",{children:"先确认，后执行"}),h.jsx("p",{children:"场景面板只能预览执行前的状态。确认研究需求后可编辑大纲，确认大纲后开始分章节写作。"})]}),h.jsxs("div",{className:"cf-demo-disclaimer",children:[h.jsx("span",{children:"本地交互原型"}),h.jsx("p",{children:"字段识别与 Agent 执行为本地演示。切换展示状态会载入示例回答；不会触发真实服务。"})]})]})]});return h.jsx(w1,{reducedMotion:"user",children:r?h.jsxs(h.Fragment,{children:[h.jsx("div",{className:"clarification-app cf-controls-host","data-embedded":!0,children:Se}),o&&R&&ml.createPortal(h.jsx("div",{className:"clarification-app cf-home-flow","data-embedded":!0,children:ye}),R)]}):h.jsxs("div",{className:"clarification-app",children:[ye,Se]})})}const SessionPane=createSessionPane(y,ml);
+
+  function confirmReport() {
+    if (confirmedReport.current) return;
+    if (shouldSaveReport && launch) {
+      const next = Ht(flow, {type:"CONFIRM_FINAL", launch:{...launch, templateSpec:libraryTemplate(launch)}});
+      if (next.phase !== "outline-review") return;
+      if (!launch.sessionId || !launch.runId) {
+        if (!onConfirmUnbound?.(launch, next)) setMessage("本次任务未能保存，请重试。");
+        return;
+      }
+      if (!saveOutlineState(next)) return;
+      setMessage("");
+      dispatch({type:"LOAD", state:next});
+      return;
+    }
+    const now = Date.now();
+    const next = dockedFlowReducer(flow, {type:"CONFIRM_FINAL", preview:true, now});
+    if (next.phase !== "thinking") return;
+    confirmedReport.current = true;
+    setMessage("");
+    setAutoAdvance(true);
+    pausedAt.current = null;
+    pausedTime.current = 0;
+    setClock(now);
+    dispatch({type:"LOAD", state:next});
+  }
+
+  function startWriting() {
+    const next = Ht(flow, {type:"CONFIRM_OUTLINE"});
+    if (next.phase !== "executing") {
+      dispatch({type:"LOAD", state:next});
+      return;
+    }
+    if (saveOutlineState(next)) window.sessionReports.openSession(launch.sessionId);
+  }
+  y.useEffect(() => {
+    if (flow.phase !== "processing" || embedded && !active) return;
+    setRecognitionStep(0);
+    if (!autoAdvance) return;
+    cfRecogStart.current = performance.now();
+    setCfRecogMs(null);
+    const progress = setInterval(() => setRecognitionStep(step => Math.min(3, step + 1)), 700);
+    const finish = setTimeout(() => {
+      setCfRecogMs(performance.now() - cfRecogStart.current);
+      dispatch({
+        type: "PROCESSED"
+      });
+    }, 2450);
+    return () => {
+      clearInterval(progress);
+      clearTimeout(finish);
+    };
+  }, [flow.phase, flow.material.prompt, flow.history.length, autoAdvance, active, embedded]);
+  const cfStick = y.useRef(true),
+    cfAutoScroll = y.useRef(0),
+    cfLastHeight = y.useRef(0),
+    cfRecogStart = y.useRef(0);
+  const [cfRecogMs, setCfRecogMs] = y.useState(null);
+  y.useEffect(() => {
+    if (!historyTarget) return;
+    const onScroll = () => {
+      if (performance.now() - cfAutoScroll.current < 450) return;
+      cfStick.current = historyTarget.scrollHeight - historyTarget.scrollTop - historyTarget.clientHeight < 48;
+    };
+    historyTarget.addEventListener("scroll", onScroll, {
+      passive: true
+    });
+    return () => historyTarget.removeEventListener("scroll", onScroll);
+  }, [historyTarget]);
+  y.useLayoutEffect(() => {
+    if (!active || !historyTarget) return;
+    const follow = () => {
+      const height = historyTarget.scrollHeight,
+        delta = height - cfLastHeight.current;
+      cfLastHeight.current = height;
+      const max = height - historyTarget.clientHeight;
+      if (!cfStick.current || max <= 0) return;
+      cfAutoScroll.current = performance.now();
+      if (delta > 32 && !reducedMotion) historyTarget.scrollTo({
+        top: max,
+        behavior: "smooth"
+      });else historyTarget.scrollTop = max;
+    };
+    cfStick.current = true;
+    historyTarget.scrollTop = historyTarget.scrollHeight;
+    cfLastHeight.current = historyTarget.scrollHeight;
+    const observer = new ResizeObserver(follow);
+    observer.observe(historyTarget);
+    Array.from(historyTarget.children).forEach(child => observer.observe(child));
+    const mutations = new MutationObserver(() => Array.from(historyTarget.children).forEach(child => observer.observe(child)));
+    mutations.observe(historyTarget, {
+      childList: true
+    });
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+    };
+  }, [active, historyTarget, reducedMotion]);
+  y.useEffect(() => {
+    if (!dockTarget) return;
+    const empty = active && (flow.phase === "outline-review" || (flow.phase === "thinking" && flow.thinkingDoneAt != null));
+    if (empty) dockTarget.setAttribute("data-cf-dock-empty", "true");else dockTarget.removeAttribute("data-cf-dock-empty");
+  }, [dockTarget, active, flow.phase, flow.thinkingDoneAt]);
+  function loadPreview(F, ne) {
+    if (generating) return;
+    const scene = F === "live" && launch ? HL(launch, ne) : uw(F, ne);
+    const ze = scene.phase === "round-review" ? dockedFlowReducer(scene, {
+      type: "CONFIRM_ROUND",
+      end: true
+    }) : scene;
+    confirmedReport.current = false;
+    setShouldSaveReport(false);
+    if (setScenario(F), setPreviewPhase(ze.phase === "final-review" ? "final-review" : ne), setAutoAdvance(ne !== "processing"), setMessage(""), dispatch({
+      type: "LOAD",
+      state: ze
+    }), ne === "compose" && onComposePreview) {
+      onComposePreview({
+        prompt: ze.material.prompt,
+        attachments: ze.material.attachments,
+        skills: F === "live" ? launch?.skills : []
+      });
+      return;
+    }
+    onActivate == null || onActivate();
+  }
+  async function readAttachments(F) {
+    const ne = [...(F.target.files || [])];
+    if (ne.length) {
+      if (ne.some(ze => !/(\.txt|\.md|\.markdown)$/i.test(ze.name))) {
+        setMessage("请选择 TXT 或 Markdown 格式的资料。"), F.target.value = "";
+        return;
+      }
+      setReadingFiles(!0), setMessage("");
+      try {
+        const ze = await Promise.all(ne.map(async Ne => ({
+          name: Ne.name,
+          text: await Ne.text()
+        })));
+        dispatch({
+          type: "ATTACHMENTS",
+          value: [...flow.material.attachments, ...ze]
+        });
+      } catch {
+        setMessage("资料读取失败，请重新选择文件。");
+      } finally {
+        setReadingFiles(!1), F.target.value = "";
+      }
+    }
+  }
+  const cfProcessing = flow.phase === "processing",
+    cfFields = cfProcessing ? kL(flow.material) : flow.fields,
+    cfAsked = cfProcessing ? cfFields.filter(F => F.decision === "ASK").map(F => F.id) : (flow.history.length ? flow.history[0].questions : flow.questions).map(F => F.id),
+    cfReportDone = thinking && flow.thinkingDoneAt != null,
+    note = cfProcessing ? "" : flow.phase === "questions" ? `还需要确认 ${flow.questions.length} 项研究信息，请在下方${flow.questions.length > 1 ? "逐题" : ""}补充。` : thinking ? "研究需求已整理完毕。" : flow.phase === "outline-review" ? "报告大纲已生成。" : "请确认下方的研究需求。",
+    transcript = h.jsxs("div", {
+      className: "cf-conversation-history",
+      children: [flow.phase !== "compose" && h.jsxs("div", {
+        className: "cf-user-message cf-msg",
+        children: [flow.material.prompt && h.jsx("p", {
+          children: flow.material.prompt
+        }), flow.material.attachments.length > 0 && h.jsx("div", {
+          className: "cf-attachments",
+          children: flow.material.attachments.map((F, ne) => h.jsxs("details", {
+            className: "cf-attachment-detail",
+            children: [h.jsxs("summary", {
+              children: [h.jsx(Df, {
+                "aria-hidden": true
+              }), F.name]
+            }), h.jsx("pre", {
+              children: F.text
+            })]
+          }, `${F.name}-${ne}`))
+        })]
+      }), flow.phase !== "compose" && h.jsxs("div", {
+        className: "cf-agent-turn cf-msg",
+        children: [h.jsx("div", {
+          className: "cf-processing-message",
+          "data-processing-message": true,
+          "data-paused": !autoAdvance,
+          children: h.jsx(CfStepTrace, {
+            title: "正在识别研究需求",
+            doneTitle: "已识别研究需求",
+            label: "识别过程",
+            steps: cfRecognitionSteps({
+              material: flow.material,
+              fields: cfFields,
+              asked: cfAsked,
+              step: recognitionStep,
+              done: !cfProcessing
+            }),
+            done: !cfProcessing,
+            elapsedMs: cfProcessing ? recognitionStep > 0 ? performance.now() - cfRecogStart.current : null : cfRecogMs,
+            orb: cfProcessing ? AL("processing", recognitionStep, 0, flow.processReason) : null
+          })
+        }), note ? h.jsx("p", {
+          className: "cf-agent-text",
+          children: note
+        }, note) : null]
+      }), flow.phase === "outline-review" && h.jsx(OutlineReview, {
+        outline: flow.definition.outline,
+        topic: flow.definition.fields.find(field => field.id === "F01")?.value,
+        templateName: launch?.template,
+        error: flow.error || message,
+        onChange: outline => dispatch({type:"EDIT_OUTLINE", outline}),
+        onConfirm: startWriting
+      }), thinking && h.jsxs(h.Fragment, {
+        children: [h.jsx("div", {
+          className: "cf-system-event cf-msg",
+          role: "note",
+          children: h.jsx("span", {
+            children: "已确认并提交研究需求"
+          })
+        }), h.jsx(CfThinkingThread, {
+          flow,
+          now: clock,
+          launch: scenario === "live" ? launch : null,
+          message
+        })]
+      })]
+    }),
+    cfStageKey = flow.phase === "questions" ? `q-${flow.round}-${question ? question.id : ""}` : flow.phase === "final-review" || flow.phase === "final-edit" ? "confirm" : cfReportDone ? "done" : flow.phase,
+    stageContent = flow.phase === "compose" ? h.jsxs(yc, {
+      className: "cf-action-panel cf-compose-panel",
+      children: [h.jsxs(_o, {
+        children: [h.jsx($o, {
+          role: "heading",
+          "aria-level": 2,
+          children: "描述你的战略研究任务"
+        }), h.jsx(rl, {
+          children: "主题、目标、范围和读者能说清多少，就先写多少。"
+        })]
+      }), h.jsxs(Zs, {
+        children: [h.jsx(il, {
+          children: h.jsxs(kr, {
+            children: [h.jsx(Dr, {
+              htmlFor: "cf-prompt",
+              className: "sr-only",
+              children: "报告任务描述"
+            }), h.jsx(Qh, {
+              id: "cf-prompt",
+              placeholder: "例如：帮我分析中国新能源汽车行业未来三年的发展趋势。",
+              rows: 5,
+              value: flow.material.prompt,
+              onChange: F => dispatch({
+                type: "PROMPT",
+                value: F.target.value
+              }),
+              onKeyDown: F => {
+                (F.ctrlKey || F.metaKey) && F.key === "Enter" && (F.preventDefault(), readingFiles || dispatch({
+                  type: "SUBMIT"
+                }));
+              }
+            })]
+          })
+        }), h.jsx("input", {
+          ref: fileInput,
+          type: "file",
+          accept: ".txt,.md,.markdown,text/plain,text/markdown",
+          multiple: !0,
+          hidden: !0,
+          onChange: readAttachments
+        }), h.jsx("div", {
+          className: "cf-compose-attachments",
+          children: flow.material.attachments.map((F, ne) => h.jsxs("span", {
+            children: [h.jsx(Df, {}), F.name, h.jsx(Mn, {
+              variant: "ghost",
+              size: "icon-xs",
+              "aria-label": `移除${F.name}`,
+              onClick: () => dispatch({
+                type: "ATTACHMENTS",
+                value: flow.material.attachments.filter((ze, Ne) => Ne !== ne)
+              }),
+              children: h.jsx($w, {})
+            })]
+          }, `${F.name}-${ne}`))
+        }), (flow.error || message) && h.jsx("p", {
+          className: "cf-error",
+          role: "alert",
+          children: flow.error || message
+        })]
+      }), h.jsxs(Qs, {
+        className: "cf-panel-footer",
+        children: [h.jsxs(Mn, {
+          variant: "ghost",
+          size: "sm",
+          onClick: () => {
+            var F;
+            return (F = fileInput.current) == null ? void 0 : F.click();
+          },
+          disabled: readingFiles,
+          children: [h.jsx(zw, {
+            "data-icon": "inline-start"
+          }), readingFiles ? "读取资料中" : "添加资料"]
+        }), h.jsxs(Mn, {
+          onClick: () => dispatch({
+            type: "SUBMIT"
+          }),
+          disabled: readingFiles,
+          children: ["提交并识别", h.jsx(Mo, {
+            "data-icon": "inline-end"
+          })]
+        })]
+      }), h.jsx("p", {
+        className: "cf-format-note",
+        children: "可添加 TXT 或 Markdown 资料 · Ctrl / ⌘ + Enter 提交"
+      })]
+    }) : flow.phase === "processing" ? h.jsx("div", {
+      className: "cf-dock-status",
+      role: "status",
+      children: "识别完成后，会在这里请你补充信息"
+    }) : flow.phase === "questions" ? question ? h.jsx(ClarificationSteps, {
+      flow: flow,
+      question: question,
+      answer: answer,
+      dispatch: dispatch,
+      reducedMotion: reducedMotion
+    }) : null : flow.phase === "final-review" || flow.phase === "final-edit" ? h.jsx(ClarificationConfirm, {
+      flow: flow,
+      dispatch,
+      message,
+      onConfirm: confirmReport
+    }) : thinking && !cfReportDone ? h.jsx(FollowUpComposer, {
+      placeholder: "补充说明或追问…",
+      onSend: value => dispatch({
+        type: "FOLLOW_UP",
+        value
+      })
+    }) : null,
+    product = h.jsx("section", {
+      className: "cf-product",
+      "aria-label": "战略报告需求澄清",
+      "data-product-surface": true,
+      children: h.jsx("div", {
+        className: "cf-conversation",
+        "data-flow-phase": flow.phase,
+        children: h.jsxs("div", {
+          className: "cf-conversation-inner",
+          children: [!embedded && transcript, h.jsx("div", {
+            className: "cf-composer-stage",
+            children: h.jsx(ClarificationStage, {
+              reducedMotion: reducedMotion,
+              contentKey: cfStageKey,
+              initialHeight: shouldSaveReport && flow.phase === "processing" ? 126 : null,
+              children: stageContent
+            })
+          })]
+        })
+      })
+    }),
+    demoControls = h.jsxs("aside", {
+      className: "cf-demo-panel",
+      "data-open": controlsOpen,
+      "data-demo-controls": true,
+      "aria-label": "演示控制台",
+      children: [h.jsxs("button", {
+        type: "button",
+        className: "cf-demo-heading",
+        onClick: () => setControlsOpen(open => !open),
+        "aria-expanded": controlsOpen,
+        "aria-controls": "cf-demo-content",
+        "aria-label": controlsOpen ? "收起演示控制台" : "展开演示控制台",
+        children: [h.jsx(d6, {
+          "aria-hidden": true
+        }), h.jsx("span", {
+          children: controlsOpen ? "演示控制台" : "演示"
+        }), controlsOpen && h.jsx(xw, {
+          "data-open": true,
+          "aria-hidden": true
+        })]
+      }), h.jsxs("div", {
+        className: "cf-demo-content",
+        id: "cf-demo-content",
+        hidden: !controlsOpen,
+        children: [h.jsxs(il, {
+          children: [h.jsxs(kr, {
+            children: [h.jsx(Dr, {
+              htmlFor: "cf-scenario",
+              children: "任务情况"
+            }), h.jsxs(Z5, {
+              value: scenario,
+              onValueChange: value => loadPreview(value, previewPhase),
+              children: [h.jsx(ew, {
+                id: "cf-scenario",
+                className: "w-full",
+                "data-scenario-trigger": true,
+                children: h.jsx(J5, {})
+              }), h.jsx(tw, {
+                position: "popper",
+                "data-cf-menu": true,
+                children: h.jsxs(Q5, {
+                  children: [launch && h.jsx(Jh, {
+                    value: "live",
+                    children: "本次首页需求"
+                  }), Ic.map(item => h.jsx(Jh, {
+                    value: item.id,
+                    children: item.title
+                  }, item.id))]
+                })
+              })]
+            })]
+          }), h.jsxs(kr, {
+            children: [h.jsx(Dr, {
+              htmlFor: "cf-preview",
+              children: "起始状态"
+            }), h.jsxs(Z5, {
+              value: previewPhase,
+              onValueChange: value => loadPreview(scenario, value),
+              children: [h.jsx(ew, {
+                id: "cf-preview",
+                className: "w-full",
+                "data-preview-trigger": true,
+                children: h.jsx(J5, {})
+              }), h.jsx(tw, {
+                position: "popper",
+                "data-cf-menu": true,
+                children: h.jsx(Q5, {
+                  children: IL.map(item => h.jsx(Jh, {
+                    value: item.value,
+                    children: item.label
+                  }, item.value))
+                })
+              })]
+            })]
+          })]
+        }), h.jsxs("div", {
+          className: "cf-demo-switch",
+          children: [h.jsx("label", {
+            htmlFor: "cf-auto-advance",
+            children: "自动推进"
+          }), h.jsx(tT, {
+            id: "cf-auto-advance",
+            checked: autoAdvance,
+            onCheckedChange: setAutoAdvance
+          })]
+        }), h.jsx(Mn, {
+          type: "button",
+          variant: "outline",
+          className: "w-full",
+          onClick: () => loadPreview(scenario, previewPhase),
+          children: "重置演示"
+        })]
+      })]
+    });
+  return h.jsx(w1, {
+    reducedMotion: "user",
+    children: embedded ? h.jsxs(h.Fragment, {
+      children: [h.jsx("div", {
+        className: "clarification-app cf-controls-host",
+        "data-embedded": !0,
+        children: demoControls
+      }), active && historyTarget && ml.createPortal(h.jsx("div", {
+        className: "clarification-app cf-history-host",
+        "data-embedded": true,
+        children: transcript
+      }), historyTarget), active && dockTarget && ml.createPortal(h.jsx("div", {
+        className: "clarification-app cf-home-flow",
+        "data-embedded": !0,
+        children: product
+      }), dockTarget)]
+    }) : h.jsxs("div", {
+      className: "clarification-app",
+      children: [product, demoControls]
+    })
+  });
+}const SessionPane=createSessionPane(y,ml);
 function tP({initialPreview=false}) {
   const sessions=window.sessionReports;
   function lookup(id) {
@@ -2321,7 +3921,8 @@ function tP({initialPreview=false}) {
       return {hash,kind:"library",id:library?.[1] || "templates",launch:null};
     }
     let path=sessions.readRoute(hash);
-    if(!path && hash==="#/clarification") {
+    if(!path && hash === "#/clarification"){
+      if(new URLSearchParams(location.search).get("demo")==="clarification")return {hash,kind:"clarification",launch:null};
       const saved=$L();
       if(!saved?.sessionId || !sessions.generationFor(saved.sessionId)) return {hash,kind:"clarification",launch:saved?.sessionId?null:saved};
       path={kind:"clarification",id:saved.sessionId};
