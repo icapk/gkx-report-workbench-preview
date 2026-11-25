@@ -39,7 +39,7 @@
     const previous = makeLaunch(workspace,report);
     if (!previous || input.prompt.trim() !== previous.prompt.trim()) return false;
     if (['type','model','template','template_id','template_version'].some(key=>input[key] != null && input[key]!==previous[key])) return false;
-    return JSON.stringify(input.skills || []) === JSON.stringify(previous.skills) &&
+    return JSON.stringify(window.WorkbenchSkills.validTaskSkills(input.skills)) === JSON.stringify(previous.skills) &&
       JSON.stringify(fileKeys(input.attachments || [])) === JSON.stringify(fileKeys(previous.attachments));
   }
   function makeLaunch(workspace, report) {
@@ -50,7 +50,7 @@
       type: report.type, model: report.model || report.draft?.model || 'GLM 5.2',
       template: report.template || report.draft?.template || '不使用模板', templateSpec: report.templateSpec,
       template_id: report.template_id, template_version: report.template_version,
-      skills: report.skills || [], skillSnapshots: report.skillSnapshots || [],
+      ...window.WorkbenchSkills.taskSkillFields(report.skills, report.skillSnapshots),
       sourceTaskId: report.id, sessionId: report.id, runId: report.session?.runId
     };
   }

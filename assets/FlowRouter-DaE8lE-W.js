@@ -195,7 +195,7 @@ Error generating stack: `+s.message+`
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const _w={name:"x",size:24,node:[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]]};_w.node;const $w=rn(_w);function Et(t){return`./${t}`}const Lw=Et("icons/project-folder.png"),g6=Et("icons/project-folder-open.png"),v6=Et("icons/new-report.png"),b6=Et("icons/new-report-hover.gif"),Ro={strategy:Et("icons/skills/strategy.svg"),industry:Et("icons/skills/industry.svg"),technology:Et("icons/skills/technology.svg"),policy:Et("icons/skills/policy.svg"),evidence:Et("icons/skills/evidence.svg"),argument:Et("icons/skills/argument.svg"),writing:Et("icons/skills/writing.svg")};function x6({onCreate:t,current}){const n=y.useRef(null),[r,o]=y.useState(!1),[l,c]=y.useState(!1),[u,d]=y.useState(()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches);y.useEffect(()=>{const S=window.matchMedia("(prefers-reduced-motion: reduce)"),C=()=>d(S.matches),z=()=>{o(!1),c(!1)},E=()=>{document.hidden&&z()},T=new IntersectionObserver(A=>{A[0].isIntersecting||z()});return n.current&&T.observe(n.current),S.addEventListener("change",C),document.addEventListener("visibilitychange",E),()=>{T.disconnect(),S.removeEventListener("change",C),document.removeEventListener("visibilitychange",E)}},[]);const x=!u&&(r||l);return h.jsxs("button",{ref:n,type:"button",onClick:t,"aria-current":current ? "page" : undefined,onPointerEnter:S=>{S.pointerType==="mouse"&&o(!0)},onPointerLeave:()=>o(!1),onFocus:S=>c(S.currentTarget.matches(":focus-visible")),onBlur:()=>c(!1),className:"content-stretch flex gap-[8px] items-center px-[4px] py-[5px] relative rounded-[8px] shrink-0 w-full","data-node-id":"1:89","data-icon-playing":x,children:[h.jsx("div",{className:"relative shrink-0 size-[20px]","data-node-id":"1:90","data-name":"新建写作报告",children:h.jsx("img",{alt:"",className:"new-report-image",src:x?b6:v6,width:512,height:512,draggable:!1})}),h.jsx("p",{className:"[word-break:break-word] font-normal leading-[22px] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:99",children:"新建报告"})]})}const bc=["依据可循","数据支撑","证据可查","方法可依"];function y6(){const t=y.useRef(null),[n,r]=y.useState(()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches),[o,l]=y.useState(!document.hidden),[c,u]=y.useState(!0),[d,m]=y.useState({index:0,count:0,phase:"typing"}),v=o&&c&&!n;return y.useEffect(()=>{const b=()=>l(!document.hidden),g=window.matchMedia("(prefers-reduced-motion: reduce)"),x=()=>r(g.matches),S=new IntersectionObserver(C=>u(C[0].isIntersecting));return t.current&&S.observe(t.current),document.addEventListener("visibilitychange",b),g.addEventListener("change",x),()=>{S.disconnect(),document.removeEventListener("visibilitychange",b),g.removeEventListener("change",x)}},[]),y.useEffect(()=>{if(!v)return;const b={typing:140,holding:5e3,deleting:85,waiting:380}[d.phase],g=window.setTimeout(()=>m(x=>{if(x.phase==="holding")return{...x,count:x.count-1,phase:"deleting"};if(x.phase==="waiting")return{index:(x.index+1)%bc.length,count:0,phase:"typing"};const S=x.count+(x.phase==="typing"?1:-1),C=S===bc[x.index].length?"holding":S===0?"waiting":x.phase;return{...x,count:S,phase:C}}),b);return()=>window.clearTimeout(g)},[d,v]),h.jsxs("span",{ref:t,className:"headline-typewriter leading-[28px] text-[#165dff] text-[20px]","data-playing":v,"data-phase":n?"static":d.phase,children:[h.jsx("span",{className:"sr-only",children:bc[0]}),h.jsxs("span",{className:"headline-typewriter-text","aria-hidden":"true",
+ */const _w={name:"x",size:24,node:[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]]};_w.node;const $w=rn(_w);function Et(t){return`./${t}`}const Lw=Et("icons/project-folder.png"),g6=Et("icons/project-folder-open.png"),v6=Et("icons/new-report.png"),b6=Et("icons/new-report-hover.gif");function x6({onCreate:t,current}){const n=y.useRef(null),[r,o]=y.useState(!1),[l,c]=y.useState(!1),[u,d]=y.useState(()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches);y.useEffect(()=>{const S=window.matchMedia("(prefers-reduced-motion: reduce)"),C=()=>d(S.matches),z=()=>{o(!1),c(!1)},E=()=>{document.hidden&&z()},T=new IntersectionObserver(A=>{A[0].isIntersecting||z()});return n.current&&T.observe(n.current),S.addEventListener("change",C),document.addEventListener("visibilitychange",E),()=>{T.disconnect(),S.removeEventListener("change",C),document.removeEventListener("visibilitychange",E)}},[]);const x=!u&&(r||l);return h.jsxs("button",{ref:n,type:"button",onClick:t,"aria-current":current ? "page" : undefined,onPointerEnter:S=>{S.pointerType==="mouse"&&o(!0)},onPointerLeave:()=>o(!1),onFocus:S=>c(S.currentTarget.matches(":focus-visible")),onBlur:()=>c(!1),className:"content-stretch flex gap-[8px] items-center px-[4px] py-[5px] relative rounded-[8px] shrink-0 w-full","data-node-id":"1:89","data-icon-playing":x,children:[h.jsx("div",{className:"relative shrink-0 size-[20px]","data-node-id":"1:90","data-name":"新建写作报告",children:h.jsx("img",{alt:"",className:"new-report-image",src:x?b6:v6,width:512,height:512,draggable:!1})}),h.jsx("p",{className:"[word-break:break-word] font-normal leading-[22px] not-italic relative shrink-0 text-[#1d2129] text-[14px] whitespace-nowrap","data-node-id":"1:99",children:"新建报告"})]})}const bc=["依据可循","数据支撑","证据可查","方法可依"];function y6(){const t=y.useRef(null),[n,r]=y.useState(()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches),[o,l]=y.useState(!document.hidden),[c,u]=y.useState(!0),[d,m]=y.useState({index:0,count:0,phase:"typing"}),v=o&&c&&!n;return y.useEffect(()=>{const b=()=>l(!document.hidden),g=window.matchMedia("(prefers-reduced-motion: reduce)"),x=()=>r(g.matches),S=new IntersectionObserver(C=>u(C[0].isIntersecting));return t.current&&S.observe(t.current),document.addEventListener("visibilitychange",b),g.addEventListener("change",x),()=>{S.disconnect(),document.removeEventListener("visibilitychange",b),g.removeEventListener("change",x)}},[]),y.useEffect(()=>{if(!v)return;const b={typing:140,holding:5e3,deleting:85,waiting:380}[d.phase],g=window.setTimeout(()=>m(x=>{if(x.phase==="holding")return{...x,count:x.count-1,phase:"deleting"};if(x.phase==="waiting")return{index:(x.index+1)%bc.length,count:0,phase:"typing"};const S=x.count+(x.phase==="typing"?1:-1),C=S===bc[x.index].length?"holding":S===0?"waiting":x.phase;return{...x,count:S,phase:C}}),b);return()=>window.clearTimeout(g)},[d,v]),h.jsxs("span",{ref:t,className:"headline-typewriter leading-[28px] text-[#165dff] text-[20px]","data-playing":v,"data-phase":n?"static":d.phase,children:[h.jsx("span",{className:"sr-only",children:bc[0]}),h.jsxs("span",{className:"headline-typewriter-text","aria-hidden":"true",
   style:{"--orbit-visibility":n ? 1 : d.count / bc[d.index].length},
   children:[n ? bc[0] : bc[d.index].slice(0,d.count),
     h.jsx("span",{className:"headline-typewriter-caret"}),
@@ -1613,18 +1613,9 @@ y.useEffect(()=>{if(!m||t!=="project")return;const T=requestAnimationFrame(()=>{
   const x = phase === "outline-review" ? "待确认大纲" : clarifying ? "澄清中" : g ? `生成进度 ${b.progress}%` : b.notified ? "有更新" : "";
   return h.jsxs("div",{"data-node-id":b.id,"data-report":"true","data-selected":r===b.id,className:`report-row ${b.generated?"generated-report":""}`,children:[h.jsxs(n4,{children:[h.jsx(a4,{asChild:!0,children:h.jsx("button",{type:"button",className:"report-row-open","aria-current":r===b.id?"page":void 0,"aria-label":`${b.title}${x?"，"+x:""}`,onClick:()=>l("report",b.id),children:[h.jsx("span",{"data-node-id":b.titleId,"data-report-title":"true",className:"report-row-title",children:b.title},"title"),clarifying && h.jsx("small",{style:{flexShrink:0,color:"#53677f",fontSize:11,marginRight:24},children:x},"phase")]})}),h.jsxs(i4,{side:"right",align:"start",sideOffset:10,collisionPadding:12,className:"report-title-tooltip",children:[h.jsx("p",{children:b.title}),x && h.jsx("p",{className:"report-title-tooltip-meta",children:x})]})]}),(g||b.notified)&&h.jsxs("div",{className:"report-row-status",children:[g&&h.jsx("div",{"data-node-id":b.id==="1:128"?"1:300":void 0,className:"report-row-progress",children:h.jsx(Nm,{value:b.progress,label:`${b.title}生成进度`,focusable:!1})}),!g&&b.notified&&h.jsx("img",{alt:"","data-node-id":b.id==="1:109"?"1:118":void 0,className:"report-status-dot",src:Et("figma/imgEllipse14300.svg")})]}),h.jsx(X5,{kind:"report",id:b.id,name:b.title,folders:d,folderId:b.folderId,nodeId:b.moreId,onAction:c,onMove:u,canEditRequest})]},b.id)}return o==="最近"?h.jsx(jm,{delayDuration:300,children:[...m].sort((b,g)=>(g.updatedAt||0)-(b.updatedAt||0)).map(v)}):h.jsxs(jm,{delayDuration:300,children:[d.map(b=>{const g=n.includes(b.name);return h.jsxs("div",{"data-folder-id":b.id,"data-node-id":b.nodeId,"data-closed":g,className:"tree-folder",children:[h.jsxs("div",{className:"tree-folder-heading",children:[h.jsxs("button",{type:"button","data-folder-toggle":"true","data-node-id":b.buttonId,"aria-expanded":!g,onClick:()=>l("group",b.name),children:[h.jsx("span",{"data-node-id":b.iconId,className:"tree-folder-icon",children:h.jsx("img",{alt:"",className:"project-folder-image",src:g?Lw:g6},g?"closed":"open")}),h.jsx("span",{className:"tree-folder-name",title:b.name,style:currentFolderId===b.id?{color:"#2456bb"}:undefined,children:b.name})]}),
     h.jsx("button",{type:"button",className:"tree-more folder-more",style:{marginRight:0},title:"新建会话","aria-label":"在"+b.name+"中新建会话",onClick:()=>l("projectSession",b.id),children:h.jsx(G9,{size:15,"aria-hidden":"true"})}),
-    h.jsx(X5,{kind:"folder",id:b.id,name:b.name,folders:d,onAction:c,onMove:u})]}),h.jsx("div",{className:"tree-folder-reports","aria-hidden":g,children:h.jsx("div",{className:"tree-folder-reports-inner",inert:g,children:m.filter(x=>x.folderId===b.id).map(v)})})]},b.id)}),d.length===0&&h.jsx("p",{className:"tree-empty",children:"暂无写作项目，可在上方项目下拉菜单中新建。"})]})}function l$({className:t,...n}){return h.jsx("div",{"data-slot":"card",className:Ve("flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",t),...n})}function _o({className:t,...n}){return h.jsx("div",{"data-slot":"card-header",className:Ve("@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",t),...n})}function $o({className:t,...n}){return h.jsx("div",{"data-slot":"card-title",className:Ve("leading-none font-semibold",t),...n})}function rl({className:t,...n}){return h.jsx("div",{"data-slot":"card-description",className:Ve("text-sm text-muted-foreground",t),...n})}function c$({className:t,...n}){return h.jsx("div",{"data-slot":"card-action",className:Ve("col-start-2 row-span-2 row-start-1 self-start justify-self-end",t),...n})}function Zs({className:t,...n}){return h.jsx("div",{"data-slot":"card-content",className:Ve("px-6",t),...n})}function Qs({className:t,...n}){return h.jsx("div",{"data-slot":"card-footer",className:Ve("flex items-center px-6 [.border-t]:pt-6",t),...n})}const u$=z1("inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",{variants:{variant:{default:"bg-primary text-primary-foreground [a&]:hover:bg-primary/90",secondary:"bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",destructive:"bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90",outline:"border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",ghost:"[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",link:"text-primary underline-offset-4 [a&]:hover:underline"}},defaultVariants:{variant:"default"}});function ig({className:t,variant:n="default",asChild:r=!1,...o}){const l=r?Uw:"span";return h.jsx(l,{"data-slot":"badge","data-variant":n,className:Ve(u$({variant:n}),t),...o})}function tT({className:t,size:n="default",...r}){return h.jsx(wN,{"data-slot":"switch","data-size":n,className:Ve("peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",t),...r,children:h.jsx(CN,{"data-slot":"switch-thumb",className:Ve("pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground")})})}const M1=[
-  {icon:Ro.strategy, id:"strategy", name:"战略分析", description:"把模糊方向问题转化为可比较的战略选项，呈现评价维度、推荐理由、替代方案与实施条件", scope:"EOS 技能", category:"战略分析", updated:"2026-10-28", usage:6800, creator:"EOS Skill · 战略选项与路径比选", tags:["赛道选择", "多方案比较"]},
-  {icon:Ro.industry, id:"industry", name:"产业研究", description:"梳理产业链结构、关键环节与竞争格局，识别产业发展阶段、增长机会与布局重点", scope:"EOS 技能", category:"产业研究", updated:"2026-10-26", usage:5400, creator:"EOS Skill · 产业研究与七链分析", tags:["产业链分析", "七链结论"]},
-  {icon:Ro.technology, id:"technology", name:"技术研判", description:"围绕技术路线、成熟度与应用场景展开研判，梳理发展趋势、关键瓶颈与落地条件", scope:"EOS 技能", category:"技术研判", updated:"2026-10-22", usage:2700, creator:"EOS Skill · 技术路线与成熟度分析", tags:["技术路线", "成熟度"]},
-  {icon:Ro.policy, id:"policy", name:"政策分析", description:"梳理政策目标、支持方向与约束条件，比较政策工具及其对产业和项目的影响", scope:"EOS 技能", category:"政策分析", updated:"2026-10-29", usage:4600, creator:"EOS Skill · 政策匹配与区域指标", tags:["政策比对", "区域适配"]},
-  {icon:Ro.evidence, id:"evidence", name:"证据核验", description:"核对数据、事实与引用来源，梳理证据链，标记口径差异、信息缺口与待核验项", scope:"通用技能", category:"证据核验", updated:"2026-11-02", usage:8200, creator:"通用 Skill · 证据质量与引用审查", tags:["数据溯源", "质量检查"]},
-  {icon:Ro.argument, id:"argument", name:"观点论证", description:"围绕核心观点组织论据与推理，检查论证逻辑，补充反例、边界条件与替代解释", scope:"EOS 技能", category:"观点论证", updated:"2026-10-24", usage:3100, creator:"EOS Skill · 观点结构化论证", tags:["反方校验", "假设边界"]},
-  {icon:Ro.writing, id:"writer", name:"报告写作", description:"根据研究目标组织报告结构，整合分析与证据，形成层次清晰、表达一致的报告草稿", scope:"通用技能", category:"报告写作", updated:"2026-11-01", usage:12400, creator:"通用 Skill · 结构化研究写作", tags:["报告结构", "表达优化"]},
-  {icon:Et("icons/skills/deep-research.svg"), id:"deep-research", name:"深度研究编排", description:"拆解研究问题，安排多源检索、交叉验证与结论合并，适合产业和技术专题研究。", scope:"通用技能", category:"产业研究", updated:"2026-11-03", usage:18400, creator:"通用 Skill · 多源研究工作流", tags:["研究计划", "证据合并"]}
-];
+    h.jsx(X5,{kind:"folder",id:b.id,name:b.name,folders:d,onAction:c,onMove:u})]}),h.jsx("div",{className:"tree-folder-reports","aria-hidden":g,children:h.jsx("div",{className:"tree-folder-reports-inner",inert:g,children:m.filter(x=>x.folderId===b.id).map(v)})})]},b.id)}),d.length===0&&h.jsx("p",{className:"tree-empty",children:"暂无写作项目，可在上方项目下拉菜单中新建。"})]})}function l$({className:t,...n}){return h.jsx("div",{"data-slot":"card",className:Ve("flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",t),...n})}function _o({className:t,...n}){return h.jsx("div",{"data-slot":"card-header",className:Ve("@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",t),...n})}function $o({className:t,...n}){return h.jsx("div",{"data-slot":"card-title",className:Ve("leading-none font-semibold",t),...n})}function rl({className:t,...n}){return h.jsx("div",{"data-slot":"card-description",className:Ve("text-sm text-muted-foreground",t),...n})}function c$({className:t,...n}){return h.jsx("div",{"data-slot":"card-action",className:Ve("col-start-2 row-span-2 row-start-1 self-start justify-self-end",t),...n})}function Zs({className:t,...n}){return h.jsx("div",{"data-slot":"card-content",className:Ve("px-6",t),...n})}function Qs({className:t,...n}){return h.jsx("div",{"data-slot":"card-footer",className:Ve("flex items-center px-6 [.border-t]:pt-6",t),...n})}const u$=z1("inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",{variants:{variant:{default:"bg-primary text-primary-foreground [a&]:hover:bg-primary/90",secondary:"bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",destructive:"bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90",outline:"border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",ghost:"[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",link:"text-primary underline-offset-4 [a&]:hover:underline"}},defaultVariants:{variant:"default"}});function ig({className:t,variant:n="default",asChild:r=!1,...o}){const l=r?Uw:"span";return h.jsx(l,{"data-slot":"badge","data-variant":n,className:Ve(u$({variant:n}),t),...o})}function tT({className:t,size:n="default",...r}){return h.jsx(wN,{"data-slot":"switch","data-size":n,className:Ve("peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",t),...r,children:h.jsx(CN,{"data-slot":"switch-thumb",className:Ve("pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground")})})}const M1=window.WorkbenchSkills.catalog;
 const skillDetailCopy = {
-  "深度研究编排": {
+  "deep-research": {
   "summary": "支持多阶段研究编排。正式接入时需以项目授权的数据与服务能力为准。",
   "examples": [
     "把研究问题拆成可执行的检索与分析任务。",
@@ -1646,7 +1637,7 @@ const skillDetailCopy = {
     ]
   ]
 },
-  "战略分析": {
+  "strategy": {
     "summary": "组合战略选项比较、赛道优先级研判和风险边界检查。优先调用已授权的专题结论和指标，逐项保留依据。",
     "examples": [
       "比较深圳低空经济三个优先布局方向，并解释推荐与暂缓理由。",
@@ -1668,7 +1659,7 @@ const skillDetailCopy = {
       ]
     ]
   },
-  "产业研究": {
+  "industry": {
     "summary": "优先复用科技专题服务系统已沉淀的链条结论，再补充本次任务所需证据，避免重复从头分析。",
     "examples": [
       "分析低空经济产业链的关键环节、短板与目标企业。",
@@ -1690,7 +1681,7 @@ const skillDetailCopy = {
       ]
     ]
   },
-  "观点论证": {
+  "argument": {
     "summary": "既协助形成论点，也主动暴露证据缺口；观点经用户确认后再进入报告正文。",
     "examples": [
       "论证“优先发展运行服务而非全面布局整机制造”是否成立。",
@@ -1712,7 +1703,7 @@ const skillDetailCopy = {
       ]
     ]
   },
-  "证据核验": {
+  "evidence": {
     "summary": "把可信度问题转成可定位的来源缺失、过期资料、口径冲突和人工复核事项。",
     "examples": [
       "检查报告中哪些关键判断缺少直接支撑。",
@@ -1734,7 +1725,7 @@ const skillDetailCopy = {
       ]
     ]
   },
-  "技术研判": {
+  "technology": {
     "summary": "优先调用专题系统已有技术链阶段结论，并呈现数据更新时间、指标口径与待核验假设。",
     "examples": [
       "比较该领域主要技术路线及其产业化准备程度。",
@@ -1756,7 +1747,7 @@ const skillDetailCopy = {
       ]
     ]
   },
-  "政策分析": {
+  "policy": {
     "summary": "结合科技信息展示系统政策和区域指标；政策适配结论仍应回到正式政策来源核验。",
     "examples": [
       "筛选适用于科技企业的政策，说明匹配条件和材料要求。",
@@ -1778,7 +1769,7 @@ const skillDetailCopy = {
       ]
     ]
   },
-  "报告写作": {
+  "writer": {
     "summary": "只负责结构和表达组织，不补造研究事实；证据不足时保留待核查标记。",
     "examples": [
       "把已确认的研究结论整理为领导摘要和完整章节结构。",
@@ -1902,7 +1893,7 @@ function f$({ category, taskSkills, onChangeSkill, onApplySkill, onUseExample })
   const visibleSkills = M1.filter(skill => {
     if (category !== "全部" && category !== skill.category) return false;
     const terms = [skill.name, skill.description, skill.creator, ...skill.tags,
-      ...skillDetailCopy[skill.name].scenarios.flat()];
+      ...skillDetailCopy[skill.id].scenarios.flat()];
     return !term || terms.join(" ").toLocaleLowerCase().includes(term);
   });
   visibleSkills.sort(sort === "最近更新"
@@ -1960,10 +1951,10 @@ function f$({ category, taskSkills, onChangeSkill, onApplySkill, onUseExample })
     h.jsx("section", { className: "skill-grid", "aria-label": "技能列表", children: visibleSkills.map(renderCard) }),
     !visibleSkills.length && h.jsx("p", {className:"skill-search-empty", role:"status", children:"没有找到匹配的技能"}),
     selectedSkill && h.jsx(SkillDetailsDialog, {
-      skill: selectedSkill, detail: skillDetailCopy[selectedSkill.name],
+      skill: selectedSkill, detail: skillDetailCopy[selectedSkill.id],
       applied: taskSkills.includes(selectedSkill.name),
       onApply: () => onApplySkill(selectedSkill.name),
-      onExample: example => { onUseExample(selectedSkill.name,example); setSelectedSkill(null); },
+      onExample: example => { onUseExample(selectedSkill.id,example); setSelectedSkill(null); },
       onClose: () => setSelectedSkill(null)
     })
   ] });
@@ -2055,19 +2046,7 @@ function LinkedLibraryFiles({files}) {
   ]});
 }
 const composerSkillDraftKey = "gkx-writing-prototype:composer-skills";
-function validTaskSkills(value) {
-  const available = M1.map(skill => skill.name);
-  return Array.isArray(value) ? [...new Set(value.filter(name => available.includes(name)))] : [];
-}
-function taskSkillFields(names, saved) {
-  const skills=validTaskSkills(names);
-  const skillSnapshots=skills.map(name=>{
-    const skill=M1.find(item=>item.name===name);
-    const previous=Array.isArray(saved) && saved.find(item=>item?.skill_id===skill.id && item.version && item.source);
-    return previous || {skill_id:skill.id,name:skill.name,version:skill.updated,source:skill.scope};
-  });
-  return {skills,skillSnapshots};
-}
+const {validTaskSkills, taskSkillFields} = window.WorkbenchSkills;
 function restoredComposer(workspace, launch) {
   try {
     const draft=JSON.parse(sessionStorage.getItem(composerSkillDraftKey));
@@ -2131,8 +2110,8 @@ function setTaskSkill(name, include) {
     ? (previous.includes(name) ? previous : [...previous,name])
     : previous.filter(skill => skill!==name));
 }
-function useSkillExample(name, text) {
-  if (!skillDetailCopy[name]?.examples.includes(text)) return;
+function useSkillExample(id, text) {
+  if (!skillDetailCopy[id]?.examples.includes(text)) return;
   b(previous => previous.includes(text) ? previous : previous.trim() ? previous.trimEnd()+"\n\n"+text : text);
   showComposer();
 }
