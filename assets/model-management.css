@@ -66,16 +66,35 @@
 .wm-settings .wm-filters {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: clamp(8px, 1vw, 16px);
+  overflow-x: auto;
   margin: 0 0 16px;
+  padding: 3px;
 }
-.wm-settings .wm-filters label {
+.wm-settings .wm-filters label,
+.wm-settings .wm-name-filter,
+.wm-settings .wm-query-actions {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
   color: #344861;
 }
+.wm-settings .wm-name-filter { flex: 0 1 304px; min-width: 208px; }
+.wm-settings .wm-query-field { position: relative; flex: 1; min-width: 0; }
+.wm-settings .wm-query-count {
+  position: absolute;
+  inset-inline-end: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--wm-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.wm-settings .wm-filters .wm-button { flex-shrink: 0; white-space: nowrap; }
+.wm-settings .wm-filters .wm-primary { margin-inline-start: auto; }
+.wm-settings .wm-query { color: var(--wm-blue); border-color: #adc6ff; }
 .wm-settings .wm-filters :is(input, select) {
   height: 34px;
   padding: 5px 10px;
@@ -85,9 +104,9 @@
   color: var(--wm-ink);
   font: inherit;
 }
-.wm-settings .wm-filters input { width: 240px; }
+.wm-settings .wm-filters input { width: 100%; padding-inline-end: 60px; }
 .wm-settings .wm-filters input::placeholder { color: #758398; }
-.wm-settings .wm-filters select { width: 128px; appearance: auto; }
+.wm-settings .wm-filters select { width: clamp(94px, 8vw, 128px); appearance: auto; }
 .wm-settings .wm-table-scroll { overflow-x: auto; border: 1px solid var(--wm-border); border-radius: 7px; }
 .wm-settings table { width: 100%; min-width: 600px; border-collapse: collapse; table-layout: fixed; text-align: left; }
 .wm-settings .wm-col-name { width: 23%; }

@@ -1,6 +1,7 @@
 (() => {
   "use strict";
 
+  const modelNameLimit = 120;
   let active = null;
 
   function unmount() {
@@ -22,20 +23,29 @@
               返回
             </button>
             <h1 id="wm-title" tabindex="-1">模型管理</h1>
-            <button class="wm-button wm-primary" type="button" data-action="new">
-              <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg>
-              新增模型
-            </button>
           </div>
-          <div class="wm-filters" role="search" aria-label="筛选模型">
-            <label>模型名称<input name="filter-name" type="search" maxlength="120" placeholder="搜索名称（最多 120 个字符）" autocomplete="off"></label>
+          <form class="wm-filters" role="search" aria-label="筛选模型">
+            <div class="wm-name-filter">
+              <label for="wm-filter-name">模型名称</label>
+              <div class="wm-query-field">
+                <input id="wm-filter-name" name="filter-name" type="search" maxlength="${modelNameLimit}" placeholder="搜索模型名称" aria-describedby="wm-query-count" autocomplete="off">
+                <span id="wm-query-count" class="wm-query-count">0/${modelNameLimit}</span>
+              </div>
+            </div>
             <label>上架状态<select name="filter-status">
               <option value="">全部状态</option>
               <option value="online">已上架</option>
               <option value="offline">已下架</option>
             </select></label>
-            <button class="wm-button" type="button" data-action="reset">重置</button>
-          </div>
+            <div class="wm-query-actions">
+              <button class="wm-button wm-query" type="submit">查询</button>
+              <button class="wm-button" type="button" data-action="reset">重置</button>
+            </div>
+            <button class="wm-button wm-primary" type="button" data-action="new">
+              <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg>
+              新增模型
+            </button>
+          </form>
           <div class="wm-table-scroll">
             <table aria-label="模型列表">
               <colgroup><col class="wm-col-name"><col class="wm-col-address"><col class="wm-col-state"><col class="wm-col-actions"></colgroup>
@@ -49,7 +59,7 @@
           <form autocomplete="off" novalidate>
             <h2 id="wm-dialog-title">新增模型</h2>
             <div class="wm-fields">
-              <label><span>模型名称 <b aria-hidden="true">*</b></span><input name="name" required maxlength="120" placeholder="例如 glm-5.3" spellcheck="false"></label>
+              <label><span>模型名称 <b aria-hidden="true">*</b></span><input name="name" required maxlength="${modelNameLimit}" placeholder="例如 glm-5.3" spellcheck="false"></label>
               <label><span>接入地址 <b aria-hidden="true">*</b></span><input name="endpoint" type="url" required maxlength="500" placeholder="https://gateway.example.test/v1" spellcheck="false"></label>
               <label><span>API Key <small>选填</small></span><input name="key" type="password" autocomplete="new-password" placeholder="仅填写示例值"></label>
               <p class="wm-error" role="alert"></p>
@@ -74,6 +84,9 @@
     const addButton = root.querySelector('[data-action="new"]');
     const nameFilter = root.querySelector('[name="filter-name"]');
     const statusFilter = root.querySelector('[name="filter-status"]');
+    const counter = root.querySelector("#wm-query-count");
+    let appliedKeyword = "";
+    let appliedStatus = "";
 
     function feedback(message = "", failed = false) {
       result.textContent = message;
@@ -128,11 +141,9 @@
     function refresh(focusId) {
       try {
         const models = records.list();
-        const keyword = nameFilter.value.trim().toLowerCase();
-        const status = statusFilter.value;
         const matches = models.filter(model =>
-          model.name.toLowerCase().includes(keyword) &&
-          (status === "" || status === (model.online ? "online" : "offline"))
+          model.name.toLowerCase().includes(appliedKeyword) &&
+          (appliedStatus === "" || appliedStatus === (model.online ? "online" : "offline"))
         );
         if (matches.length) body.replaceChildren(...matches.map(modelRow));
         else showEmpty(models.length ? "未找到匹配的模型" : "暂无模型");
@@ -147,14 +158,19 @@
     }
 
     function applyFilters() {
+      appliedKeyword = nameFilter.value.trim().toLowerCase();
+      appliedStatus = statusFilter.value;
       feedback();
       refresh();
     }
-    nameFilter.addEventListener("input", event => {
-      if (!event.isComposing) applyFilters();
+    function updateCounter() {
+      counter.textContent = nameFilter.value.length + "/" + modelNameLimit;
+    }
+    nameFilter.addEventListener("input", updateCounter, listeners);
+    nameFilter.form.addEventListener("submit", event => {
+      event.preventDefault();
+      applyFilters();
     }, listeners);
-    nameFilter.addEventListener("compositionend", applyFilters, listeners);
-    statusFilter.addEventListener("change", applyFilters, listeners);
 
     root.addEventListener("click", event => {
       const button = event.target.closest("button[data-action]");
@@ -167,6 +183,7 @@
       if (action === "reset") {
         nameFilter.value = "";
         statusFilter.value = "";
+        updateCounter();
         applyFilters();
         nameFilter.focus();
         return;
