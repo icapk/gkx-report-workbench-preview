@@ -1,0 +1,86 @@
+.writing-project-tools,
+.writing-project-lists {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.writing-project-heading {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.writing-library-link {
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  cursor: pointer;
+  text-align: start;
+}
+
+.writing-library-link {
+  gap: 8px;
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 4px;
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.writing-project-lists {
+  gap: 8px;
+  padding-bottom: 8px;
+}
+.writing-project-lists[data-view="recent"] { gap: 1px; }
+
+.writing-view-tabs {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  width: 100%;
+  min-width: 0;
+  margin-top: 8px;
+  column-gap: 4px;
+  padding: 4px;
+  border-radius: 7px;
+  background: #f0f1f4;
+}
+.writing-view-tabs > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 28px;
+  padding-inline: 8px;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 5px;
+  color: var(--color-secondary);
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.writing-view-tabs > button[aria-selected="true"] {
+  color: var(--color-text);
+  font-weight: 600;
+  background: white;
+  box-shadow: 0 1px 3px rgb(29 33 41 / 8%);
+}
+.writing-view-tabs > button:hover { color: var(--color-text); }
+.writing-pinned { display: grid; gap: 1px; }
+.writing-pinned h3 {
+  padding: 4px;
+  color: var(--color-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.writing-library-link:hover { background: rgb(255 255 255 / 76%); }
+
+.writing-project-tools button:focus-visible { outline: 1px solid var(--color-primary); outline-offset: -1px; }

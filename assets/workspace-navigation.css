@@ -1,0 +1,124 @@
+/* Shared portal frame for report writing and the library. */
+.strategy-workspace > main[data-node-id="1:61"] {
+  --workspace-gutter: clamp(8px, 1vw, 16px);
+  left: var(--workspace-gutter);
+  right: var(--workspace-gutter);
+  width: auto;
+}
+.strategy-workspace[data-workspace-view="library"] { min-height: 0; }
+.strategy-workspace[data-workspace-view="library"] [data-node-id="1:69"] { overflow: hidden; }
+.strategy-workspace .writing-scroll-content:is([data-library-page], [data-session-pane]) {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+}
+.strategy-workspace .writing-scroll-content[data-session-pane] > .home-workflow-slot { min-height: 0; }
+.workspace-crumb-row { display: flex; align-items: center; min-width: 0; max-width: 100%; flex: none; }
+.workspace-crumb-row > [data-node-id="1:63"] { min-width: 0; color: #758194; }
+.workspace-crumb-row .workbench-pane-path { min-width: 0; }
+.workspace-crumb-row button, .workspace-crumb-row strong { white-space: nowrap; }
+.strategy-workspace [data-node-id="1:62"] { gap: 12px; }
+.workspace-project-toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 70%);
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+.workspace-project-toggle img { width: 16px; height: 16px; }
+.workspace-project-toggle:hover { background: white; }
+.workspace-project-toggle:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+.strategy-workspace .writing-library-link[aria-current="page"] {
+  color: var(--color-primary);
+  background: #eaf1ff;
+  font-weight: 500;
+}
+.workspace-back { color: var(--color-primary); cursor: pointer; }
+.workspace-back:hover { text-decoration: underline; }
+.workspace-back:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+.strategy-workspace [data-node-id="1:63"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 20px;
+}
+.strategy-crumb-divider { color: #96a3b6; }
+.strategy-workspace [data-node-id="1:62"] [aria-current="page"] { color: var(--color-text); font-weight: 500; }
+
+.strategy-library-view {
+  --library-inset: clamp(14px, 2vw, 28px);
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 0 var(--library-inset) 16px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  container: library-view / inline-size;
+  background: white;
+  color: var(--color-text);
+}
+
+.strategy-library-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  margin: 0 0 18px;
+  border-bottom: 1px solid var(--color-border);
+  background: white;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.strategy-workspace .writing-scroll-content [data-node-id="1:270"] {
+  width: min(800px, calc(100% - 48px));
+}
+.strategy-workspace [data-node-id="1:270"] :is([data-node-id="1:269"], [data-node-id="1:304"]) {
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+}
+.strategy-workspace [data-node-id="1:270"] :is([data-node-id="7:26"], [data-node-id="7:25"], [data-node-id="1:334"]) {
+  width: 100%;
+  min-width: 0;
+}
+.strategy-workspace [data-node-id="7:100"] { container: skill-gallery / inline-size; }
+.strategy-workspace .strategy-skills-title {
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+@container skill-gallery (max-width: 680px) {
+  .skill-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@container library-view (max-width: 620px) {
+  .strategy-library-view .lib-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .workspace-project-toggle { width: 36px; height: 36px; }
+  .strategy-library-title { min-height: 56px; }
+}
+
+@media (max-width: 480px) {
+  .strategy-workspace .writing-scroll-content [data-node-id="1:270"] { width: calc(100% - 20px); }
+  .strategy-workspace .writing-scroll-content [data-node-id="7:100"] { width: calc(100% - 24px); }
+  .strategy-workspace [data-node-id="1:334"] { flex-wrap: wrap; row-gap: 4px; }
+  .strategy-workspace [data-node-id="1:313"] { margin-left: auto; }
+}

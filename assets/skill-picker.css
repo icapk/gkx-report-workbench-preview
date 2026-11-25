@@ -1,21 +1,32 @@
 .skill-picker-menu {
-  width:min(320px,calc(100vw - 20px));
-  max-height:min(370px,var(--radix-dropdown-menu-content-available-height));
+  display: flex;
+  flex-direction: column;
+  width: min(320px, calc(100vw - 20px));
+  max-height: min(296px, var(--radix-dropdown-menu-content-available-height));
+  overflow: hidden;
 }
-.skill-picker-search { padding:4px; }
-.skill-picker-search input { height:32px; width:100%; }
+.skill-picker-search { flex: none; padding: 4px; }
+.strategy-workspace [data-choosing-skills] .composer-entry-line { min-height: 0; }
+.skill-picker-search input { height: 32px; width: 100%; }
+.skill-picker-list {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
 .skill-picker-row {
-  display:grid; grid-template-columns:minmax(0,1fr) auto;
-  align-items:center; gap:4px; padding:3px 4px;
+  width: 100%; min-height: 36px; padding: 4px 8px; gap: 8px;
+  text-align: start; cursor: pointer; color: var(--color-text);
 }
-.skill-picker-identity {
-  display:flex; align-items:center; gap:8px; min-width:0; font-size:14px;
+.skill-picker-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.skill-picker-row > svg { color: var(--color-primary); flex: none; }
+.skill-picker-row:is(:hover,[data-highlighted]) { background: #f2f3f5; }
+.skill-picker-row:focus { outline: none; }
+.skill-picker-row:focus-visible { background: #e6e8ec; }
+@media (forced-colors: active) {
+  .skill-picker-row:focus-visible { outline: 2px solid Highlight; outline-offset: -2px; }
 }
-.skill-picker-identity > span:last-child { overflow-wrap:anywhere; }
-.skill-picker-action {
-  padding:4px 7px; justify-content:center; white-space:nowrap;
-  color:var(--color-primary); font-size:13px; cursor:pointer;
+.skill-picker-empty { margin: 0; padding: 16px 10px; color: var(--color-secondary); font-size: 13px; text-align: center; }
+@media (any-pointer: coarse) {
+  .skill-picker-row { min-height: 44px; }
 }
-.skill-picker-action:is(:hover,[data-highlighted]) { background:var(--color-hover); }
-.skill-picker-action:focus-visible { outline:1px solid var(--text-field-focus-border); outline-offset:-1px; }
-.skill-picker-empty { margin:0; padding:16px 10px; color:var(--color-secondary); font-size:13px; text-align:center; }

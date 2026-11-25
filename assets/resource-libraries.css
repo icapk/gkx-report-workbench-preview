@@ -44,14 +44,8 @@
 .lib-linked-files { margin-top:14px; display:grid; gap:5px; }
 .lib-linked-files summary { cursor:pointer; }
 .lib-linked-files pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:190px; overflow:auto; }
-.lib-template-chip { display:inline-flex; align-items:center; gap:6px; max-width:100%; padding:1px 7px; border-radius:4px; background:#fff2e0; color:#995713; font-size:12px; }
-.lib-template-chip button { cursor:pointer; }
 @media(max-width:760px) { .lib-grid {grid-template-columns:minmax(0,1fr);} }
 @media(max-width:480px) { .lib-head,.lib-foot {padding:12px 14px;} .lib-body{padding:2px 14px 14px;} .assignment-layout{grid-template-columns:1fr;gap:8px;} }
-.prompt-attachments > .lib-template-chip { background:#fff2df; color:#915827; border:1px solid #f3d9ae; }
-.prompt-attachments > .task-skill-chip { background:#eaf7f6; color:#176b6b; border-color:#c3e4e1; }
-.task-skill-chip > .task-skill-mark { width:7px; height:7px; flex:none; margin-inline:2px; border-radius:1px; background:#218d8e; transform:rotate(45deg); }
-.prompt-attachments .task-skill-chip button { color:#397676; }
 
 .kb-library,.kb-stack,.kb-file-copy { display:grid;gap:12px;min-width:0; }
 .kb-spread,.kb-actions,.kb-pages,.kb-foot { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
@@ -74,13 +68,12 @@
 .kb-stack > label { font-weight:500; }
 .kb-stack label + .lib-field { margin-top:-6px; }
 .kb-required,.kb-error,.kb-danger { color:#b72828; }
-.kb-search { width:min(290px,100%); }
 .kb-library { container-type:inline-size; }
-.kb-list-toolbar { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"search create"; }
-.kb-list-toolbar .kb-search { grid-area:search; }
-.kb-list-toolbar .lib-primary { grid-area:create; min-height:34px; padding-inline:14px; }
-.kb-empty-toolbar { grid-template-columns:minmax(0,1fr) auto auto; grid-template-areas:"search stats create"; margin-bottom:0; }
-.kb-empty-toolbar .kb-stats { grid-area:stats; font-size:12px; }
+.kb-list-toolbar { justify-content:flex-start; gap:8px 16px; margin-bottom:0; }
+.kb-search-actions { display:flex; align-items:center; gap:8px; width:min(100%, 400px); }
+.kb-search-actions .kb-search { flex:1 1 0; min-width:0; height:36px; }
+.kb-search-actions .lib-primary { flex:none; height:36px; padding-inline:14px; white-space:nowrap; }
+.kb-list-toolbar .kb-stats { margin-inline-start:auto; justify-content:flex-end; font-size:12px; }
 .kb-stats { display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; }
 .kb-stats > span + span { display:inline-flex; align-items:center; gap:12px; }
 .kb-stats > span + span::before { content:""; flex:none; height:1em; border-inline-start:1px solid var(--color-border); }
@@ -106,9 +99,6 @@
   border:1px solid #6396ee; border-radius:4px 5px 6px 5px;
   background:linear-gradient(145deg,#98bfff,#558ced);
 }
-@container (max-width: 640px) {
-  .kb-empty-toolbar { grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"search create" "stats stats"; }
-}
 @container (max-width: 560px) {
   .kb-welcome { grid-template-columns:auto minmax(0,1fr); justify-content:start; gap:10px 14px; padding:16px; }
 }
@@ -124,7 +114,6 @@
 .kb-file-copy { gap:3px; }
 .kb-file-copy strong,.kb-content,.kb-card p { overflow-wrap:anywhere; }
 .kb-file-copy small { color:#687387;font-size:12px; }
-.kb-source-list { max-height:170px;overflow:auto; }
 .kb-content { max-height:46dvh;overflow:auto;white-space:pre-wrap;background:#f6f8fc;border-radius:10px;padding:15px;margin:0;font:inherit;line-height:1.7; }
 .kb-link { color:#165dff; }
 @media(max-width:590px) {
@@ -135,8 +124,6 @@
 .kb-upload { width:100%;align-content:center;justify-items:center;cursor:pointer;color:#384861; }
 .kb-upload small { color:#687387;font-size:12px; }
 .kb-upload[data-dragging="true"] { border-color:#165dff;background:#eaf2ff; }
-.kb-option { width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer; }
-.kb-option input { width:16px;height:16px;accent-color:#165dff;flex-shrink:0; }
 
 .tpl-library { min-width: 0; }
 .tpl-toolbar, .tpl-bar, .tpl-inline, .tpl-tags, .tpl-card-actions, .tpl-tabs {

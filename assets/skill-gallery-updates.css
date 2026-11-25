@@ -40,60 +40,90 @@
   cursor: pointer;
 }
 .skill-card-title-button:focus-visible,
-.skill-card .skill-task-button:focus-visible {
+.skill-task-button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 .skill-task-button {
   flex: none;
-  padding: 3px 10px;
-  border: 1px solid #cddcf7;
-  border-radius: 6px;
-  background: #f3f7ff;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  box-shadow: none;
   color: #205cc8;
-  font-size: 13px;
-  line-height: 20px;
   cursor: pointer;
 }
-.skill-task-button:hover:enabled { background: #e5eeff; }
-.skill-task-button[aria-pressed="true"] {
-  border-color: #a8d8d2;
-  background: #eef9f6;
-  color: #246f66;
-}
-.skill-task-button[aria-pressed="true"]:hover { background: #dcf2ed; }
-.skill-task-button:disabled {
-  border-color: var(--color-border);
-  background: transparent;
-  color: var(--color-muted);
-  cursor: not-allowed;
-}
+.skill-task-button:disabled { cursor: default; color: var(--color-primary); background: transparent; }
+.skill-detail-primary:disabled { cursor: default; opacity: .6; }
+.skill-task-button:is(:hover,:active):enabled { color: var(--color-primary); background: transparent; }
 .skill-detail-footer { flex-wrap: wrap; }
-.skill-detail-footer .skill-task-button { min-height: 34px; }
-.skill-detail-footer .skill-task-button[aria-pressed="false"]:enabled {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: white;
+@media (any-pointer: coarse) {
+  .skill-task-button { width: 44px; height: 44px; }
 }
 .skill-detail-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 9px; }
 .skill-detail-meta time { margin-top: 2px; color: var(--color-secondary); font-size: 12px; line-height: 18px; }
 .skill-detail-dismiss { flex: none; margin-inline-start: auto; align-self: flex-start; cursor: pointer; }
 .skill-detail-dismiss:hover { background: var(--color-hover); }
-.skill-detail-examples li { padding: 0; }
+.skill-detail-examples li {
+  padding: 0;
+  border: 1px solid #e1e6ee;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-text);
+}
 .skill-detail-examples button {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 7px 12px;
+  min-height: 40px;
+  padding: 8px 12px;
   border-radius: inherit;
   color: inherit;
   text-align: start;
   cursor: pointer;
 }
-.skill-detail-examples button:hover { background: #e5edfc; color: var(--color-primary); }
-.skill-detail-examples button > [aria-hidden] { color: var(--color-primary); }
+.skill-detail-examples button:hover { background: #f5f6f8; }
+.skill-example-insert {
+  flex: none;
+  color: #295bb9;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.skill-detail-scenarios {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 14px 0;
+  border-radius: 8px;
+  background: #f0f3f8;
+}
+.skill-detail-scenarios > div {
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 4px;
+  padding-inline: 14px;
+}
+.skill-detail-scenarios > div + div { border-inline-start: 1px solid #d8dfe9; }
+.skill-detail-scenarios dt { font-weight: 600; }
+.skill-detail-scenarios dd { font-size: 13px; line-height: 20px; }
+@media (max-width: 500px) {
+  .skill-detail-scenarios { grid-template-columns: minmax(0, 1fr); padding: 0 12px; }
+  .skill-detail-scenarios > div {
+    grid-template-columns: 5.25em minmax(0, 1fr);
+    align-items: baseline;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  .skill-detail-scenarios > div + div { border-inline-start: 0; border-top: 1px solid #d8dfe9; }
+  .skill-detail-examples button { min-height: 44px; }
+}
 @media (max-width: 540px) {
   .skill-gallery-filters .lib-field { flex: 1 0 100%; }
   .skill-gallery-filters button.lib-select-trigger { min-width: 0; flex: 1; }
