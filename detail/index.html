@@ -5,52 +5,52 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>报告详情 · 智能创作报告</title>
   <link rel="icon" href="../assets/portal-brand.png">
-  <link rel="stylesheet" href="layout.css?v=e1bc559df677">
-  <link rel="stylesheet" href="process-history.css?v=3f7984091a63">
+  <link rel="stylesheet" href="layout.css?v=c0209d6eae04">
+  <link rel="stylesheet" href="process-history.css?v=2bb856c113a8">
   <link rel="stylesheet" href="report-actions.css?v=0c7db3e26fca">
-  <script defer src="process-history.js?v=133e200e4cea"></script>
-  <script defer src="report-actions.js?v=03defb911784"></script>
-  <script defer src="workspace.js?v=03269fccf830"></script>
+  <script defer src="process-history.js?v=ded196bb8272"></script>
+  <script defer src="report-actions.js?v=6070d82f7b6f"></script>
+  <script defer src="workspace.js?v=7dca7a0057bd"></script>
 </head>
 <body>
   <main class="workspace">
     <section class="report-surface" id="detail" hidden aria-label="报告写作工作区">
-      <div class="tool-row">
-        <button class="process-trigger" id="process-toggle" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="process-drawer"><i data-icon="history-chat"></i>沟通记录</button>
-        <div class="report-tools" id="report-tools" role="toolbar" aria-label="报告工具栏">
-          <span class="tool-sep"></span>
-          <button data-action="toc" aria-expanded="true" aria-controls="toc"><i data-icon="list"></i>目录</button>
-          <button data-action="copy"><i data-icon="copy"></i>复制</button>
-          <button data-action="download" aria-haspopup="true"><i data-icon="download"></i>下载</button>
-          <span class="tool-sep"></span>
-          <button data-action="new-version"><i data-icon="plus"></i>新建版本</button>
-          <button data-action="versions"><i data-icon="history"></i>版本管理</button>
-          <span class="tool-sep"></span>
-          <button data-action="knowledge"><i data-icon="upload"></i>保存至知识库</button>
+      <section class="conversation" aria-label="沟通记录">
+        <div id="process-content" class="conversation-content"></div>
+      </section>
+      <section class="document-pane" id="document-pane" aria-label="报告阅读区">
+        <div class="tool-row">
+          <div class="report-tools" id="report-tools" role="toolbar" aria-label="报告工具栏">
+            <button data-action="toc" aria-expanded="true" aria-controls="toc"><i data-icon="list"></i>目录</button>
+            <button data-action="copy"><i data-icon="copy"></i>复制</button>
+            <button data-action="download" aria-haspopup="true"><i data-icon="download"></i>下载</button>
+            <span class="tool-sep"></span>
+            <button data-action="new-version"><i data-icon="plus"></i>新建版本</button>
+            <button data-action="versions"><i data-icon="history"></i>版本管理</button>
+            <span class="tool-sep"></span>
+            <button data-action="knowledge"><i data-icon="upload"></i>保存至知识库</button>
+          </div>
+          <button class="icon-btn" id="close-report" type="button" aria-label="关闭报告" title="关闭报告"><i data-icon="close"></i></button>
         </div>
-      </div>
-      <div class="reading-layout" id="reading-layout">
-        <aside class="toc" id="toc" aria-label="报告目录">
-          <div class="toc-heading"><strong>目录</strong><button class="icon-btn" id="close-toc" aria-label="收起目录"><i data-icon="panel-close"></i></button></div>
-          <nav id="toc-items" aria-label="定位到章节"></nav>
-        </aside>
-        <div class="reader" id="reader">
-          <div class="paper">
-            <article class="report-text" id="editor" contenteditable="true" role="textbox" aria-label="报告正文" aria-multiline="true" spellcheck="false"></article>
-            <section class="references" id="references" hidden aria-label="数据来源与参考文献">
-              <h2>数据来源与参考文献</h2>
-              <h3 id="source-count"></h3>
-              <ol id="sources"></ol>
-            </section>
+        <div class="reading-layout" id="reading-layout">
+          <aside class="toc" id="toc" aria-label="报告目录">
+            <div class="toc-heading"><strong>目录</strong><button class="icon-btn" id="close-toc" aria-label="收起目录"><i data-icon="panel-close"></i></button></div>
+            <nav id="toc-items" aria-label="定位到章节"></nav>
+          </aside>
+          <div class="reader" id="reader">
+            <div class="paper">
+              <article class="report-text" id="editor" contenteditable="true" role="textbox" aria-label="报告正文" aria-multiline="true" spellcheck="false"></article>
+              <section class="references" id="references" hidden aria-label="数据来源与参考文献">
+                <h2>数据来源与参考文献</h2>
+                <h3 id="source-count"></h3>
+                <ol id="sources"></ol>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </section>
     <section id="unavailable" class="detail-unavailable" hidden><h1>暂时无法打开这份报告</h1><p id="unavailable-message">请返回工作台，从所属会话打开已生成的报告。</p><button type="button" id="return-home">返回工作台</button></section>
   </main>
-  <dialog id="process-drawer" class="process-drawer" aria-labelledby="process-title">
-    <div class="drawer-heading"><div class="drawer-title"><i data-icon="history-chat"></i><h2 id="process-title">沟通记录</h2></div><button type="button" class="icon-btn" id="close-process" title="收起沟通记录" aria-label="收起沟通记录" autofocus><i data-icon="close"></i></button></div>
-    <div id="process-content" class="drawer-content"></div>
-  </dialog>
 </body>
 </html>

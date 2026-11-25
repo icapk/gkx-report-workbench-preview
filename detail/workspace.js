@@ -31,7 +31,7 @@
   });
   const get = id => document.getElementById(id);
   const reader = get('reader'), editor = get('editor'), toc = get('toc'), tocItems = get('toc-items');
-  const drawer = get('process-drawer'), trigger = get('process-toggle');
+  const documentPane = get('document-pane'), conversation = get('process-content');
   const tocToggle = document.querySelector('[data-action="toc"]');
   let report;
   try {if(sessionId)report=api?.getReport(sessionId);}catch {}
@@ -118,6 +118,7 @@
     if(draft !== null) editor.innerHTML = window.reportActions.safeHTML(draft);
   } catch {}
   renderToc();
+  if (window.matchMedia('(max-width:760px)').matches) setToc(false);
   // Keep pasted material local and preserve the current document's formatting.
   editor.addEventListener('paste', event => {
     event.preventDefault();
@@ -149,23 +150,29 @@
     } else window.reportActions.run(button.dataset.action,button);
   });
   get('close-toc').addEventListener('click', () => { setToc(false); tocToggle.focus(); });
-  trigger.addEventListener('click', () => {
-    if (!drawer.open) {
-      window.renderProcessHistory(get('process-content'), report, {
-        openReport() { drawer.close(); },
-        downloadReport(format) { window.reportActions.run(format,drawer.querySelector('.ph-download')); }
-      });
-      drawer.showModal();
-      trigger.setAttribute('aria-expanded','true');
-    }
+  function showDocument(open) {
+    documentPane.hidden = !open;
+    get('detail').classList.toggle('conversation-only', !open);
+    const card = conversation.querySelector('.ph-file-open');
+    card.setAttribute('aria-expanded', String(open));
+    if (open) {
+      get('close-report').focus({preventScroll:true});
+      highlightSection();
+    } else card.focus({preventScroll:true});
+  }
+  const launch = api.launchFor(sessionId);
+  const state = launch && api.restore(launch);
+  const generation = api.generationFor(sessionId);
+  window.renderProcessHistory(conversation, report, {
+    request: launch?.prompt,
+    definition: state?.definition,
+    durationMs: generation?.durationMs,
+    openReport: () => showDocument(true),
+    downloadReport: (format, anchor) => window.reportActions.run(format, anchor)
   });
-  get('close-process').addEventListener('click', () => drawer.close());
-  drawer.addEventListener('close', () => { trigger.setAttribute('aria-expanded','false'); trigger.focus({preventScroll:true}); });
-  drawer.addEventListener('click', e => {
-    if(e.target === drawer && e.clientX > drawer.getBoundingClientRect().right) drawer.close();
-  });
+  get('close-report').addEventListener('click', () => showDocument(false));
   document.addEventListener('keydown', e => {
-    if(e.key==='Escape' && !document.querySelector('dialog[open]') && !toc.hidden) {
+    if(e.key==='Escape' && !documentPane.hidden && !document.querySelector('dialog[open]') && !toc.hidden) {
       setToc(false); tocToggle.focus();
     }
   });

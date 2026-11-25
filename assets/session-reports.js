@@ -6,8 +6,17 @@
   const generationDuration = 24000;
   const oldGenerationDuration = 6000;
   const home = new URL('../index.html', document.currentScript.src);
-  const detail = new URL('../detail/index.html', document.currentScript.src);
-  const load = () => JSON.parse(localStorage.getItem(workspaceKey) || '{"folders":[],"reports":[]}');
+  const detail = new URL('../detail/index.html?v=fe3f79db94af', document.currentScript.src);
+  // The composer can omit the report type, including on tasks saved by older versions.
+  function normalizeWorkspace(workspace) {
+    if (Array.isArray(workspace?.reports)) {
+      for (const report of workspace.reports) {
+        if (report && !report.type) report.type = report.publishedReport?.type || report.draft?.type || '战略分析报告';
+      }
+    }
+    return workspace;
+  }
+  const load = () => normalizeWorkspace(JSON.parse(localStorage.getItem(workspaceKey) || '{"folders":[],"reports":[]}'));
   const row = (workspace, id) => workspace.reports.find(report => report.id === id);
   const folder = (workspace, report) => workspace.folders.find(project => project.id === report?.folderId);
   function write(workspace) {
@@ -96,7 +105,7 @@
     const caption = input.prompt.trim().split(/\n/)[0] || input.attachments?.[0]?.name || '写作会话';
     const files = input.attachments || [];
     const report = {
-      ...previous, ...input, id, title:previous?.title || caption.slice(0,40),
+      ...previous, ...input, id, type:input.type || source?.type || '战略分析报告', title:previous?.title || caption.slice(0,40),
       folderId:project.id, progress:0, updatedAt:ts,
       attachments:files.filter(file=>file.source!=='knowledge'),
       knowledgeFiles:files.filter(file=>file.source==='knowledge'),
@@ -141,7 +150,7 @@
     if (!report) return null;
     const projectTitle = folder(workspace,report)?.name;
     const released = report.publishedReport;
-    if (released) return {...released,sessionId:id,projectId:report.folderId,projectTitle};
+    if (released) return {...released,type:released.type || report.type,sessionId:id,projectId:report.folderId,projectTitle};
     if (!hasReport(report)) return null;
     const content = window.buildSessionReportContent({report, draft:report.draft,project:projectTitle});
     return {...content,sessionId:id,projectId:report.folderId,projectTitle,type:report.type,
@@ -154,6 +163,7 @@
     const session = report.session;
     const before = session.state;
     if (finishedWriting(report)) return state.phase === 'complete';
+    if (before?.phase === 'cancelled') return false;
     if (before?.phase === 'executing') {
       if (!['executing','complete'].includes(state.phase) || !isGenerating(report)) return false;
       const clock = runningClock(report, Date.now());
@@ -184,7 +194,7 @@
     if (state.definition?.consent && (before?.phase !== 'executing' || state.phase === 'complete')) {
       const definition = {...state.definition,skills:launch.skills,skillSnapshots:launch.skillSnapshots,
         template:launch.template,templateSpec:launch.templateSpec};
-      const documentTitle = definition.fields.find(field=>field.id==='F01')?.value || report.title;
+      const documentTitle = definition.outlineSettings?.title?.trim() || definition.fields.find(field=>field.id==='F01')?.value || report.title;
       if (!report.customTitle && before?.phase !== 'executing') report.title = documentTitle.slice(0,80);
       if (state.phase === 'complete') {
         const draft = {id:report.id,title:documentTitle,prompt:definition.prompt,type:report.type,
@@ -193,7 +203,7 @@
         report.draft = draft;
         const content = window.buildSessionReportContent({report,draft,definition,launch,phase:'complete',project:draft.project});
         report.publishedReport = {...content,revision:launch.runId,date:report.updatedAt,type:report.type,
-          history:timeline(report,state),sourceDetails:filesFor(report).map(file=>({title:file.name,text:file.text || ''}))};
+          history:timeline(report,state),sourceDetails:[...filesFor(report), ...(definition.outlineSettings?.files || [])].map(file=>({title:file.name,text:file.text || ''}))};
         report.generated = true;
       }
     }
@@ -208,6 +218,14 @@
       } catch {}
     }
     return true;
+  }
+  function cancelOutline(launch) {
+    const workspace = load(), report = row(workspace,launch?.sessionId);
+    if (!report || report.session?.runId !== launch.runId || report.session.state?.phase !== 'outline-review') return false;
+    report.session.state = {...report.session.state, phase:'cancelled'};
+    report.updatedAt = Date.now();
+    try { write(workspace); return true; }
+    catch { return false; }
   }
   function isGenerating(report) {
     const session = report.session;
@@ -293,6 +311,7 @@
     if (!generation) return null;
     if (generation.phase === 'executing') return 'generating';
     if (generation.phase === 'complete') return 'report';
+    if (generation.phase === 'cancelled') return 'compose';
     if (generation.phase === 'idle') return getReport(id) ? 'report' : null;
     return 'clarification';
   }
@@ -328,5 +347,5 @@
     sessionStorage.removeItem('gkx-writing-prototype:clarification-launch');
     return navigate('compose',id);
   }
-  window.sessionReports = {begin,save,restore,getReport,generationFor,launchFor,openSession,returnToSession,showReport,again,openProject,embeddedUrl,readRoute,hashFor,sessionView,routeId,sessionHash,writingLocked,finishedWriting,sameRequest,historyFor:timeline};
+  window.sessionReports = {normalizeWorkspace,begin,save,cancelOutline,restore,getReport,generationFor,launchFor,openSession,returnToSession,showReport,again,openProject,embeddedUrl,readRoute,hashFor,sessionView,routeId,sessionHash,writingLocked,finishedWriting,sameRequest,historyFor:timeline};
 })();

@@ -63,6 +63,20 @@
     } });
     return dialog;
   }
+  function keepReportFormatting(element) {
+    const {fontFamily, fontSize, lineHeight, textAlign} = element.style;
+    element.removeAttribute('style');
+    if (!element.matches('h1,h2,h3,p,td,th')) return;
+    const families = fontFamily.split(',').map(name => name.trim().replace(/^["']|["']$/g, ''));
+    if (families.length && families.every(name => /^[A-Za-z\u3400-\u9fff][A-Za-z0-9 \u3400-\u9fff-]{0,48}$/.test(name))) {
+      element.style.fontFamily = fontFamily;
+    }
+    const size = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(fontSize);
+    const pixels = size ? Number(size[1]) * (size[2] === 'pt' ? 4/3 : 1) : 0;
+    if (pixels >= 1 && pixels <= 200) element.style.fontSize = fontSize;
+    if (/^\d+(?:\.\d+)?$/.test(lineHeight) && Number(lineHeight) >= 0.1 && Number(lineHeight) <= 10) element.style.lineHeight = lineHeight;
+    if (['left','center','right','justify'].includes(textAlign)) element.style.textAlign = textAlign;
+  }
   function sanitiseHTML(html) {
     const temp = document.createElement('template'); temp.innerHTML = html;
     const allowed=new Set('h1 h2 h3 h4 h5 h6 p br hr div span small strong b em i u s sub sup ul ol li blockquote table caption colgroup col thead tbody tfoot tr th td figure figcaption img a button pre code dl dt dd'.split(' '));
@@ -71,6 +85,7 @@
       if(!allowed.has(el.localName)){el.replaceWith(...el.childNodes);continue;}
       for (const attr of [...el.attributes]) {
         const {name,value}=attr;
+        if (name === 'style') { keepReportFormatting(el); continue; }
         if(['alt','title','rowspan','colspan','data-source','aria-label','start'].includes(name)) continue;
         if (name==='src' && el.localName==='img') {
           try { const url=new URL(value,document.baseURI);
@@ -155,7 +170,7 @@
   async function knowledge(draft={name:title.slice(0,80),query:'',selected:''}) {
     const host=modal('保存至知识库'); dialog.classList.add('ra-kb-dialog');
     body.append(node('p','ra-hint','正在读取知识库…'));
-    const kb=await import('../assets/knowledge-library.js');
+    const kb=await import('../assets/knowledge-library.js?v=3d7584b85b8c');
     const catalog=await kb.listCollections();
     if(!host.isConnected) return;
     body.replaceChildren();
@@ -238,7 +253,7 @@
       const value=name.value.trim(); if(!value || creating) return;
       creating=true; create.disabled=true;
       try {
-        const kb=await import('../assets/knowledge-library.js');
+        const kb=await import('../assets/knowledge-library.js?v=3d7584b85b8c');
         const catalog=await kb.listCollections();
         if(catalog.some(lib=>lib.name.toLocaleLowerCase()===value.toLocaleLowerCase())) { error.textContent='该知识库名称已存在';name.focus();return; }
         const id=crypto.randomUUID();await kb.persist({id,version:0,created:Date.now(),name:value,summary:note.value.trim(),files:[]});
@@ -250,7 +265,7 @@
     body.append(nameLabel,name,noteLabel,note,error);footer.append(button('取消',back),create);name.focus();
   }
   async function knowledgeList() {
-    const host=modal('已保存的报告'),kb=await import('../assets/knowledge-library.js');
+    const host=modal('已保存的报告'),kb=await import('../assets/knowledge-library.js?v=3d7584b85b8c');
     const records=savedCopies(await kb.listCollections());if(!host.isConnected)return;
     if(!records.length)body.append(node('p','ra-hint','此会话暂无已保存的副本。'));
     for (const {lib,file} of records) {
@@ -313,12 +328,25 @@
         if(element.tagName==='SUP' || element.matches('[data-source]')) {next.superScript=true;next.color='3862D8';}
         return [...element.childNodes].flatMap(c=>runs(c,next));
       }
+      function formattedParagraph(el) {
+        const {fontFamily, fontSize, lineHeight, textAlign} = el.style;
+        const run = {};
+        const font = fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
+        if (font) run.font = font;
+        if (fontSize) run.size = Math.round(parseFloat(fontSize) * (fontSize.endsWith('px') ? 1.5 : 2));
+        if (el.tagName === 'TH') run.bold = true;
+        const paragraph = {children:runs(el, run)};
+        if (/^H[1-6]$/.test(el.tagName)) paragraph.heading = D.HeadingLevel['HEADING_' + el.tagName[1]];
+        if (textAlign) paragraph.alignment = textAlign === 'justify' ? D.AlignmentType.BOTH : textAlign;
+        if (lineHeight) paragraph.spacing = {line:Math.round(240 * Number(lineHeight)), lineRule:D.LineRuleType.AUTO};
+        return new D.Paragraph(paragraph);
+      }
       async function blocks(element) {
         let children=[];
         for(const el of [...element.children]) {
           const tag=el.tagName, heading=/^H[1-6]$/.test(tag);
           if (tag==='TABLE') {
-            const rows=[...el.rows].map(r=>new D.TableRow({children:[...r.cells].map(c=>new D.TableCell({children:[new D.Paragraph({children:runs(c)})]}))}));
+            const rows=[...el.rows].map(r=>new D.TableRow({children:[...r.cells].map(c=>new D.TableCell({children:[formattedParagraph(c)]}))}));
             if(rows.length) children.push(new D.Table({rows,width:{size:100,type:D.WidthType.PERCENTAGE}}));
           } else if (tag==='OL'||tag==='UL') {
             [...el.children].forEach((item,i)=>children.push(new D.Paragraph({children:[new D.TextRun(tag==='OL'?(i+1)+'. ':'• '),...runs(item)]})));
@@ -326,8 +354,10 @@
             const target=el.matches('figure,.chart')?el:(el.querySelector('img,svg,canvas')||el);
             const {bytes,ratio}=await imageBytes(target); const w=550;
             children.push(new D.Paragraph({children:[new D.ImageRun({type:'png',data:bytes,transformation:{width:w,height:Math.round(w*ratio)}})]}));
+            const caption = el.tagName === 'FIGURE' && el.querySelector('img') && el.querySelector('figcaption');
+            if (caption) children.push(new D.Paragraph({children:runs(caption),alignment:D.AlignmentType.CENTER}));
           } else if (heading || ['P','BLOCKQUOTE','LI'].includes(tag)) {
-            children.push(new D.Paragraph({children:runs(el),...(heading?{heading:D.HeadingLevel['HEADING_'+tag[1]]}:{})}));
+            children.push(formattedParagraph(el));
           } else if (el.children.length && el.querySelector('p,table,h1,h2,h3,figure,svg,img,ol,ul,div')) children.push(...await blocks(el));
           else if(el.textContent.trim()) children.push(new D.Paragraph({children:runs(el)}));
         }

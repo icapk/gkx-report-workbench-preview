@@ -104,6 +104,8 @@
       folders.push(project);
     }
     const definition={prompt:info.prompt,consent:true,attachments:[],fields:fields.map(({id,name,value,origin})=>({id,name,value,origin,unresolved:null}))};
+    definition.outline=window.sessionOutline.propose({definition,launch:info});
+    definition.outlineConfirmed=true;
     const state={phase:'complete',material:{prompt:info.prompt,attachments:[],answers,edits:{}},
       definition,fields,history,questions:[],round:history.length,index:0,answers:{},error:'',ending:false,
       processReason:'round',editId:null,editText:'',executionProgress:100,extractionCount:8};

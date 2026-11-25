@@ -109,7 +109,7 @@
     const type = text(launch?.type) || text(definition.type) || '战略分析报告';
     const strategic = type === '战略分析报告';
     const titles = strategic ? ['现状分析','趋势洞察','落地方案'] : (structure[type] || structure['研究报告']);
-    const rows = normaliseOutline(['摘要', ...titles]);
+    const rows = normaliseOutline(['摘要', '核心结论', ...titles]);
     const goal = text(list(definition.fields).find(field => field.id === 'F02')?.value);
     if (!goal) return rows;
 
@@ -140,7 +140,42 @@
     ).join('\n\n');
   }
 
-  window.sessionOutline = {propose:proposeOutline, normalize:normaliseOutline, markdown:markdownOutline};
+  function writingSteps(definition) {
+    const sections = normaliseOutline(definition.outline);
+    return [
+      {title:'制定执行计划', detail:'按已确认的文章大纲安排各章节的写作顺序。'},
+      ...sections.map(section => ({
+        title:'撰写“' + section.title + '”',
+        detail:section.body || (section.children.length ? '按顺序展开' + section.children.join('、') + '。' : '整理本节的写作材料和要点。')
+      })),
+      {title:'汇总并检查报告', detail:'核对章节顺序、素材与目录，生成报告文档。'}
+    ];
+  }
+
+  function applyTextStyle(element, config) {
+    if (!config) return;
+    if (/^[一-龥a-zA-Z0-9 -]{1,48}$/.test(config.font || '')) element.style.fontFamily = config.font;
+    if (Number(config.size) >= 1 && Number(config.size) <= 200) element.style.fontSize = Number(config.size) + 'px';
+    if (Number(config.lineHeight) >= 0.1 && Number(config.lineHeight) <= 10) element.style.lineHeight = Number(config.lineHeight);
+    if (['left','center','right','justify'].includes(config.align)) element.style.textAlign = config.align;
+  }
+
+  function heading(level, title, config) {
+    const element = document.createElement('h' + level);
+    element.textContent = title;
+    applyTextStyle(element,config);
+    return element.outerHTML;
+  }
+
+  function styledBody(html, config) {
+    if (!config || !html) return html;
+    const fragment = document.createElement('template');
+    fragment.innerHTML = html;
+    fragment.content.querySelectorAll('p,th,td').forEach(element => applyTextStyle(element,config));
+    return fragment.innerHTML;
+  }
+
+  window.sessionOutline = {propose:proposeOutline, normalize:normaliseOutline, markdown:markdownOutline, writingSteps};
 
   function derivedOutline(fragment) {
     const headings = [...fragment.querySelectorAll('h2,h3')];
@@ -242,27 +277,16 @@
     const field = id => text(fields.get(id)?.value);
     const prompt = text(definition.prompt) || text(draft.prompt) || text(report.prompt) || text(launch.prompt);
     const files = generating && Array.isArray(definition.attachments)
-      ? sourceFiles([definition.attachments])
-      : sourceFiles([definition.attachments, report.attachments, report.knowledgeFiles, launch.attachments]);
+      ? sourceFiles([definition.attachments, definition.outlineSettings?.files])
+      : sourceFiles([definition.attachments, report.attachments, report.knowledgeFiles, launch.attachments, definition.outlineSettings?.files]);
     const type = text(report.type) || text(draft.type) || text(launch.type) || '研究报告';
-    const title = saved?.doc.content.querySelector('h1')?.textContent.trim() || text(saved?.record.title) || (generating && field('F01')) || text(report.title) || field('F01') || text(draft.title) || prompt.split('\n')[0].slice(0, 60) || files[0]?.name || type;
+    const title = saved?.doc.content.querySelector('h1')?.textContent.trim() || text(saved?.record.title) || (generating && (text(definition.outlineSettings?.title) || field('F01'))) || text(report.title) || field('F01') || text(draft.title) || prompt.split('\n')[0].slice(0, 60) || files[0]?.name || type;
     const task = {topic:field('F01') || title, goal:field('F02'), scope:field('F03'), reader:field('F04')};
     const confirmedOutline = Array.isArray(definition.outline) ? normaliseOutline(definition.outline) : null;
     const preferredOutline = confirmedOutline ?? [!generating && context.existing?.outline, context.outline, definition.templateSpec?.outline, draft.templateSpec?.outline, launch.templateSpec?.outline, !generating && report.templateSpec?.outline].map(normaliseOutline).find(rows => rows.length);
     const sources = files.map(file => file.name);
     const complete = definition.consent === true && (report.progress === 100 || !!draft.taskDefinition || context.phase === 'complete');
-    const writingSteps = confirmedOutline ? [
-      {title:'确认报告大纲',detail:confirmedOutline.map(section => section.title).join('、')},
-      ...confirmedOutline.map(section => ({
-        title:'撰写“' + section.title + '”',
-        detail:[section.body, section.children.length ? '按顺序展开：' + section.children.join('、') + '。' : '根据本次任务的材料与要求整理本节正文。'].filter(Boolean).join('\n')
-      }))
-    ] : [{title:'组织研究与报告结构', detail:preferredOutline ? '按本会话选定的大纲组织章节。' : '根据当前报告类型和已确认的研究目标组织章节。'}];
-    const steps = complete ? [
-      {title:'接收已确认的任务定义', detail:'保留本次确认的研究主题、目标、范围和读者，以及尚未明确的内容。'},
-      ...writingSteps,
-      {title:'生成报告草稿', detail:'根据本会话的任务信息和可读资料在本地生成报告草稿。'}
-    ] : [];
+    const steps = complete ? writingSteps(definition) : [];
     if (saved) {
       let outline = derivedOutline(saved.doc.content);
       if (!outline.length && preferredOutline) outline = preferredOutline.map(({title,children}) => ({title,children}));
@@ -280,7 +304,7 @@
     const metadata = [text(context.project) || text(draft.project) || text(launch.project), type, '本地草稿'].filter(Boolean).map(escape).join(' · ');
     const lead = seed?.[3] || seed?.[0] || (fieldSentence('研究主题', task.topic) + (fieldSentence('研究目标', task.goal) || '当前首先需要明确观察对象、比较条件和判断依据。'));
     const hasSummary = chapters.some(section => /^(?:摘要|执行摘要|内容摘要)$/.test(section.title));
-    const html = ['<h1>' + escape(title) + '</h1>', '<blockquote><p>' + metadata + '</p></blockquote>'];
+    const html = [heading(1,title,definition.outlineSettings?.titleConfig), '<blockquote><p>' + metadata + '</p></blockquote>'];
     if (!hasSummary && !confirmedOutline) html.push('<h2>摘要</h2>', paragraph(lead), materialObservation(files));
     if (seed && task.goal) html.push(paragraph(fieldSentence('研究目标', task.goal)));
     if (task.scope) html.push(paragraph(fieldSentence('研究范围', task.scope)));
@@ -291,15 +315,19 @@
     let sourceIndex = chapters.findIndex(section => /资料|证据|信号|来源/.test(section.title));
     if (sourceIndex === -1) sourceIndex = Math.max(chapters.length - 1, 0);
     chapters.forEach((section, i) => {
-      html.push('<h2>' + escape(section.title) + '</h2>');
-      const isSummary = /^(?:摘要|执行摘要|内容摘要)$/.test(section.title);
+      html.push(heading(2,section.title,section.config));
+      const isSummary = section.kind === '摘要' || /^(?:摘要|执行摘要|内容摘要)$/.test(section.title);
       const commentary = isSummary ? lead : sectionText(section.title, task, seed);
       const body = section.body || commentary;
-      html.push(paragraph(!hasSummary && body === lead ? '本节围绕“' + task.topic + '”界定观察对象。应先明确比较单位和样本范围，再展开后续分析。' : body));
+      html.push(styledBody(paragraph(!hasSummary && body === lead ? '本节围绕“' + task.topic + '”界定观察对象。应先明确比较单位和样本范围，再展开后续分析。' : body), section.config));
       if (isSummary) html.push(materialObservation(files));
-      section.children.forEach(child => {
-        html.push('<h3>' + escape(child) + '</h3>', paragraph(sectionText(child, task, seed)));
+      section.children.forEach((child, index) => {
+        const options = section.childDetails?.[index];
+        html.push(heading(3,child,options?.config), styledBody(paragraph(options?.body || sectionText(child, task, seed)), options?.config));
       });
+      for (const item of list(section.placeholders)) {
+        html.push(heading(3,item.title || item.kind,item.config), styledBody(window.WorkbenchPlaceholders.render(item),item.config));
+      }
       if (i === sourceIndex) {
         if (compareLogistics) html.push(logisticsComparison());
         const missingEvidence = compareLogistics ? '本次会话还缺少两个场景的对照记录，试点优先次序需待验证。' : '本次会话尚未附可核验的资料，涉及规模、排名或因果关系的判断均需补证。';

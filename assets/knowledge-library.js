@@ -7,7 +7,7 @@ const MAX_FILES = 10;
 const XML_BUDGET = 96 * 1024 * 1024;
 const UPLOAD_EXTENSIONS = [".pdf", ".docx", ".xls", ".xlsx", ".txt", ".md", ".csv", ".json"];
 
-function checkBatch(existingCount, incoming) {
+export function checkBatch(existingCount, incoming) {
   if (existingCount + incoming.length > MAX_FILES) return "每个知识库最多添加 10 个文件。";
   if (incoming.some(file => file.size > MAX_FILE_BYTES)) return "单文件不能超过 50 MB。";
   if (incoming.some(file => !UPLOAD_EXTENSIONS.includes("." + file.name.split(".").pop().toLowerCase()))) return "请选择 PDF、Word（.docx）、Excel、TXT、Markdown、CSV 或 JSON 文件。";
@@ -40,7 +40,7 @@ function readCollection(collection) {
   })};
 }
 
-async function listCollections() {
+export async function listCollections() {
   const db = await database();
   return new Promise((resolve, reject) => {
     const request = db.transaction(STORE).objectStore(STORE).getAll();
@@ -49,7 +49,7 @@ async function listCollections() {
   });
 }
 
-async function persist(collection, remove = false) {
+export async function persist(collection, remove = false) {
   const db = await database();
   await new Promise((resolve, reject) => {
     const tx = db.transaction(STORE, "readwrite");
@@ -90,7 +90,7 @@ function saveOriginal(file) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-async function readLocal(file) {
+export async function readLocal(file) {
   const result = {id: uid(), name: file.name, size: file.size, source: "本地上传", blob: file, added: Date.now(), status: "仅存原件", text: ""};
   const ext = file.name.split(".").pop().toLowerCase();
   if (!["txt","md","csv","json","docx","xlsx"].includes(ext)) return result;

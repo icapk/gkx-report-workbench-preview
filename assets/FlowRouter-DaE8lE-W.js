@@ -1,6 +1,6 @@
-import {createSessionPane} from "./session-pane.js?v=6044460e58dc";
-import {createOutlineReview} from "./outline-review.js?v=65876c527d63";
-import {createKnowledgeLibrary} from "./knowledge-library.js?v=ea0bac4bf4fa";
+import {createSessionPane} from "./session-pane.js?v=bae21a6fe9f1";
+import {createOutlineReview} from "./outline-review.js?v=7911453cd54b";
+import {createKnowledgeLibrary} from "./knowledge-library.js?v=3d7584b85b8c";
 import {lookupTemplate} from "./template-library.js?v=120a259b53f8";
 var Rx=t=>{throw TypeError(t)};var Ax=(t,n,r)=>n.has(t)||Rx("Cannot "+r);var wn=(t,n,r)=>(Ax(t,n,"read from private field"),r?r.call(t):n.get(t)),jx=(t,n,r)=>n.has(t)?Rx("Cannot add the same private member more than once"):n instanceof WeakSet?n.add(t):n.set(t,r),ph=(t,n,r,o)=>(Ax(t,n,"write to private field"),o?o.call(t,r):n.set(t,r),r);function Iz(t,n){for(var r=0;r<n.length;r++){const o=n[r];if(typeof o!="string"&&!Array.isArray(o)){for(const l in o)if(l!=="default"&&!(l in t)){const c=Object.getOwnPropertyDescriptor(o,l);c&&Object.defineProperty(t,l,c.get?c:{enumerable:!0,get:()=>o[l]})}}}return Object.freeze(Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}))}function Hz(t){return t&&t.__esModule&&Object.prototype.hasOwnProperty.call(t,"default")?t.default:t}var hh={exports:{}},gc={};/**
  * @license React
@@ -272,7 +272,7 @@ function WorkbenchModelPane() {
   },[]);
   return h.jsx("section",{id:"model-management-view","aria-label":"模型管理",ref:host});
 }
-function tO({onAction:t,prompt:n,setPrompt:r,model:o,modelRequired,project:c,category:u,projectMode:m,collapsed:v,closedGroups:b,selectedReport:g,resourceFeedback:x,generatedReport:S,background:C,renderDropdown:z,renderComposer:E,projectTree:T,generating:A,mobile:R,sessionHeader,libraryPage,libraryContent,workflowActive:M=!1,renderTokens}){const _=w6();
+function tO({onAction:t,prompt:n,setPrompt:r,model:o,modelRequired,project:c,category:u,projectMode:m,collapsed:v,closedGroups:b,selectedReport:g,resourceFeedback:x,generatedReport:S,background:C,renderDropdown:z,renderComposer:E,projectTree:T,generating:A,mobile:R,sessionHeader,outlineActive,libraryPage,libraryContent,workflowActive:M=!1,renderTokens}){const _=w6();
 const workflowOrLibrary = M || Boolean(libraryPage);
   const dockedClarification = M && !sessionHeader && !libraryPage;
 const projectsExpanded=R ? v : !v;
@@ -307,7 +307,7 @@ return y.useEffect(()=>{
      : h.jsx("span",{children:"战略报告创作"}),
   h.jsx("span",{className:"strategy-crumb-divider","aria-hidden":true,children:"/"}),
   libraryPage ? h.jsx("strong",{"aria-current":"page",children:libraryPage==="models" ? "模型管理" : "知识库"})
-    : sessionHeader || h.jsx("strong",{"aria-current":"page",children:M?"需求澄清":"报告创作"})
+    : sessionHeader || h.jsx("strong",{"aria-current":"page",children:outlineActive?"大纲生成":M?"需求澄清":"报告创作"})
  ]})
 ]}),h.jsxs("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"1:67",children:[h.jsx("div",{className:"bg-[rgba(255,255,255,0.48)] border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-0 mt-0 relative rounded-bl-[8px] rounded-tl-[8px] row-1 w-[1670px]","data-node-id":"1:68"}),h.jsx("div",{className:"bg-white border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-[248px] mt-0 relative rounded-[8px] row-1 w-[1422px]","data-node-id":"1:69","aria-label":"报告创作与资源",tabIndex:0,onScroll:L=>{const I=L.currentTarget;_(I);const Y=I.querySelector(".resource-header");I.dataset.resourceSticky=String(!!(!workflowOrLibrary&&Y&&I.scrollTop>0&&Y.getBoundingClientRect().top<=I.getBoundingClientRect().top+16.5))},children:h.jsxs("div",{className:"writing-scroll-content","data-workflow-active":workflowOrLibrary,"data-library-page":libraryPage||undefined,"data-session-pane":sessionHeader && !libraryPage ? true : undefined,"data-docked-clarification":dockedClarification||undefined,children:[
 
@@ -1634,7 +1634,7 @@ y.useEffect(()=>{if(!m||t!=="project")return;const T=requestAnimationFrame(()=>{
   const canEditRequest = !window.sessionReports.writingLocked(b);
   const clarifying = Boolean(b.session) && canEditRequest;
   const g = phase === "executing" && !window.sessionReports.finishedWriting(b);
-  const x = phase === "outline-review" ? "待确认大纲" : clarifying ? "澄清中" : g ? `生成进度 ${b.progress}%` : b.notified ? "有更新" : "";
+  const x = phase === "cancelled" ? "已取消" : phase === "outline-review" ? "待确认大纲" : clarifying ? "澄清中" : g ? `生成进度 ${b.progress}%` : b.notified ? "有更新" : "";
   return h.jsxs("div",{"data-node-id":b.id,"data-report":"true","data-selected":r===b.id,className:`report-row ${b.generated?"generated-report":""}`,children:[h.jsxs(n4,{children:[h.jsx(a4,{asChild:!0,children:h.jsx("button",{type:"button",className:"report-row-open","aria-current":r===b.id?"page":void 0,"aria-label":`${b.title}${x?"，"+x:""}`,onClick:()=>l("report",b.id),children:[h.jsx("span",{"data-node-id":b.titleId,"data-report-title":"true",className:"report-row-title",children:b.title},"title"),clarifying && h.jsx("small",{style:{flexShrink:0,color:"#53677f",fontSize:11,marginRight:24},children:x},"phase")]})}),h.jsxs(i4,{side:"right",align:"start",sideOffset:10,collisionPadding:12,className:"report-title-tooltip",children:[h.jsx("p",{children:b.title}),x && h.jsx("p",{className:"report-title-tooltip-meta",children:x})]})]}),(g||b.notified)&&h.jsxs("div",{className:"report-row-status",children:[g&&h.jsx("div",{"data-node-id":b.id==="1:128"?"1:300":void 0,className:"report-row-progress",children:h.jsx(Nm,{value:b.progress,label:`${b.title}生成进度`,focusable:!1})}),!g&&b.notified&&h.jsx("img",{alt:"","data-node-id":b.id==="1:109"?"1:118":void 0,className:"report-status-dot",src:Et("figma/imgEllipse14300.svg")})]}),h.jsx(X5,{kind:"report",id:b.id,name:b.title,folders:d,folderId:b.folderId,nodeId:b.moreId,onAction:c,onMove:u,canEditRequest})]},b.id)}return o==="最近"?h.jsx(jm,{delayDuration:300,children:[...m].sort((b,g)=>(g.updatedAt||0)-(b.updatedAt||0)).map(v)}):h.jsxs(jm,{delayDuration:300,children:[d.map(b=>{const g=n.includes(b.name);return h.jsxs("div",{"data-folder-id":b.id,"data-node-id":b.nodeId,"data-closed":g,className:"tree-folder",children:[h.jsxs("div",{className:"tree-folder-heading",children:[h.jsxs("button",{type:"button","data-folder-toggle":"true","data-node-id":b.buttonId,"aria-expanded":!g,onClick:()=>l("group",b.name),children:[h.jsx("span",{"data-node-id":b.iconId,className:"tree-folder-icon",children:h.jsx("img",{alt:"",className:"project-folder-image",src:g?Lw:g6},g?"closed":"open")}),h.jsx("span",{className:"tree-folder-name",title:b.name,style:currentFolderId===b.id?{color:"#2456bb"}:undefined,children:b.name})]}),
     h.jsx("button",{type:"button",className:"tree-more folder-more",style:{marginRight:0},title:"新建会话","aria-label":"在"+b.name+"中新建会话",onClick:()=>l("projectSession",b.id),children:h.jsx(G9,{size:15,"aria-hidden":"true"})}),
     h.jsx(X5,{kind:"folder",id:b.id,name:b.name,folders:d,onAction:c,onMove:u})]}),h.jsx("div",{className:"tree-folder-reports","aria-hidden":g,children:h.jsx("div",{className:"tree-folder-reports-inner",inert:g,children:m.filter(x=>x.folderId===b.id).map(v)})})]},b.id)}),d.length===0&&h.jsx("p",{className:"tree-empty",children:"暂无写作项目，可在上方项目下拉菜单中新建。"})]})}function l$({className:t,...n}){return h.jsx("div",{"data-slot":"card",className:Ve("flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",t),...n})}function _o({className:t,...n}){return h.jsx("div",{"data-slot":"card-header",className:Ve("@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",t),...n})}function $o({className:t,...n}){return h.jsx("div",{"data-slot":"card-title",className:Ve("leading-none font-semibold",t),...n})}function rl({className:t,...n}){return h.jsx("div",{"data-slot":"card-description",className:Ve("text-sm text-muted-foreground",t),...n})}function c$({className:t,...n}){return h.jsx("div",{"data-slot":"card-action",className:Ve("col-start-2 row-span-2 row-start-1 self-start justify-self-end",t),...n})}function Zs({className:t,...n}){return h.jsx("div",{"data-slot":"card-content",className:Ve("px-6",t),...n})}function Qs({className:t,...n}){return h.jsx("div",{"data-slot":"card-footer",className:Ve("flex items-center px-6 [.border-t]:pt-6",t),...n})}const u$=z1("inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",{variants:{variant:{default:"bg-primary text-primary-foreground [a&]:hover:bg-primary/90",secondary:"bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",destructive:"bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90",outline:"border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",ghost:"[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",link:"text-primary underline-offset-4 [a&]:hover:underline"}},defaultVariants:{variant:"default"}});function ig({className:t,variant:n="default",asChild:r=!1,...o}){const l=r?Uw:"span";return h.jsx(l,{"data-slot":"badge","data-variant":n,className:Ve(u$({variant:n}),t),...o})}function tT({className:t,size:n="default",...r}){return h.jsx(wN,{"data-slot":"switch","data-size":n,className:Ve("peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",t),...r,children:h.jsx(CN,{"data-slot":"switch-thumb",className:Ve("pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground")})})}const M1=window.WorkbenchSkills.catalog;
@@ -1984,7 +1984,7 @@ function f$({ category, taskSkills, onChangeSkill, onApplySkill, onUseExample })
   ] });
 }
 
-const d$={folders:[{id:"low-altitude",name:"低空经济战略研究",nodeId:"1:101",buttonId:"1:102",iconId:"1:103"},{id:"emerging",name:"新兴产业布局",nodeId:"1:136",buttonId:"1:137",iconId:"1:138"},{id:"independent",name:"独立报告",nodeId:"1:271",buttonId:"1:272",iconId:"1:273"}],reports:[{id:"1:109",title:"深圳低空经济产业链战略研究",type:"战略分析报告",folderId:"low-altitude",titleId:"1:110",tagId:"1:112",moreId:"1:113",notified:!0},{id:"1:119",title:"大湾区低空经济区域竞争比较",type:"研究报告",folderId:"low-altitude",titleId:"1:120",tagId:"1:122"},{id:"1:128",title:"低空飞行服务重点企业筛选",type:"洞察报告",folderId:"low-altitude",titleId:"1:129",tagId:"1:131"},{id:"1:144",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"emerging",titleId:"1:145",tagId:"1:147"},{id:"1:153",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"emerging",titleId:"1:154",tagId:"1:156"},{id:"1:279",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"independent",titleId:"1:280",tagId:"1:282"},{id:"1:288",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"independent",titleId:"1:289",tagId:"1:291"}]},Wd="gkx-writing-prototype:workspace-v1";function gd(){try{const t=JSON.parse(localStorage.getItem(Wd)||"null");if(t&&Array.isArray(t.folders)&&Array.isArray(t.reports)&&t.folders.every(n=>typeof n.id=="string"&&typeof n.name=="string")&&t.reports.every(n=>typeof n.id=="string"&&typeof n.title=="string"&&typeof n.type=="string"&&t.folders.some(r=>r.id===n.folderId)))return t}catch{}return window.workbenchExample ? window.workbenchExample.addTo(d$) : d$}
+const d$={folders:[{id:"low-altitude",name:"低空经济战略研究",nodeId:"1:101",buttonId:"1:102",iconId:"1:103"},{id:"emerging",name:"新兴产业布局",nodeId:"1:136",buttonId:"1:137",iconId:"1:138"},{id:"independent",name:"独立报告",nodeId:"1:271",buttonId:"1:272",iconId:"1:273"}],reports:[{id:"1:109",title:"深圳低空经济产业链战略研究",type:"战略分析报告",folderId:"low-altitude",titleId:"1:110",tagId:"1:112",moreId:"1:113",notified:!0},{id:"1:119",title:"大湾区低空经济区域竞争比较",type:"研究报告",folderId:"low-altitude",titleId:"1:120",tagId:"1:122"},{id:"1:128",title:"低空飞行服务重点企业筛选",type:"洞察报告",folderId:"low-altitude",titleId:"1:129",tagId:"1:131"},{id:"1:144",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"emerging",titleId:"1:145",tagId:"1:147"},{id:"1:153",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"emerging",titleId:"1:154",tagId:"1:156"},{id:"1:279",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"independent",titleId:"1:280",tagId:"1:282"},{id:"1:288",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"independent",titleId:"1:289",tagId:"1:291"}]},Wd="gkx-writing-prototype:workspace-v1";function gd(){try{const t=window.sessionReports.normalizeWorkspace(JSON.parse(localStorage.getItem(Wd)||"null"));if(t&&Array.isArray(t.folders)&&Array.isArray(t.reports)&&t.folders.every(n=>typeof n.id=="string"&&typeof n.name=="string")&&t.reports.every(n=>typeof n.id=="string"&&typeof n.title=="string"&&typeof n.type=="string"&&t.folders.some(r=>r.id===n.folderId)))return t}catch{}return window.workbenchExample ? window.workbenchExample.addTo(d$) : d$}
 const {KnowledgeLibrary} = createKnowledgeLibrary(y);
 function LibrarySelect({label, value, options, onValueChange, disabled = false, hideHeading = false}) {
   const trigger = y.useRef(null);
@@ -2238,7 +2238,7 @@ ${libraryMarkdownOutline(se) || `## 一、研究背景与目标
 `;downloadReviewedReport(event,"报告创作草稿.md",te)}function Te(){try{const saved=JSON.parse(localStorage.getItem("gkx-writing-prototype:last-draft")||"null");const te=saved?.workspaceDraft?gd().reports.find(report=>report.id===saved.id)?.draft:saved;te!=null&&typeof te.prompt=="string"?(ve(te),Z({kind:"draft",title:"上次创作草稿"})):re("暂无本地保存的草稿")}catch{re("暂无可读取的本地草稿")}}  const currentRoute=window.sessionReports.readRoute(location.hash);
   const activeReportId = r && currentRoute && currentRoute.kind !== "project" ? currentRoute.id : taskContextId || X;
   const activeFolderId = c.reports.find(report => report.id === activeReportId)?.folderId || composerFolderId;
-  const Oe=c.reports.find(te=>te.id===(O==null?void 0:O.value)),st=c.folders.find(te=>te.id===(Oe==null?void 0:Oe.folderId)),Xe=c.folders.find(te=>te.id===(O==null?void 0:O.value)),gt=c.reports.filter(te=>te.folderId===(O==null?void 0:O.value)).length;return h.jsxs(h.Fragment,{children:[h.jsx(tO,{renderTokens:taskSkills.map(name=>h.jsx(ComposerToken,{kind:"task-skill-chip",name,removeLabel:"从输入框移除技能「"+name+"」",onRemove:()=>setTaskSkill(name,false)},name)),workflowActive:r,sessionHeader,libraryPage,onAction:Vn,prompt:v,setPrompt:b,model:C || (modelSelection.options.length ? "请重新选择模型" : "暂无可用模型"),modelRequired:!C,project:A,category:M,library:"技能广场",projectMode:_,collapsed:I,closedGroups:me,selectedReport:X,generating:be,mobile:U,projectTree:h.jsx(s$,{workspace:c,closedGroups:me,selectedReport:libraryPage ? null : activeReportId,currentFolderId:libraryPage ? null : activeFolderId,projectMode:_,onAction:Vn,onMore:ga,onMove:Oa}),renderDropdown:(te,pe)=>te==="skills" ? h.jsx(ComposerSkillPicker,{trigger:pe,taskSkills,onChange:setTaskSkill})
+  const Oe=c.reports.find(te=>te.id===(O==null?void 0:O.value)),st=c.folders.find(te=>te.id===(Oe==null?void 0:Oe.folderId)),Xe=c.folders.find(te=>te.id===(O==null?void 0:O.value)),gt=c.reports.filter(te=>te.folderId===(O==null?void 0:O.value)).length;return h.jsxs(h.Fragment,{children:[h.jsx(tO,{renderTokens:taskSkills.map(name=>h.jsx(ComposerToken,{kind:"task-skill-chip",name,removeLabel:"从输入框移除技能「"+name+"」",onRemove:()=>setTaskSkill(name,false)},name)),workflowActive:r,sessionHeader,outlineActive:r && c.reports.some(report=>report.id===n?.sessionId && report.session?.state?.phase==="outline-review"),libraryPage,onAction:Vn,prompt:v,setPrompt:b,model:C || (modelSelection.options.length ? "请重新选择模型" : "暂无可用模型"),modelRequired:!C,project:A,category:M,library:"技能广场",projectMode:_,collapsed:I,closedGroups:me,selectedReport:X,generating:be,mobile:U,projectTree:h.jsx(s$,{workspace:c,closedGroups:me,selectedReport:libraryPage ? null : activeReportId,currentFolderId:libraryPage ? null : activeFolderId,projectMode:_,onAction:Vn,onMore:ga,onMove:Oa}),renderDropdown:(te,pe)=>te==="skills" ? h.jsx(ComposerSkillPicker,{trigger:pe,taskSkills,onChange:setTaskSkill})
   :te==="model" ? h.jsx(WorkbenchModelPicker,{trigger:pe,selection:modelSelection})
   :h.jsx(r$,{kind:te,trigger:pe,options:d,value:A,onChange:_e=>An(te,_e),onCreateProject:ma}),renderComposer:te=>h.jsx(I9,{disabled:r,children:te}),background:h.jsx("div",{className:"galaxy-backdrop","aria-hidden":"true",children:h.jsx(lO,{density:1.1,glowIntensity:.42,flareIntensity:1.7,starSpeed:0,mouseRepulsion:!0,clickWarp:!0,starColors:[],hueShift:140,saturation:1,starSize:.55,twinkleIntensity:.3,speed:1,rotationSpeed:.1,layers:3,direction:"forward",repulsionStrength:2,mouseInteraction:!0,intro:!0,lightMode:!0})}),resourceFeedback:h.jsx(f$,{category:M,taskSkills,onChangeSkill:setTaskSkill,onApplySkill:applyComposerSkill,onUseExample:useSkillExample}),
     libraryContent:libraryPage==="knowledge" ? h.jsx(KnowledgeLibrary,{notify:re}) : null
@@ -2274,9 +2274,10 @@ function Ht(t,n){var r,o,l;if(n.type==="LOAD")return n.state;if(n.type==="PROMPT
   }
 if(t.phase==="questions"){const c=(r=t.questions[t.index])==null?void 0:r.id;if(!c)return t;const u=t.answers[c]||zc(),d=m=>({...t,answers:{...t.answers,[c]:m},error:""});if(n.type==="OPTION")return d({...u,option:n.value,skipped:!1});if(n.type==="TEXT")return d({...u,text:n.value,skipped:!1});if(n.type==="CUSTOM")return d({...u,customOpen:!u.customOpen});if(n.type==="CLEAR_OPTION")return d({...u,option:"",customOpen:!0,skipped:!1});if(n.type==="NEXT"||n.type==="SKIP"){if(n.type==="NEXT"&&!u.option&&!u.text.trim())return{...t,error:"请选择一个推荐选项，或填写自定义回答。"};const m=n.type==="SKIP"?{...zc(),skipped:!0}:{...u,skipped:!1};return{...t,answers:{...t.answers,[c]:m},phase:t.index===t.questions.length-1?"round-review":"questions",index:Math.min(t.index+1,t.questions.length-1),error:""}}if(n.type==="BACK")return{...t,index:Math.max(0,t.index-1),error:""};}if(t.phase==="round-review"){if(n.type==="BACK")return{...t,phase:"questions",index:n.index??0,ending:!1,error:""};if(n.type==="CONFIRM_ROUND"){const c={...t.material.answers},u={...t.material.edits};return t.questions.forEach(d=>{var v;const m=t.answers[d.id];if(m&&!m.skipped){const b=((v=t.fields.find(g=>g.id===d.id))==null?void 0:v.value)||"";c[d.id]=d.partial&&b?{...m,option:"",text:`${b}；${sg(m)}`}:{...m},delete u[d.id]}}),{...t,phase:"processing",material:{...t.material,answers:c,edits:u},processReason:"round",ending:t.ending||!!n.end,history:[...t.history,{round:t.round,questions:t.questions,answers:t.answers}],error:""}}}if(t.phase==="final-review"){if(n.type==="EDIT_FINAL")return{...t,phase:"final-edit",editId:n.id,editText:((o=t.fields.find(c=>c.id===n.id))==null?void 0:o.value)||"",error:""};if(n.type==="CONFIRM_FINAL"){const c={fields:t.fields.map(u=>({id:u.id,name:u.name,value:u.judge==="CONFLICTED"?null:u.value||null,origin:u.decision==="ASK"?"unprovided":u.origin,unresolved:u.decision==="ASK"?u.judge==="CONFLICTED"?`输入仍有冲突：${u.candidates.join(" / ")}`:u.missing||"信息尚未明确":null})),prompt:t.material.prompt,attachments:t.material.attachments,consent:!0};if (n.preview) return {...t,phase:"executing",definition:c,executionProgress:0,error:""};
       const outline = window.sessionOutline.propose({ definition:c, launch:n.launch });
-    return {...t,phase:"outline-review",definition:{...c,outline,outlineConfirmed:false},executionProgress:0,error:""};
+    return {...t,phase:"outline-review",definition:{...c,outline,outlineConfirmed:false},outlineReadyAt:n.outlineReadyAt || 0,executionProgress:0,error:""};
   }}
   if(t.phase==="outline-review"){
+    if(n.type==="EDIT_OUTLINE_SETTINGS") return {...t,definition:{...t.definition,outlineSettings:n.settings},error:""};
     if(n.type==="EDIT_OUTLINE") return {...t,definition:{...t.definition,outline:n.outline},error:""};
     if(n.type==="CONFIRM_OUTLINE"){
       const rows=t.definition.outline;
@@ -3526,7 +3527,7 @@ function YL({
   function confirmReport() {
     if (confirmedReport.current) return;
     if (shouldSaveReport && launch) {
-      const next = Ht(flow, {type:"CONFIRM_FINAL", launch:{...launch, templateSpec:libraryTemplate(launch)}});
+      const next = Ht(flow, {type:"CONFIRM_FINAL", outlineReadyAt:Date.now()+1800, launch:{...launch, templateSpec:libraryTemplate(launch)}});
       if (next.phase !== "outline-review") return;
       if (!launch.sessionId || !launch.runId) {
         if (!onConfirmUnbound?.(launch, next)) setMessage("本次任务未能保存，请重试。");
@@ -3547,6 +3548,22 @@ function YL({
     pausedTime.current = 0;
     setClock(now);
     dispatch({type:"LOAD", state:next});
+  }
+
+  const outlineReadyAt = flow.phase === "outline-review" ? flow.outlineReadyAt || 0 : 0;
+  const preparingOutline = outlineReadyAt > clock;
+  y.useEffect(() => {
+    if (!outlineReadyAt) return;
+    const timer = setTimeout(() => setClock(Date.now()), Math.max(0, outlineReadyAt - Date.now()) + 10);
+    return () => clearTimeout(timer);
+  }, [outlineReadyAt]);
+
+  function cancelOutline() {
+    if (!window.sessionReports.cancelOutline(launch)) {
+      setMessage("本次任务状态已变更，请重新打开会话。");
+      return;
+    }
+    location.hash = "";
   }
 
   function startWriting() {
@@ -3592,7 +3609,7 @@ function YL({
     return () => historyTarget.removeEventListener("scroll", onScroll);
   }, [historyTarget]);
   y.useLayoutEffect(() => {
-    if (!active || !historyTarget) return;
+    if (!active || !historyTarget || flow.phase === "outline-review") return;
     const follow = () => {
       const height = historyTarget.scrollHeight,
         delta = height - cfLastHeight.current;
@@ -3619,7 +3636,7 @@ function YL({
       observer.disconnect();
       mutations.disconnect();
     };
-  }, [active, historyTarget, reducedMotion]);
+  }, [active, historyTarget, reducedMotion, flow.phase === "outline-review"]);
   y.useEffect(() => {
     if (!dockTarget) return;
     const empty = active && (flow.phase === "outline-review" || (flow.phase === "thinking" && flow.thinkingDoneAt != null));
@@ -3675,7 +3692,7 @@ function YL({
     cfFields = cfProcessing ? kL(flow.material) : flow.fields,
     cfAsked = cfProcessing ? cfFields.filter(F => F.decision === "ASK").map(F => F.id) : (flow.history.length ? flow.history[0].questions : flow.questions).map(F => F.id),
     cfReportDone = thinking && flow.thinkingDoneAt != null,
-    note = cfProcessing ? "" : flow.phase === "questions" ? `还需要确认 ${flow.questions.length} 项研究信息，请在下方${flow.questions.length > 1 ? "逐题" : ""}补充。` : thinking ? "研究需求已整理完毕。" : flow.phase === "outline-review" ? "报告大纲已生成。" : "请确认下方的研究需求。",
+    note = cfProcessing ? "" : flow.phase === "questions" ? `还需要确认 ${flow.questions.length} 项研究信息，请在下方${flow.questions.length > 1 ? "逐题" : ""}补充。` : thinking ? "研究需求已整理完毕。" : flow.phase === "outline-review" ? (preparingOutline ? "问题搜索和理解已完成，正在生成大纲…" : "报告大纲已生成。") : "请确认下方的研究需求。",
     transcript = h.jsxs("div", {
       className: "cf-conversation-history",
       children: [flow.phase !== "compose" && h.jsxs("div", {
@@ -3720,11 +3737,15 @@ function YL({
           className: "cf-agent-text",
           children: note
         }, note) : null]
-      }), flow.phase === "outline-review" && h.jsx(OutlineReview, {
+      }), flow.phase === "outline-review" && !preparingOutline && h.jsx(OutlineReview, {
         outline: flow.definition.outline,
         topic: flow.definition.fields.find(field => field.id === "F01")?.value,
         templateName: launch?.template,
         error: flow.error || message,
+        settings: flow.definition.outlineSettings || {},
+        attachments: flow.material.attachments,
+        onCancel: cancelOutline,
+        onSettingsChange: settings => dispatch({type:"EDIT_OUTLINE_SETTINGS", settings}),
         onChange: outline => dispatch({type:"EDIT_OUTLINE", outline}),
         onConfirm: startWriting
       }), thinking && h.jsxs(h.Fragment, {

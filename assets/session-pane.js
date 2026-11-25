@@ -1,41 +1,75 @@
-export function createSessionPane(React,ReactDOM) {
-  const el=React.createElement, sessions=window.sessionReports;
-  function Generation({launch}) {
-    const id=launch.sessionId;
-    const [clock,setClock]=React.useState(()=>sessions.generationFor(id));
-    const [definition]=React.useState(()=>sessions.restore(launch)?.definition);
-    React.useEffect(()=>{
-      const update=()=>setClock(sessions.generationFor(id));
-      window.addEventListener('gkx-report-updated',update);
-      update();
-      return ()=>window.removeEventListener('gkx-report-updated',update);
-    },[id]);
-    const progress=clock?.progress || 0;
-    const sections=definition?.outline || [];
-    const current=Math.min(sections.length-1,Math.floor(progress*sections.length/100));
-    const title=definition?.fields?.find(field=>field.id==='F01')?.value || launch.prompt;
-    return el('section',{className:'generation-card','aria-label':'报告生成中'},
-      el('header',{className:'generation-status'},el('span',{'aria-hidden':true,className:'generation-spinner'}),'报告生成中'),
-      el('h1',null,title),
-      el('p',{className:'generation-note'},'报告正在后台撰写。你可以切换项目或处理其他任务，稍后从左侧会话查看进度。'),
-      el('div',{className:'generation-meter-label'},el('span',null,'生成进度'),el('strong',null,progress+'%')),
-      el('progress',{max:100,value:progress,'aria-label':'报告生成进度'}),
-      sections.length>0 && el('ol',{className:'generation-chapters','aria-label':'章节进度'},sections.map((section,i)=>{
-        const state=i<current?'done':i===current?'current':'waiting';
-        return el('li',{key:i,'data-state':state},el('span',{className:'generation-dot','aria-hidden':true},state==='done'?'✓':''),
-          el('span',null,section.title),el('small',null,state==='done'?'已完成':state==='current'?'撰写中':'待撰写'));
-      })),
-      el('footer',null,el('button',{type:'button',onClick:()=>sessions.openProject(launch.folderId)},'在此项目新建会话')));
+export function createSessionPane(React, ReactDOM) {
+  const el = React.createElement;
+  const sessions = window.sessionReports;
+
+  function ConfirmedOutline({definition}) {
+    const sections = definition.outline || [];
+    return el('details', {className:'generation-outline'},
+      el('summary', null, el('strong', null, '文章大纲'), el('span', {className:'generation-confirmed'}, '✓ 已确认')),
+      el('div', {className:'generation-outline-body'},
+        el('strong', null, definition.outlineSettings?.title || definition.fields?.find(field => field.id === 'F01')?.value),
+        el('ol', null, sections.map((section, i) =>
+          el('li', {key:i}, section.title,
+            section.children?.length > 0 && el('ul', null, section.children.map((child,j) => el('li', {key:j}, child))))))));
   }
+
+  function Generation({launch}) {
+    const id = launch.sessionId;
+    const [clock, setClock] = React.useState(() => sessions.generationFor(id));
+    const [definition] = React.useState(() => sessions.restore(launch)?.definition || {});
+    const [showProcess, setShowProcess] = React.useState(true);
+    const toggle = React.useRef(null);
+    React.useEffect(() => {
+      const update = () => setClock(sessions.generationFor(id));
+      window.addEventListener('gkx-report-updated', update);
+      update();
+      return () => window.removeEventListener('gkx-report-updated', update);
+    }, [id]);
+
+    const progress = clock?.progress || 0;
+    const steps = React.useMemo(() => window.sessionOutline.writingSteps(definition), [definition]);
+    const active = Math.min(steps.length - 1, Math.floor(progress * steps.length / 100));
+    const status = active === 0 ? '正在分解任务并制定执行计划' : steps[active].title;
+    const processId = React.useId();
+
+    return el('section', {className:'generation-workspace', 'data-process':showProcess, 'aria-label':'报告生成中'},
+      el('div', {className:'generation-thread'}, el('div', {className:'generation-thread-inner'},
+        el('div', {className:'generation-query'}, launch.prompt),
+        el('p', {className:'generation-message'}, el('span', {className:'generation-mark','aria-hidden':true}, '✦'),
+          '已收到写作任务，以下是本次确认的文章大纲。'),
+        el(ConfirmedOutline, {definition}),
+        el('p', {className:'generation-message'}, '已接收确认的大纲，接下来将制定计划并按章节撰写报告。'),
+        el('button', {type:'button', ref:toggle, className:'generation-status', 'aria-controls':processId,
+          'aria-expanded':showProcess, title:'查看思考过程', onClick:() => setShowProcess(open => !open)},
+          el('span', {className:'generation-spinner', 'aria-hidden':true}), status,
+          el('span', {className:'generation-caret', 'aria-hidden':true}, '›')),
+        el('div', {className:'generation-plan'},
+          el('div', {className:'generation-meter-label'}, el('strong', null, '计划进度'), el('span', null, active + '/' + steps.length)),
+          el('progress', {max:100, value:progress, 'aria-label':'报告生成进度'}),
+          el('ol', {className:'generation-chapters'}, steps.map((step, i) =>
+            el('li', {key:i, 'data-state':i < active ? 'done' : i === active ? 'current' : 'waiting'},
+              el('span', {className:'generation-dot','aria-hidden':true}, i < active ? '✓' : ''),
+              el('span', null, step.title), el('small', null, i < active ? '已完成' : i === active ? '进行中' : '待开始'))))),
+        el('p', {className:'generation-note'}, '可从左侧会话继续查看生成进度。'))),
+      showProcess && el('aside', {id:processId, className:'generation-process','aria-label':'思考过程'},
+        el('header', null, el('strong', null, '思考过程'),
+          el('button', {type:'button', className:'generation-close', 'aria-label':'关闭思考过程', title:'关闭思考过程',
+            onClick:() => {setShowProcess(false); toggle.current?.focus();}}, '×')),
+        active === 0 ? el('div', {className:'generation-starting', role:'status'},
+          el('span', {className:'generation-loading-dots','aria-hidden':true}, '••••'), '正在启动调研，请稍候') :
+          el('div', {className:'generation-process-log'}, steps.slice(0, active + 1).map((step, i) =>
+            el('section', {key:i, 'data-current':i === active}, el('small', null, i === active ? '进行中' : '已完成'),
+              el('h3', null, step.title), el('p', null, step.detail))))));
+  }
+
   return function SessionPane({kind,launch,title}) {
-    const [slot,setSlot]=React.useState(null);
-    React.useLayoutEffect(()=>setSlot(document.getElementById('home-workflow-slot')),[]);
-    if(!slot) return null;
-    const loaded=Boolean(launch);
-    return ReactDOM.createPortal(el('section',{className:'workbench-session-pane','data-pane':kind,'aria-label':title},
-      loaded ? (kind==='report' ? el('iframe',{className:'workbench-report-frame',title:'报告详情',src:sessions.embeddedUrl(launch.sessionId)})
-        : el('div',{className:'generation-scroll'},el(Generation,{launch}))) :
-        el('div',{className:'workbench-session-empty'},'当前浏览器中未找到这份报告，请从左侧选择会话。')
-    ),slot);
+    const [slot,setSlot] = React.useState(null);
+    React.useLayoutEffect(() => setSlot(document.getElementById('home-workflow-slot')), []);
+    if (!slot) return null;
+    return ReactDOM.createPortal(el('section', {className:'workbench-session-pane', 'data-pane':kind, 'aria-label':title},
+      launch ? kind === 'report'
+        ? el('iframe', {className:'workbench-report-frame', title:'报告详情', src:sessions.embeddedUrl(launch.sessionId)})
+        : el(Generation, {launch})
+      : el('div', {className:'workbench-session-empty'}, '当前浏览器中未找到这份报告，请从左侧选择会话。')), slot);
   };
 }
