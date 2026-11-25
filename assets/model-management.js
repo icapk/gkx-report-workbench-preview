@@ -17,12 +17,24 @@
       <div class="wm-layout">
         <section class="wm-panel" aria-labelledby="wm-title">
           <div class="wm-toolbar">
+            <button class="wm-button" type="button" data-action="home">
+              <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m12 4-6 6 6 6"/></svg>
+              返回
+            </button>
             <h1 id="wm-title" tabindex="-1">模型管理</h1>
-            <button class="wm-button" type="button" data-action="home">返回首页</button>
             <button class="wm-button wm-primary" type="button" data-action="new">
               <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg>
               新增模型
             </button>
+          </div>
+          <div class="wm-filters" role="search" aria-label="筛选模型">
+            <label>模型名称<input name="filter-name" type="search" maxlength="120" placeholder="搜索名称（最多 120 个字符）" autocomplete="off"></label>
+            <label>上架状态<select name="filter-status">
+              <option value="">全部状态</option>
+              <option value="online">已上架</option>
+              <option value="offline">已下架</option>
+            </select></label>
+            <button class="wm-button" type="button" data-action="reset">重置</button>
           </div>
           <div class="wm-table-scroll">
             <table aria-label="模型列表">
@@ -60,6 +72,8 @@
     const fields = form.elements;
     const error = form.querySelector(".wm-error");
     const addButton = root.querySelector('[data-action="new"]');
+    const nameFilter = root.querySelector('[name="filter-name"]');
+    const statusFilter = root.querySelector('[name="filter-status"]');
 
     function feedback(message = "", failed = false) {
       result.textContent = message;
@@ -114,14 +128,17 @@
     function refresh(focusId) {
       try {
         const models = records.list();
-        if (!models.length) {
-          showEmpty("暂无模型");
-          return;
-        }
-        body.replaceChildren(...models.map(modelRow));
+        const keyword = nameFilter.value.trim().toLowerCase();
+        const status = statusFilter.value;
+        const matches = models.filter(model =>
+          model.name.toLowerCase().includes(keyword) &&
+          (status === "" || status === (model.online ? "online" : "offline"))
+        );
+        if (matches.length) body.replaceChildren(...matches.map(modelRow));
+        else showEmpty(models.length ? "未找到匹配的模型" : "暂无模型");
         if (focusId) {
           const row = [...body.rows].find(item => item.dataset.id === focusId);
-          row?.querySelector("button")?.focus({ preventScroll: true });
+          (row?.querySelector("button") || statusFilter).focus({ preventScroll: true });
         }
       } catch (cause) {
         showEmpty("暂时无法读取模型");
@@ -129,12 +146,29 @@
       }
     }
 
+    function applyFilters() {
+      feedback();
+      refresh();
+    }
+    nameFilter.addEventListener("input", event => {
+      if (!event.isComposing) applyFilters();
+    }, listeners);
+    nameFilter.addEventListener("compositionend", applyFilters, listeners);
+    statusFilter.addEventListener("change", applyFilters, listeners);
+
     root.addEventListener("click", event => {
       const button = event.target.closest("button[data-action]");
       if (!button) return;
       const action = button.dataset.action;
       if (action === "home") {
         window.location.hash = "";
+        return;
+      }
+      if (action === "reset") {
+        nameFilter.value = "";
+        statusFilter.value = "";
+        applyFilters();
+        nameFilter.focus();
         return;
       }
       if (action === "new") {
