@@ -34,8 +34,7 @@
 .wm-settings .wm-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
+  gap: 8px;
   min-height: 60px;
   padding: 12px 0;
 }
@@ -45,7 +44,7 @@
   font-weight: 600;
   letter-spacing: normal;
 }
-.wm-settings h1 { font-size: 16px; line-height: 24px; }
+.wm-settings h1 { margin-inline-end: auto; font-size: 16px; line-height: 24px; }
 .wm-settings h1:focus { outline: none; }
 .wm-settings h2 { font-size: 18px; line-height: 26px; }
 .wm-settings .wm-button {

@@ -18,6 +18,7 @@
         <section class="wm-panel" aria-labelledby="wm-title">
           <div class="wm-toolbar">
             <h1 id="wm-title" tabindex="-1">模型管理</h1>
+            <button class="wm-button" type="button" data-action="home">返回首页</button>
             <button class="wm-button wm-primary" type="button" data-action="new">
               <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg>
               新增模型
@@ -132,6 +133,10 @@
       const button = event.target.closest("button[data-action]");
       if (!button) return;
       const action = button.dataset.action;
+      if (action === "home") {
+        window.location.hash = "";
+        return;
+      }
       if (action === "new") {
         feedback();
         error.textContent = "";
