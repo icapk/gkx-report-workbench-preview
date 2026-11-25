@@ -37,7 +37,5 @@
   white-space: nowrap;
 }
 .workbench-model-empty { padding: 8px; font-size: 13px; color: #65758b; }
-body.show-model-management > :is(#root, #siteHeader, #mobileDrawer, #mobileBackdrop) { display: none !important; }
-#model-management-view { position: fixed; inset: 0; overflow: auto; background: #f3f6fb; }
-#model-management-view[hidden] { display: none !important; }
+#model-management-view { min-width: 0; min-height: 0; height: 100%; }
 .workbench-model-option-name { min-width: 0; overflow-wrap: anywhere; }

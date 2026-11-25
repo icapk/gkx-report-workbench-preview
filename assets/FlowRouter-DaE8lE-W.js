@@ -259,6 +259,19 @@ Defaulting to \`null\`.`}Zi(O3,"getInvalidValueError");var pj=Object.definePrope
       }, children:h.jsx($w, {"aria-hidden":true})})
   ]});
 }
+function WorkbenchModelPane() {
+  const host=y.useRef(null);
+  y.useLayoutEffect(()=>{
+    const previousTitle=document.title;
+    document.title="模型管理｜深圳国际科技信息中心";
+    window.WorkbenchModelManagement.mount(host.current);
+    return ()=>{
+      window.WorkbenchModelManagement.unmount();
+      document.title=previousTitle;
+    };
+  },[]);
+  return h.jsx("section",{id:"model-management-view","aria-label":"模型管理",ref:host});
+}
 function tO({onAction:t,prompt:n,setPrompt:r,model:o,modelRequired,project:c,category:u,projectMode:m,collapsed:v,closedGroups:b,selectedReport:g,resourceFeedback:x,generatedReport:S,background:C,renderDropdown:z,renderComposer:E,projectTree:T,generating:A,mobile:R,sessionHeader,libraryPage,libraryContent,workflowActive:M=!1,renderTokens}){const _=w6();
 const workflowOrLibrary = M || Boolean(libraryPage);
   const dockedClarification = M && !sessionHeader && !libraryPage;
@@ -283,12 +296,13 @@ return y.useEffect(()=>{
   (libraryPage || M) ? h.jsx("button",{type:"button",className:"workspace-back",onClick:()=>t("returnToComposer"),children:"报告创作"})
      : h.jsx("span",{children:"战略报告创作"}),
   h.jsx("span",{className:"strategy-crumb-divider","aria-hidden":true,children:"/"}),
-  libraryPage ? h.jsx("strong",{"aria-current":"page",children:"知识库"})
+  libraryPage ? h.jsx("strong",{"aria-current":"page",children:libraryPage==="models" ? "模型管理" : "知识库"})
     : sessionHeader || h.jsx("strong",{"aria-current":"page",children:M?"需求澄清":"报告创作"})
  ]})
 ]}),h.jsxs("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"1:67",children:[h.jsx("div",{className:"bg-[rgba(255,255,255,0.48)] border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-0 mt-0 relative rounded-bl-[8px] rounded-tl-[8px] row-1 w-[1670px]","data-node-id":"1:68"}),h.jsx("div",{className:"bg-white border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-[248px] mt-0 relative rounded-[8px] row-1 w-[1422px]","data-node-id":"1:69","aria-label":"报告创作与资源",tabIndex:0,onScroll:L=>{const I=L.currentTarget;_(I);const Y=I.querySelector(".resource-header");I.dataset.resourceSticky=String(!!(!workflowOrLibrary&&Y&&I.scrollTop>0&&Y.getBoundingClientRect().top<=I.getBoundingClientRect().top+16.5))},children:h.jsxs("div",{className:"writing-scroll-content","data-workflow-active":workflowOrLibrary,"data-library-page":libraryPage||undefined,"data-session-pane":sessionHeader && !libraryPage ? true : undefined,"data-docked-clarification":dockedClarification||undefined,children:[
 
-  libraryPage && h.jsxs("section",{className:"workbench-library-view strategy-library-view","aria-label":"知识库",children:[
+  libraryPage==="models" && h.jsx(WorkbenchModelPane,{}),
+  libraryPage==="knowledge" && h.jsxs("section",{className:"workbench-library-view strategy-library-view","aria-label":"知识库",children:[
    h.jsx("h1",{className:"strategy-library-title",children:"知识库"}),libraryContent
  ]},libraryPage),dockedClarification && h.jsxs("div", {
     className: "clarification-workspace",
@@ -304,7 +318,7 @@ return y.useEffect(()=>{
   h.jsxs("div",{className:"writing-project-tools","data-node-id":"1:83",children:[
    h.jsx("h2",{className:"writing-project-heading",children:"写作项目"}),
    h.jsx(x6,{current:!workflowOrLibrary,onCreate:()=>t("newReport","")}),
-   h.jsxs("button",{type:"button",className:"writing-library-link","aria-current":libraryPage?"page":undefined,onClick:()=>t("openLibrary","knowledge"),children:[
+   h.jsxs("button",{type:"button",className:"writing-library-link","aria-current":libraryPage==="knowledge"?"page":undefined,onClick:()=>t("openLibrary","knowledge"),children:[
    h.jsx("svg",{viewBox:"0 0 20 20",width:20,height:20,fill:"none","aria-hidden":"true",children:[
           h.jsx("path",{d:"M3 4.7c0-.9.7-1.7 1.7-1.7h10.5v12.4H5a2 2 0 0 0-2 2V4.7Z",fill:"#6a97d8"},"cover"),
           h.jsx("path",{d:"M5 15.1h10.5v2.1H5c-1.4 0-1.4-2.1 0-2.1Z",fill:"#c4d8ef"},"pages"),
@@ -2064,7 +2078,7 @@ function restoredComposer(workspace, launch) {
     return {...draft,project:folder.name};
   } catch {return launch;}
 }
-function h$({onStartClarification:t,initialLaunch:n,workflowActive:r=!1,onResetClarification:o,composerSeed:l,projectId,sessionHeader,libraryPage,onShowComposer}){const[c,setWorkspace]=y.useState(gd),[composer]=y.useState(()=>restoredComposer(c,r ? null : n)),previousLaunch=y.useRef(n),d=c.folders.map(te=>te.name),[v,b]=y.useState((composer==null?void 0:composer.prompt)||""),modelSelection=useWritingModel(composer),C=modelSelection.selected?.name || "",[A,R]=y.useState((composer==null?void 0:composer.project)||d[0]||"选择写作项目"),[M,N]=y.useState("全部"),[_,L]=y.useState("项目"),[I,Y]=y.useState(!1),[U,de]=y.useState(()=>window.matchMedia("(max-width:760px)").matches),[me,ue]=y.useState([]),[X,le]=y.useState(""),
+function h$({onStartClarification:t,initialLaunch:n,returningToDraft=false,workflowActive:r=!1,onResetClarification:o,composerSeed:l,projectId,sessionHeader,libraryPage,onShowComposer}){const[c,setWorkspace]=y.useState(gd),[composer]=y.useState(()=>restoredComposer(c,r ? null : n)),previousLaunch=y.useRef(n),d=c.folders.map(te=>te.name),[v,b]=y.useState((composer==null?void 0:composer.prompt)||""),modelSelection=useWritingModel(composer),C=modelSelection.selected?.name || "",[A,R]=y.useState((composer==null?void 0:composer.project)||d[0]||"选择写作项目"),[M,N]=y.useState("全部"),[_,L]=y.useState("项目"),[I,Y]=y.useState(!1),[U,de]=y.useState(()=>window.matchMedia("(max-width:760px)").matches),[me,ue]=y.useState([]),[X,le]=y.useState(""),
     [taskContextId,setTaskContextId]=y.useState(composer?.sourceTaskId || null),
     composerFolderId=c.folders.find(folder=>folder.name===A)?.id,
     [taskSkills,setTaskSkills]=y.useState(()=>validTaskSkills(composer?.skills)),[O,Z]=y.useState(null),[J,re]=y.useState(""),[se,ve]=y.useState(null),[be,ye]=y.useState(!1),[Se,F]=y.useState(100),[ne,ze]=y.useState(null),[Ne,St]=y.useState(""),[Mt,Rt]=y.useState(""),ut=y.useRef(null),Vt=y.useRef(null);y.useEffect(() => {
@@ -2077,7 +2091,7 @@ function h$({onStartClarification:t,initialLaunch:n,workflowActive:r=!1,onResetC
       window.removeEventListener("gkx-report-updated", refreshWorkspace);
       window.removeEventListener("storage", syncStorage);
     };
-  },[]),y.useEffect(()=>{if(!r && n!==previousLaunch.current){previousLaunch.current=n;if(n)b(n.prompt)}},[n,r]),y.useEffect(()=>{l&&(b(l.prompt),setTaskSkills(validTaskSkills(l.skills)))},[l]),y.useEffect(()=>{const te=window.matchMedia("(max-width:760px)"),pe=()=>de(te.matches);return te.addEventListener("change",pe),()=>te.removeEventListener("change",pe)},[]),y.useEffect(()=>{var te,pe;O&&ut.current&&!ut.current.open&&(Vt.current=document.activeElement,ut.current.showModal()),!O&&((te=ut.current)!=null&&te.open)&&(ut.current.close(),(pe=Vt.current)==null||pe.focus())},[O]),y.useEffect(()=>{if(J){const te=window.setTimeout(()=>re(""),3200);return()=>window.clearTimeout(te)}},[J]),y.useEffect(()=>{if(!be)return;const te=window.setInterval(()=>F(pe=>Math.min(100,pe+20)),400);return()=>window.clearInterval(te)},[be]),y.useEffect(()=>{if(!(!be||Se<100||!se)){ye(!1);try{localStorage.setItem("gkx-writing-prototype:last-draft",JSON.stringify(se))}catch{}Z(te=>(te==null?void 0:te.kind)==="generating"?{kind:"draft",title:"报告创作预览"}:te),re("报告草稿演示已完成")}},[Se,be,se]),y.useEffect(()=>{ne&&saveLibraryWorkspace(te=>({...te,reports:te.reports.map(pe=>pe.id===ne?{...pe,progress:Se}:pe)}))},[ne,Se]),y.useEffect(()=>{if(se&&!be)try{localStorage.setItem("gkx-writing-prototype:last-draft",JSON.stringify(se))}catch{}},[se,be]);const Jt=()=>requestAnimationFrame(()=>{var te;return(te=document.querySelector('[data-node-id="7:62"]'))==null?void 0:te.focus()});
+  },[]),y.useEffect(()=>{if(!r && n!==previousLaunch.current){previousLaunch.current=n;if(n && !returningToDraft)b(n.prompt)}},[n,r,returningToDraft]),y.useEffect(()=>{l&&(b(l.prompt),setTaskSkills(validTaskSkills(l.skills)))},[l]),y.useEffect(()=>{const te=window.matchMedia("(max-width:760px)"),pe=()=>de(te.matches);return te.addEventListener("change",pe),()=>te.removeEventListener("change",pe)},[]),y.useEffect(()=>{var te,pe;O&&ut.current&&!ut.current.open&&(Vt.current=document.activeElement,ut.current.showModal()),!O&&((te=ut.current)!=null&&te.open)&&(ut.current.close(),(pe=Vt.current)==null||pe.focus())},[O]),y.useEffect(()=>{if(J){const te=window.setTimeout(()=>re(""),3200);return()=>window.clearTimeout(te)}},[J]),y.useEffect(()=>{if(!be)return;const te=window.setInterval(()=>F(pe=>Math.min(100,pe+20)),400);return()=>window.clearInterval(te)},[be]),y.useEffect(()=>{if(!(!be||Se<100||!se)){ye(!1);try{localStorage.setItem("gkx-writing-prototype:last-draft",JSON.stringify(se))}catch{}Z(te=>(te==null?void 0:te.kind)==="generating"?{kind:"draft",title:"报告创作预览"}:te),re("报告草稿演示已完成")}},[Se,be,se]),y.useEffect(()=>{ne&&saveLibraryWorkspace(te=>({...te,reports:te.reports.map(pe=>pe.id===ne?{...pe,progress:Se}:pe)}))},[ne,Se]),y.useEffect(()=>{if(se&&!be)try{localStorage.setItem("gkx-writing-prototype:last-draft",JSON.stringify(se))}catch{}},[se,be]);const Jt=()=>requestAnimationFrame(()=>{var te;return(te=document.querySelector('[data-node-id="7:62"]'))==null?void 0:te.focus()});
 function openLibrary(page) {
   if (page !== "knowledge") return;
   if (projectId) history.replaceState({...history.state,libraryReturnProject:projectId},"",location.href);
@@ -2160,7 +2174,8 @@ y.useEffect(()=>{
 function Vn(te,pe=""){var _e;switch(te){case"collapse":Y(!I);break;
 case "returnToComposer":
   if (U) Y(false);
-  onShowComposer();
+  if (libraryPage==="models") window.dispatchEvent(new Event("workbench:close-model-settings"));
+  else onShowComposer();
   break;
 case"projectMode":L(pe);break;case "openLibrary": openLibrary(pe); break;
 case "group":
@@ -3972,6 +3987,7 @@ function tP({initialPreview=false}) {
     return launch;
   }
   function resolve(hash) {
+    if (hash === "#model-management") return {hash,kind:"settings",launch:null};
     if (hash === "#/library/knowledge") return {hash,kind:"library",id:"knowledge",launch:null};
     if (hash === "#/library/templates" || hash.startsWith("#template-share=")) return {hash:"",kind:"home",launch:null};
     let path=sessions.readRoute(hash);
@@ -3994,19 +4010,24 @@ function tP({initialPreview=false}) {
   const {kind,launch,id}=view;
   const [composerSeed,setComposerSeed]=y.useState(null);
   const [composerKey,setComposerKey]=y.useState(0);
-  function sync(hash) {
+  function sync(hash,returningToDraft=false) {
     const next=resolve(hash);
+    next.returningToDraft=returningToDraft;
     if(location.hash!==next.hash) window.history.replaceState(null,"",next.hash || location.pathname+location.search);
     setView(prev=>prev.hash===next.hash && prev.kind===next.kind && prev.launch?.runId===next.launch?.runId ? prev : next);
   }
   y.useEffect(()=>{
-    function changed(){
+    function changed(event){
       const hash=location.hash;
       const path=sessions.readRoute(hash);
-      if(path?.kind==="compose" && !["report","generating"].includes(sessions.sessionView(path.id))) {
+      const returningToDraft=Boolean(history.state?.modelSettingsSource && event.oldURL?.endsWith("#model-management"));
+      if(!returningToDraft && path?.kind==="compose" && !["report","generating"].includes(sessions.sessionView(path.id))) {
         setComposerSeed(null);setComposerKey(key=>key+1);
       }
-      sync(hash);
+      sync(hash,returningToDraft);
+      if (returningToDraft) requestAnimationFrame(()=>{
+        document.querySelector('[aria-label="选择模型"]')?.focus({preventScroll:true});
+      });
     }
     function updated(){
       const path=sessions.readRoute(location.hash);
@@ -4085,15 +4106,15 @@ function tP({initialPreview=false}) {
   function showDemoComposer(seed){location.hash="";sync("");setComposerSeed(seed);}
   const paneTitle=kind==="generating" ? "报告生成" : ["report","missing"].includes(kind) ? "报告详情" : null;
   const workflow=Boolean(paneTitle) || kind==="clarification";
-  const libraryPage=kind==="library" ? id : null;
-  const headerTitle=libraryPage ? "知识库" : paneTitle;
+  const libraryPage=kind==="settings" ? "models" : kind==="library" ? id : null;
+  const headerTitle=libraryPage==="models" ? "模型管理" : libraryPage ? "知识库" : paneTitle;
   const sessionHeader=headerTitle && h.jsxs("div",{className:"workbench-pane-path",children:[
     launch?.project && h.jsx("span",{title:launch.project,children:launch.project}),
     launch?.project && h.jsx("i",{"aria-hidden":true,children:"/"}),
     h.jsx("strong",{children:headerTitle})
   ]});
   return h.jsxs(h.Fragment,{children:[
-    h.jsx(h$, {initialLaunch:launch,composerSeed,onStartClarification:start,
+    h.jsx(h$, {initialLaunch:launch,returningToDraft:view.returningToDraft,composerSeed,onStartClarification:start,
       projectId:kind==="project"?id:null,workflowActive:workflow,sessionHeader,onResetClarification:reset,
       libraryPage,onShowComposer:()=>{location.hash="";sync("");}},composerKey),
     libraryPage ? null : paneTitle ? h.jsx(SessionPane,{kind,launch,title:paneTitle},kind+":"+id)

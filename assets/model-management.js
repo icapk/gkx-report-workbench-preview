@@ -15,10 +15,6 @@
     root.className = "wm-settings";
     root.innerHTML = `
       <div class="wm-layout">
-        <button class="wm-return" type="button" data-action="back">
-          <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m8 4-6 6 6 6M3 10h14"/></svg>
-          返回写作首页
-        </button>
         <section class="wm-panel" aria-labelledby="wm-title">
           <div class="wm-toolbar">
             <h1 id="wm-title" tabindex="-1">模型管理</h1>
@@ -136,10 +132,6 @@
       const button = event.target.closest("button[data-action]");
       if (!button) return;
       const action = button.dataset.action;
-      if (action === "back") {
-        window.dispatchEvent(new Event("workbench:close-model-settings"));
-        return;
-      }
       if (action === "new") {
         feedback();
         error.textContent = "";
