@@ -8,7 +8,7 @@
     {icon:"./icons/skills/evidence.svg", id:"evidence", name:"引用核验", legacyName:"证据核验", description:"核对数据、事实与引用来源，梳理证据链，标记口径差异、信息缺口与待核验项", scope:"通用技能", category:"证据核验", updated:"2026-11-02", usage:8200, creator:"通用 Skill · 证据质量与引用审查", tags:["数据溯源", "质量检查"]},
     {icon:"./icons/skills/argument.svg", id:"argument", name:"观点结构化", legacyName:"观点论证", description:"围绕核心观点组织论据与推理，检查论证逻辑，补充反例、边界条件与替代解释", scope:"EOS 技能", category:"观点论证", updated:"2026-10-24", usage:3100, creator:"EOS Skill · 观点结构化论证", tags:["反方校验", "假设边界"]},
     {icon:"./icons/skills/writing.svg", id:"writer", name:"报告结构编排", legacyName:"报告写作", description:"根据研究目标组织报告结构，整合分析与证据，形成层次清晰、表达一致的报告草稿", scope:"通用技能", category:"报告写作", updated:"2026-11-01", usage:12400, creator:"通用 Skill · 结构化研究写作", tags:["报告结构", "表达优化"]},
-    {icon:"./icons/skills/deep-research.svg", id:"deep-research", name:"深度研究编排", description:"拆解研究问题，安排多源检索、交叉验证与结论合并，适合产业和技术专题研究。", scope:"通用技能", category:"产业研究", updated:"2026-11-03", usage:18400, creator:"通用 Skill · 多源研究工作流", tags:["研究计划", "证据合并"]}
+    {icon:"./icons/skills/industry.svg", id:"deep-research", name:"深度研究编排", description:"拆解研究问题，安排多源检索、交叉验证与结论合并，适合产业和技术专题研究。", scope:"通用技能", category:"产业研究", updated:"2026-11-03", usage:18400, creator:"通用 Skill · 多源研究工作流", tags:["研究计划", "证据合并"]}
   ];
   // Earlier drafts stored the original display names. Resolve them to the same skill IDs.
   const byName = new Map();
