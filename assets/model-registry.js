@@ -80,7 +80,11 @@
   }
 
   function available() {
-    return list().filter(row => row.online).map(({ id, name, model, isDefault }) => ({ id, name, model, isDefault }));
+    return list()
+      .filter(row => row.online)
+      // A stable sort keeps the other choices in their original registration order.
+      .sort((a, b) => Number(b.isDefault) - Number(a.isDefault))
+      .map(({ id, name, model, isDefault }) => ({ id, name, model, isDefault }));
   }
 
   function register(rawName, rawEndpoint, key) {
