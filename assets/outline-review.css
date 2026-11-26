@@ -132,7 +132,7 @@ body:has(> #root > .outline-page) {
   color: #1d2129;
   font: 14px/1.55 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
-.outline-page .outline-page-crumb {
+.outline-page-crumb {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -140,7 +140,7 @@ body:has(> #root > .outline-page) {
   color: #475365;
 }
 .outline-page-crumb > [aria-hidden] { color: #b8c3d2; }
-.outline-page .outline-page-back {
+.outline-page-back {
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -160,18 +160,13 @@ body:has(> #root > .outline-page) {
   border-radius: 8px;
   background: #fff;
 }
-.outline-page .outline-stage > .outline-page-scroll {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  padding: 0;
-  overflow: hidden auto;
-  overscroll-behavior-y: contain;
-  scrollbar-width: thin;
-  background: transparent;
+.clarification-workspace:has(.outline-editor) {
+  inset: 32px 0;
+  width: auto;
+  transform: none;
 }
-.outline-stage .outline-page-scroll.cf-history-host > .cf-conversation-history {
+.clarification-workspace:has(.outline-editor) > .white-clarification-dock { display: none; }
+.outline-editor.cf-history-host > .cf-conversation-history {
   width: min(736px, calc(100% - 32px));
   margin-inline: auto;
   padding: 0;

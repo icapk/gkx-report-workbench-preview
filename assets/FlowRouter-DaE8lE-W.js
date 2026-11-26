@@ -302,12 +302,12 @@ return y.useEffect(()=>{
   const panel=document.querySelector('[data-node-id="1:69"]');
   if(panel && workflowOrLibrary){panel.scrollTop=0;panel.dataset.resourceSticky="false";}
 },[workflowOrLibrary,libraryPage]),h.jsxs("div",{className:"strategy-workspace bg-[#d8e7fc] relative size-full","data-workspace-view":libraryPage?"library":"report","data-node-id":"1:60","data-name":"高端智库","data-collapsed":v,"data-project-mode":m,children:[h.jsxs("main",{className:"absolute backdrop-blur-[8px] bg-[rgba(255,255,255,0.48)] border border-solid border-white content-stretch flex flex-col gap-[12px] h-[903px] items-start left-[200px] pb-[16px] pt-[12px] px-[16px] rounded-[8px] top-[61px] w-[1704px]","data-node-id":"1:61",children:[h.jsxs("nav",{"aria-label":"面包屑","data-node-id":"1:62",className:"workspace-crumb-row",children:[
- projectToggle, h.jsxs("div",{"data-node-id":"1:63",children:[
+ projectToggle, outlineActive ? h.jsx("div",{className:"outline-page-crumb",children:h.jsx(ReportCreationCrumbs,{})}) : h.jsxs("div",{"data-node-id":"1:63",children:[
   (libraryPage || M) ? h.jsx("button",{type:"button",className:"workspace-back",onClick:()=>t("returnToComposer"),children:"报告创作"})
      : h.jsx("span",{children:"战略报告创作"}),
   h.jsx("span",{className:"strategy-crumb-divider","aria-hidden":true,children:"/"}),
   libraryPage ? h.jsx("strong",{"aria-current":"page",children:libraryPage==="models" ? "模型管理" : "知识库"})
-    : sessionHeader || h.jsx("strong",{"aria-current":"page",children:outlineActive?"大纲生成":M?"需求澄清":"报告创作"})
+    : sessionHeader || h.jsx("strong",{"aria-current":"page",children:M?"需求澄清":"报告创作"})
  ]})
 ]}),h.jsxs("div",{className:"grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0","data-node-id":"1:67",children:[h.jsx("div",{className:"bg-[rgba(255,255,255,0.48)] border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-0 mt-0 relative rounded-bl-[8px] rounded-tl-[8px] row-1 w-[1670px]","data-node-id":"1:68"}),h.jsx("div",{className:"bg-white border-[#e5e6eb] border-r border-solid col-1 h-[839px] ml-[248px] mt-0 relative rounded-[8px] row-1 w-[1422px]","data-node-id":"1:69","aria-label":"报告创作与资源",tabIndex:0,onScroll:L=>{const I=L.currentTarget;_(I);const Y=I.querySelector(".resource-header");I.dataset.resourceSticky=String(!!(!workflowOrLibrary&&Y&&I.scrollTop>0&&Y.getBoundingClientRect().top<=I.getBoundingClientRect().top+16.5))},children:h.jsxs("div",{className:"writing-scroll-content","data-workflow-active":workflowOrLibrary,"data-library-page":libraryPage||undefined,"data-session-pane":sessionHeader && !libraryPage ? true : undefined,"data-docked-clarification":dockedClarification||undefined,children:[
 
@@ -3465,6 +3465,22 @@ function ClarificationStage({
   });
 }
 
+function ReportCreationCrumbs() {
+  return h.jsxs(h.Fragment, {
+    children: [
+      h.jsxs("a", {className:"outline-page-back", href:"#", children:[
+        h.jsx("svg", {width:16,height:16,viewBox:"0 0 16 16",fill:"none","aria-hidden":true,
+          children:h.jsx("path",{d:"m10 3-6 5 6 5",stroke:"currentColor",strokeWidth:1.4,strokeLinecap:"round",strokeLinejoin:"round"})}),
+        "返回"
+      ]}),
+      h.jsx("span", {"aria-hidden":true, children:"/"}),
+      "智能创作报告",
+      h.jsx("span", {"aria-hidden":true, children:"/"}),
+      h.jsx("span", {"aria-current":"page", children:"报告创作"})
+    ]
+  });
+}
+
 function ReportCreationPage({className = "outline-stage", children}) {
   return h.jsxs("div", {
     className: "outline-page",
@@ -3472,17 +3488,7 @@ function ReportCreationPage({className = "outline-stage", children}) {
       h.jsxs("nav", {
         className: "outline-page-crumb",
         "aria-label": "面包屑",
-        children: [
-          h.jsxs("a", {className:"outline-page-back", href:"#", children:[
-            h.jsx("svg", {width:16,height:16,viewBox:"0 0 16 16",fill:"none","aria-hidden":true,
-              children:h.jsx("path",{d:"m10 3-6 5 6 5",stroke:"currentColor",strokeWidth:1.4,strokeLinecap:"round",strokeLinejoin:"round"})}),
-            "返回"
-          ]}),
-          h.jsx("span", {"aria-hidden":true, children:"/"}),
-          "智能创作报告",
-          h.jsx("span", {"aria-hidden":true, children:"/"}),
-          h.jsx("span", {"aria-current":"page", children:"报告创作"})
-        ]
+        children: h.jsx(ReportCreationCrumbs, {})
       }),
       h.jsx("main", {className:className, "aria-label":"报告创作",
         children
@@ -3603,6 +3609,10 @@ function YL({
 
   const outlineReadyAt = flow.phase === "outline-review" ? flow.outlineReadyAt || 0 : 0;
   const preparingOutline = outlineReadyAt > clock;
+  const outlineReady = flow.phase === "outline-review" && !preparingOutline;
+  y.useLayoutEffect(() => {
+    if (embedded && active && outlineReady && historyTarget) historyTarget.scrollTop = 0;
+  }, [embedded, active, outlineReady, historyTarget]);
   y.useEffect(() => {
     if (!outlineReadyAt) return;
     const timer = setTimeout(() => setClock(Date.now()), Math.max(0, outlineReadyAt - Date.now()) + 10);
@@ -3788,7 +3798,7 @@ function YL({
           className: "cf-agent-text",
           children: note
         }, note) : null]
-      }), flow.phase === "outline-review" && !preparingOutline && h.jsx(OutlineReview, {
+      }), outlineReady && h.jsx(OutlineReview, {
         outline: flow.definition.outline,
         topic: flow.definition.fields.find(field => field.id === "F01")?.value,
         templateName: launch?.template,
@@ -4037,10 +4047,10 @@ function YL({
         })]
       })]
     });
-  if (embedded && active && flow.phase === "outline-review" && !preparingOutline) {
-    return h.jsx(ReportCreationPage, {children:
-      h.jsx("div", {className:"outline-page-scroll clarification-app cf-history-host", "data-embedded":true, children:transcript})
-    });
+  if (embedded && active && outlineReady) {
+    return historyTarget && ml.createPortal(h.jsx("div", {
+      className:"outline-page outline-editor clarification-app cf-history-host", "data-embedded":true, children:transcript
+    }), historyTarget);
   }
   return h.jsx(w1, {
     reducedMotion: "user",
