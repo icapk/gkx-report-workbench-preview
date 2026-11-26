@@ -1984,7 +1984,32 @@ function f$({ category, taskSkills, onChangeSkill, onApplySkill, onUseExample })
   ] });
 }
 
-const d$={folders:[{id:"low-altitude",name:"低空经济战略研究",nodeId:"1:101",buttonId:"1:102",iconId:"1:103"},{id:"emerging",name:"新兴产业布局",nodeId:"1:136",buttonId:"1:137",iconId:"1:138"},{id:"independent",name:"独立报告",nodeId:"1:271",buttonId:"1:272",iconId:"1:273"}],reports:[{id:"1:109",title:"深圳低空经济产业链战略研究",type:"战略分析报告",folderId:"low-altitude",titleId:"1:110",tagId:"1:112",moreId:"1:113",notified:!0},{id:"1:119",title:"大湾区低空经济区域竞争比较",type:"研究报告",folderId:"low-altitude",titleId:"1:120",tagId:"1:122"},{id:"1:128",title:"低空飞行服务重点企业筛选",type:"洞察报告",folderId:"low-altitude",titleId:"1:129",tagId:"1:131"},{id:"1:144",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"emerging",titleId:"1:145",tagId:"1:147"},{id:"1:153",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"emerging",titleId:"1:154",tagId:"1:156"},{id:"1:279",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"independent",titleId:"1:280",tagId:"1:282"},{id:"1:288",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"independent",titleId:"1:289",tagId:"1:291"}]},Wd="gkx-writing-prototype:workspace-v1";function gd(){try{const t=window.sessionReports.normalizeWorkspace(JSON.parse(localStorage.getItem(Wd)||"null"));if(t&&Array.isArray(t.folders)&&Array.isArray(t.reports)&&t.folders.every(n=>typeof n.id=="string"&&typeof n.name=="string")&&t.reports.every(n=>typeof n.id=="string"&&typeof n.title=="string"&&typeof n.type=="string"&&t.folders.some(r=>r.id===n.folderId)))return t}catch{}return window.workbenchExample ? window.workbenchExample.addTo(d$) : d$}
+const d$={folders:[{id:"low-altitude",name:"低空经济战略研究",nodeId:"1:101",buttonId:"1:102",iconId:"1:103"},{id:"emerging",name:"新兴产业布局",nodeId:"1:136",buttonId:"1:137",iconId:"1:138"},{id:"independent",name:"独立报告",nodeId:"1:271",buttonId:"1:272",iconId:"1:273"}],reports:[{id:"1:109",title:"深圳低空经济产业链战略研究",type:"战略分析报告",folderId:"low-altitude",titleId:"1:110",tagId:"1:112",moreId:"1:113",notified:!0},{id:"1:119",title:"大湾区低空经济区域竞争比较",type:"研究报告",folderId:"low-altitude",titleId:"1:120",tagId:"1:122"},{id:"1:128",title:"低空飞行服务重点企业筛选",type:"洞察报告",folderId:"low-altitude",titleId:"1:129",tagId:"1:131"},{id:"1:144",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"emerging",titleId:"1:145",tagId:"1:147"},{id:"1:153",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"emerging",titleId:"1:154",tagId:"1:156"},{id:"1:279",title:"未来产业方向优先级分析",type:"战略分析报告",folderId:"independent",titleId:"1:280",tagId:"1:282"},{id:"1:288",title:"具身智能产业发展趋势研判",type:"洞察报告",folderId:"independent",titleId:"1:289",tagId:"1:291"}]},Wd="gkx-writing-prototype:workspace-v1";
+function gd() {
+  let saved = null;
+  let hasStoredWorkspace = false;
+  try {
+    const raw = localStorage.getItem(Wd);
+    hasStoredWorkspace = raw !== null;
+    const candidate = window.sessionReports.normalizeWorkspace(JSON.parse(raw));
+    if (Array.isArray(candidate?.folders) && Array.isArray(candidate.reports) &&
+        candidate.folders.every(folder => typeof folder.id === "string" && typeof folder.name === "string") &&
+        candidate.reports.every(report => typeof report.id === "string" && typeof report.title === "string" &&
+          typeof report.type === "string" && candidate.folders.some(folder => folder.id === report.folderId))) {
+      saved = candidate;
+    }
+  } catch {}
+  const examples = window.workbenchExample;
+  const workspace = saved || (examples ? examples.addTo(d$) : d$);
+  const ready = examples ? examples.prepareHistory(workspace) : workspace;
+  if (!hasStoredWorkspace || (saved && ready !== saved)) {
+    try {
+      localStorage.setItem(Wd, JSON.stringify(ready));
+      window.sessionReports.resumeGeneration();
+    } catch {}
+  }
+  return ready;
+}
 const {KnowledgeLibrary} = createKnowledgeLibrary(y);
 function LibrarySelect({label, value, options, onValueChange, disabled = false, hideHeading = false}) {
   const trigger = y.useRef(null);
@@ -2094,7 +2119,6 @@ function h$({onStartClarification:t,initialLaunch:n,returningToDraft=false,workf
     [taskSkills,setTaskSkills]=y.useState(()=>validTaskSkills(composer?.skills)),[O,Z]=y.useState(null),[J,re]=y.useState(""),[se,ve]=y.useState(null),[be,ye]=y.useState(!1),[Se,F]=y.useState(100),[ne,ze]=y.useState(null),[Ne,St]=y.useState(""),[Mt,Rt]=y.useState(""),ut=y.useRef(null),Vt=y.useRef(null);y.useEffect(() => {
     function refreshWorkspace() { setWorkspace(gd()); }
     function syncStorage(event) { if (event.key === Wd || event.key === null) refreshWorkspace(); }
-    try { if (localStorage.getItem(Wd) === null) localStorage.setItem(Wd, JSON.stringify(gd())); } catch {}
     window.addEventListener("gkx-report-updated", refreshWorkspace);
     window.addEventListener("storage", syncStorage);
     return () => {
@@ -2208,9 +2232,10 @@ case "projectSession": beginSession(pe); break;case "report": {
   le(fe.id);
   const folder = c.folders.find(item => item.id === fe.folderId);
   if (folder) ue(closed => closed.filter(name => name !== folder.name));
-  if (window.sessionReports?.openSession && window.sessionReports.openSession(fe.id) !== false) break;
-  if (libraryPage) onShowComposer();
-  if(fe.draft)ve(fe.draft);le(pe),Z({kind:fe.id===ne?be?"generating":"draft":fe.draft?"draft":"existing",title:fe.id===ne?"报告创作预览":fe.title,value:pe});break}case"library":N("全部");break;case"category":N(pe);break;case"send":{if(be){Z({kind:"generating",title:"报告生成进度"});return}if(!v.trim()){re("请先填写报告需求"),Jt();return}const chosenModel=modelSelection.forSubmit();
+  const sessions = window.sessionReports;
+  if (!sessions.openSession(fe.id) && !sessions.again(fe.id)) re("无法打开该会话，请刷新后重试。");
+  break;
+}case"library":N("全部");break;case"category":N(pe);break;case"send":{if(be){Z({kind:"generating",title:"报告生成进度"});return}if(!v.trim()){re("请先填写报告需求"),Jt();return}const chosenModel=modelSelection.forSubmit();
 if(!chosenModel){re("请选择已上架的模型后再发送");return}
 const fe=c.folders.find(Ie=>Ie.name===A);if(!fe){ma(),re("请先新建写作项目");return}if(t({prompt:v.trim(),attachments:[],folderId:fe.id,project:A,model:chosenModel.name,modelId:chosenModel.id,modelName:chosenModel.model || chosenModel.name,sourceTaskId:taskContextId,...taskSkillFields(validTaskSkills(taskSkills))})===false)re("本机任务草稿空间不足，请检查可用空间后再提交。");break}case"navigation":pe==="战略咨询"?re("当前页面：战略咨询 · 智能创作报告"):Z({kind:"module",title:pe});break;case"utility":Z({kind:"utility",title:pe});break}}function An(te,pe){if(te==="skills"){setTaskSkill(pe,!taskSkills.includes(pe));return}te==="project"&&pe!==A&&(R(pe),setTaskContextId(null),setTaskSkills([])),re(`已选择：${pe}`)}function ma(){St(""),Rt(""),Z({kind:"new-project",title:"新建写作项目"})}function ga(te,pe,_e){
   if (te === "edit-report") { editLinkedReport(gd().reports.find(item => item.id === _e)); return; }
@@ -4044,9 +4069,10 @@ const Generation=createGeneration(y);
 function tP({initialPreview=false}) {
   const sessions=window.sessionReports;
   function lookup(id) {
+    const workspace = gd();
     let launch=sessions.launchFor(id);
     if(!launch && id===window.workbenchExample?.id) {
-      try {localStorage.setItem(Wd,JSON.stringify(window.workbenchExample.addTo(gd())));launch=sessions.launchFor(id);} catch {}
+      try {localStorage.setItem(Wd,JSON.stringify(window.workbenchExample.addTo(workspace)));launch=sessions.launchFor(id);} catch {}
     }
     return launch;
   }

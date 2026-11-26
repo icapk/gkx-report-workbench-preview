@@ -119,5 +119,54 @@
     report.title=info.title+"（示例）";
     return {...workspace,folders,reports:[report,...workspace.reports]};
   }
-  window.workbenchExample={id:example.id,addTo};
+  const historyTopics = new Map([
+    ['1:109', '深圳低空经济产业链战略研究'], ['1:119', '大湾区低空经济区域竞争比较'],
+    ['1:128', '低空飞行服务重点企业筛选'], ['1:144', '未来产业方向优先级分析'],
+    ['1:153', '具身智能产业发展趋势研判'], ['1:279', '未来产业方向优先级分析'],
+    ['1:288', '具身智能产业发展趋势研判']
+  ]);
+  const sampleDuration = 3 * 60 * 1000;
+
+  function hasExistingWork(report) {
+    return report.session || report.draft || report.publishedReport || report.taskDefinition || report.runId ||
+      [report.prompt, report.request, report.html, report.content, report.body, report.text].some(value =>
+        typeof value === 'string' && value.trim()) ||
+      [report.attachments, report.knowledgeFiles, report.sources, report.skills].some(items => items?.length);
+  }
+
+  function prepareHistory(workspace) {
+    const now = Date.now();
+    let changed = false;
+    const reports = workspace.reports.map(report => {
+      const topic = historyTopics.get(report.id);
+      if (!topic || hasExistingWork(report)) return report;
+      const project = workspace.folders.find(item => item.id === report.folderId);
+      if (!project) return report;
+
+      const running = report.id === '1:128' && !report.generated && !(report.progress >= 100);
+      const progress = running ? (Number.isFinite(report.progress) ? Math.max(0, report.progress) : 65) : 100;
+      const fields = [{id:'F01', name:'研究主题', value:topic}];
+      const definition = {prompt:topic, fields, consent:true, outlineConfirmed:true, outlineSettings:{title:report.title}};
+      definition.outline = window.sessionOutline.propose({definition, launch:report});
+      const state = {phase:running ? 'executing' : 'complete', definition, material:{prompt:topic, attachments:[]},
+        fields, history:[], questions:[], executionProgress:progress};
+      const runId = 'history-sample-' + report.id;
+      const session = {runId, state, historyExample:true};
+      const next = {...report, prompt:topic, progress, session};
+      if (running) {
+        session.executionStartedAt = now - Math.floor(progress * sampleDuration / 100);
+        session.executionDurationMs = sampleDuration;
+      } else {
+        const content = window.buildSessionReportContent({report:next, definition, project:project.name, phase:'complete'});
+        next.generated = true;
+        next.publishedReport = {...content, revision:runId, type:report.type, date:report.updatedAt || null,
+          history:window.sessionReports.historyFor(next, state), sourceDetails:[]};
+      }
+      changed = true;
+      return next;
+    });
+    return changed ? {...workspace, reports} : workspace;
+  }
+
+  window.workbenchExample = {id:example.id, addTo, prepareHistory};
 })();

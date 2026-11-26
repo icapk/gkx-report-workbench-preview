@@ -170,6 +170,7 @@
     openReport: () => showDocument(true),
     downloadReport: (format, anchor) => window.reportActions.run(format, anchor)
   });
+  window.addEventListener('gkx-open-report', () => { if (documentPane.hidden) showDocument(true); });
   get('close-report').addEventListener('click', () => showDocument(false));
   document.addEventListener('keydown', e => {
     if(e.key==='Escape' && !documentPane.hidden && !document.querySelector('dialog[open]') && !toc.hidden) {

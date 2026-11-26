@@ -6,7 +6,7 @@
   const generationDuration = 24000;
   const oldGenerationDuration = 6000;
   const home = new URL('../index.html', document.currentScript.src);
-  const detail = new URL('../detail/index.html?v=fe3f79db94af', document.currentScript.src);
+  const detail = new URL('../detail/index.html?v=6bed0b76ccf1', document.currentScript.src);
   // The composer can omit the report type, including on tasks saved by older versions.
   function normalizeWorkspace(workspace) {
     if (Array.isArray(workspace?.reports)) {
@@ -210,8 +210,8 @@
     try { write(workspace); }
     catch { return false; }
     if (state.phase === 'executing') scheduleClock();
-    // Compatibility pointers used by the original workbench's download and recent-draft menus.
-    if (state.definition?.consent && (before?.phase !== 'executing' || state.phase === 'complete')) {
+    // Background progress on a seeded example must not replace the user's last task.
+    if (!session.historyExample && state.definition?.consent && (before?.phase !== 'executing' || state.phase === 'complete')) {
       try {
         localStorage.setItem('gkx-writing-prototype:confirmed-task',JSON.stringify({id:report.id,...state.definition}));
         if(state.phase==='complete') localStorage.setItem('gkx-writing-prototype:last-draft',JSON.stringify({id:report.id,workspaceDraft:true}));
@@ -319,6 +319,9 @@
     const hash=hashFor(kind,id);
     if(document.getElementById('root')) {
       if(location.hash !== hash) location.hash=hash;
+      else if (kind === 'report') {
+        document.querySelector('.workbench-report-frame')?.contentWindow?.dispatchEvent(new Event('gkx-open-report'));
+      }
     } else {
       const url=new URL(home); url.hash=hash; location.assign(url.href);
     }
@@ -347,5 +350,5 @@
     sessionStorage.removeItem('gkx-writing-prototype:clarification-launch');
     return navigate('compose',id);
   }
-  window.sessionReports = {normalizeWorkspace,begin,save,cancelOutline,restore,getReport,generationFor,launchFor,openSession,returnToSession,showReport,again,openProject,embeddedUrl,readRoute,hashFor,sessionView,routeId,sessionHash,writingLocked,finishedWriting,sameRequest,historyFor:timeline};
+  window.sessionReports = {normalizeWorkspace,resumeGeneration:scheduleClock,begin,save,cancelOutline,restore,getReport,generationFor,launchFor,openSession,returnToSession,showReport,again,openProject,embeddedUrl,readRoute,hashFor,sessionView,routeId,sessionHash,writingLocked,finishedWriting,sameRequest,historyFor:timeline};
 })();
