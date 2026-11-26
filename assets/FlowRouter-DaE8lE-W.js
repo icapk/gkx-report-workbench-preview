@@ -3986,6 +3986,31 @@ function YL({
         })]
       })]
     });
+  if (embedded && active && flow.phase === "outline-review" && !preparingOutline) {
+    return h.jsxs("div", {
+      className: "outline-page",
+      children: [
+        h.jsxs("nav", {
+          className: "outline-page-crumb",
+          "aria-label": "面包屑",
+          children: [
+            h.jsxs("a", {className:"outline-page-back", href:"#", children:[
+              h.jsx("svg", {width:16,height:16,viewBox:"0 0 16 16",fill:"none","aria-hidden":true,
+                children:h.jsx("path",{d:"m10 3-6 5 6 5",stroke:"currentColor",strokeWidth:1.4,strokeLinecap:"round",strokeLinejoin:"round"})}),
+              "返回"
+            ]}),
+            h.jsx("span", {"aria-hidden":true, children:"/"}),
+            "智能创作报告",
+            h.jsx("span", {"aria-hidden":true, children:"/"}),
+            h.jsx("span", {"aria-current":"page", children:"报告创作"})
+          ]
+        }),
+        h.jsx("main", {className:"outline-stage", "aria-label":"报告创作",
+          children:h.jsx("div", {className:"outline-page-scroll clarification-app cf-history-host", "data-embedded":true, children:transcript})
+        })
+      ]
+    });
+  }
   return h.jsx(w1, {
     reducedMotion: "user",
     children: embedded ? h.jsxs(h.Fragment, {

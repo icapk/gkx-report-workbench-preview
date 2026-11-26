@@ -113,3 +113,80 @@
 .cf-approved-outline {margin:0 0 12px;font-size:13px;color:#405271;}
 .cf-approved-outline summary {width:fit-content;cursor:pointer;padding:4px 0;}
 .cf-approved-outline[open] .lib-generated-outline {margin-top:6px;}
+
+/* The outline editor shares the portal header and has one scrollable transcript. */
+body:has(> #root > .outline-page) {
+  overflow: hidden;
+  background: #dae7fa;
+}
+#root:has(> .outline-page) > :not(.outline-page) { display: none; }
+#root > .outline-page {
+  position: absolute;
+  inset: calc(var(--portal-header-height, 56px) + 5px) 16px 16px;
+  display: grid;
+  grid-template-rows: 46px minmax(0, 1fr);
+  padding: 0 16px 16px;
+  border: 1px solid #ffffffeb;
+  border-radius: 12px;
+  background: #ebf2fc;
+  color: #1d2129;
+  font: 14px/1.55 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.outline-page .outline-page-crumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: #475365;
+}
+.outline-page-crumb > [aria-hidden] { color: #b8c3d2; }
+.outline-page .outline-page-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding-block: 4px;
+  border-radius: 3px;
+  color: inherit;
+  text-decoration: none;
+}
+.outline-page-back:hover { color: #165dff; }
+.outline-page-back:focus-visible { outline: 2px solid #165dff; outline-offset: 2px; }
+.outline-page .outline-stage {
+  box-sizing: border-box;
+  padding-block: 32px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+}
+.outline-page .outline-stage > .outline-page-scroll {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  background: transparent;
+}
+.outline-stage .outline-page-scroll.cf-history-host > .cf-conversation-history {
+  width: min(736px, calc(100% - 32px));
+  margin-inline: auto;
+  padding: 0;
+}
+.outline-page .outline-review { margin: 16px 0 0; }
+.outline-page .outline-card { border-color: #edf0f3; border-radius: 6px; }
+.outline-page .outline-card-body { padding: 20px 24px 16px; }
+.outline-page .outline-group { grid-template-columns: 70px minmax(0, 1fr); column-gap: 10px; }
+.outline-page .outline-group::before { left: 63px; }
+.outline-page .outline-add-chapter { margin-left: 80px; width: calc(100% - 80px); }
+.outline-page .outline-review .outline-name { font-weight: 500; }
+.outline-page .outline-advanced > summary svg { transform: none; }
+.outline-page .outline-advanced[open] > summary svg { transform: rotate(180deg); }
+.outline-page .outline-materials { margin-top: 16px; }
+.outline-page .outline-drop { min-height: 146px; background: #f2f3f5; }
+.outline-page .outline-footer { background: #fff; padding: 14px 16px; border-radius: 0 0 6px 6px; }
+.outline-page .outline-footer-actions { flex-wrap: wrap; }
+.outline-page .outline-footer-actions .outline-run-actions { margin-inline-start: auto; }
