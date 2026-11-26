@@ -1,4 +1,4 @@
-import {createSessionPane} from "./session-pane.js?v=bae21a6fe9f1";
+import {createGeneration, createSessionPane} from "./session-pane.js?v=8586214cbad7";
 import {createOutlineReview} from "./outline-review.js?v=7911453cd54b";
 import {createKnowledgeLibrary} from "./knowledge-library.js?v=3d7584b85b8c";
 import {lookupTemplate} from "./template-library.js?v=120a259b53f8";
@@ -3440,6 +3440,32 @@ function ClarificationStage({
   });
 }
 
+function ReportCreationPage({className = "outline-stage", children}) {
+  return h.jsxs("div", {
+    className: "outline-page",
+    children: [
+      h.jsxs("nav", {
+        className: "outline-page-crumb",
+        "aria-label": "面包屑",
+        children: [
+          h.jsxs("a", {className:"outline-page-back", href:"#", children:[
+            h.jsx("svg", {width:16,height:16,viewBox:"0 0 16 16",fill:"none","aria-hidden":true,
+              children:h.jsx("path",{d:"m10 3-6 5 6 5",stroke:"currentColor",strokeWidth:1.4,strokeLinecap:"round",strokeLinejoin:"round"})}),
+            "返回"
+          ]}),
+          h.jsx("span", {"aria-hidden":true, children:"/"}),
+          "智能创作报告",
+          h.jsx("span", {"aria-hidden":true, children:"/"}),
+          h.jsx("span", {"aria-current":"page", children:"报告创作"})
+        ]
+      }),
+      h.jsx("main", {className:className, "aria-label":"报告创作",
+        children
+      })
+    ]
+  });
+}
+
 function YL({
   initialLaunch: launch,
   embedded = !1,
@@ -3987,28 +4013,8 @@ function YL({
       })]
     });
   if (embedded && active && flow.phase === "outline-review" && !preparingOutline) {
-    return h.jsxs("div", {
-      className: "outline-page",
-      children: [
-        h.jsxs("nav", {
-          className: "outline-page-crumb",
-          "aria-label": "面包屑",
-          children: [
-            h.jsxs("a", {className:"outline-page-back", href:"#", children:[
-              h.jsx("svg", {width:16,height:16,viewBox:"0 0 16 16",fill:"none","aria-hidden":true,
-                children:h.jsx("path",{d:"m10 3-6 5 6 5",stroke:"currentColor",strokeWidth:1.4,strokeLinecap:"round",strokeLinejoin:"round"})}),
-              "返回"
-            ]}),
-            h.jsx("span", {"aria-hidden":true, children:"/"}),
-            "智能创作报告",
-            h.jsx("span", {"aria-hidden":true, children:"/"}),
-            h.jsx("span", {"aria-current":"page", children:"报告创作"})
-          ]
-        }),
-        h.jsx("main", {className:"outline-stage", "aria-label":"报告创作",
-          children:h.jsx("div", {className:"outline-page-scroll clarification-app cf-history-host", "data-embedded":true, children:transcript})
-        })
-      ]
+    return h.jsx(ReportCreationPage, {children:
+      h.jsx("div", {className:"outline-page-scroll clarification-app cf-history-host", "data-embedded":true, children:transcript})
     });
   }
   return h.jsx(w1, {
@@ -4032,7 +4038,9 @@ function YL({
       children: [product, demoControls]
     })
   });
-}const SessionPane=createSessionPane(y,ml);
+}
+const SessionPane=createSessionPane(y,ml);
+const Generation=createGeneration(y);
 function tP({initialPreview=false}) {
   const sessions=window.sessionReports;
   function lookup(id) {
@@ -4173,7 +4181,10 @@ function tP({initialPreview=false}) {
     h.jsx(h$, {initialLaunch:launch,returningToDraft:view.returningToDraft,composerSeed,onStartClarification:start,
       projectId:kind==="project"?id:null,workflowActive:workflow,sessionHeader,onResetClarification:reset,
       libraryPage,onShowComposer:()=>{location.hash="";sync("");}},composerKey),
-    libraryPage ? null : paneTitle ? h.jsx(SessionPane,{kind,launch,title:paneTitle},kind+":"+id)
+    libraryPage ? null : kind === "generating" ? h.jsx(ReportCreationPage, {
+      className:"outline-stage generation-stage",
+      children:h.jsx(Generation, {launch}, id)
+    }) : paneTitle ? h.jsx(SessionPane,{kind,launch,title:paneTitle},kind+":"+id)
       : h.jsx(YL,{
       initialLaunch:launch,embedded:true,active:workflow,onComposePreview:showDemoComposer,onConfirmUnbound:confirmUnbound,
       onActivate:()=>{const hash=launch?.sessionId?sessions.sessionHash(launch.sessionId):"#/clarification";location.hash=hash;sync(hash);},onExit:exit
