@@ -66,7 +66,7 @@ function describeFinishedStages(stages, {report, review, trace, hasRequest, mate
   }
 }
 
-function bloodResearchFlow({demo,title,goal,sections,complete,position,progress,review,reportId}) {
+function bloodResearchFlow({demo,title,goal,chapterPlan,complete,position,progress,review,reportId}) {
   const {anchors,sources} = demo;
   const staleReview = complete && review?.demo === false;
   const stages = [
@@ -100,8 +100,8 @@ function bloodResearchFlow({demo,title,goal,sections,complete,position,progress,
       id:'compose', title:'生成扩围评估报告',
       plan:'按已确认大纲整理事实、证据缺口和行动建议。', result:'已形成含数据出处、审阅修订和扩围条件的报告。',
       detail:'逐章呈现调查依据、方案选择和试点验收条件。',
-      inputs:sections,
-      outputs:[anchors.decision,...sections]
+      inputs:chapterPlan,
+      outputs:[anchors.decision,...chapterPlan]
     }
   ];
   const statuses = ['已明确','已查阅','已核对','已模拟评审','已生成'];
@@ -154,11 +154,19 @@ export function buildResearchFlow(input = {}) {
   const completedSteps = complete ? steps.length : clamp(completedCount ?? Math.floor(progress * steps.length / 100),0,Math.max(0,steps.length - 1));
   const currentStep = nameOf(steps[completedSteps]);
   const position = complete ? 4 : phaseForClock(steps.length,sections.length,completedSteps,progress);
+  const chapterPlan = sections.flatMap((chapter,index) => {
+    const skill = nameOf(outlineRows[index]?.skillSnapshot);
+    const items = [skill ? chapter+' · '+skill : chapter];
+    for (const choice of list(steps[index + 1]?.localSkills)) {
+      if (choice.scope !== 'chapter') items.push(chapter+' / '+choice.title+' · '+nameOf(choice.skillSnapshot));
+    }
+    return items;
+  });
   const demoCaseId = definition.demoCaseId || report.demoCaseId;
   if (demoCaseId === 'sz-blood-network-2024') {
     // Detail renders inside the same-origin workbench frame. Both views use the shared case.
     const demo = window.bloodNetworkDemo || window.parent.bloodNetworkDemo;
-    if (demo) return bloodResearchFlow({demo,title,goal,sections,complete,position,progress,
+    if (demo) return bloodResearchFlow({demo,title,goal,chapterPlan,complete,position,progress,
       review:input.review,reportId:report.sessionId || report.id || demoCaseId});
   }
   const taskItems = [scope && '范围：'+scope, reader && '读者：'+reader].filter(Boolean);
@@ -177,14 +185,6 @@ export function buildResearchFlow(input = {}) {
       skill && '章节 Skill：'+skill, subtopics.length && '本章子题：'+subtopics.slice(0,3).join('、'),
       body && '写作要求：'+body].filter(Boolean);
   };
-  const chapterPlan = sections.flatMap((chapter,index) => {
-    const skill = nameOf(outlineRows[index]?.skillSnapshot);
-    const items = [skill ? chapter+' · '+skill : chapter];
-    for (const choice of list(steps[index + 1]?.localSkills)) {
-      if (choice.scope !== 'chapter') items.push(chapter+' / '+choice.title+' · '+nameOf(choice.skillSnapshot));
-    }
-    return items;
-  });
   const stages = [
     {
       id:'question',title:'研究问题拆解',
