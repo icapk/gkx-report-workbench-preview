@@ -30,9 +30,9 @@
 
   function init({report,sessionId,editor,entries,onReviewChange}) {
     const get = id => document.getElementById(id);
-    const studio = get('judgement-host'), leftSlot = get('judgement-left-slot'), mobileSlot = get('judgement-mobile');
+    const studio = get('judgement-host'), reviewSlot = get('judgement-review-slot'), mobileSlot = get('judgement-mobile');
     const process = get('process-content'), nav = get('judgement-mode'), reader = get('reader');
-    const mobile = matchMedia('(max-width:800px)'), reduceMotion = matchMedia('(prefers-reduced-motion:reduce)');
+    const mobile = matchMedia('(max-width:680px)'), reduceMotion = matchMedia('(prefers-reduced-motion:reduce)');
     const trace = window.GkxTraceWorkspace.init({report,entries,editor,locateRange});
     const baseText = visibleText(report.html);
     let preferred = new URLSearchParams(window.parent.location.search).get('panel') === 'process' ? 'process' : 'review';
@@ -48,10 +48,10 @@
     }
     function sync(open = !get('document-pane').hidden) {
       const narrow = mobile.matches;
-      const target = narrow ? mobileSlot : leftSlot;
+      const target = narrow ? mobileSlot : reviewSlot;
       if (studio.parentElement !== target) target.prepend(studio);
       nav.hidden = !open || narrow;
-      leftSlot.hidden = narrow || !open || preferred !== 'review';
+      reviewSlot.hidden = narrow || !open || preferred !== 'review';
       process.hidden = open && !narrow && preferred === 'review';
       mobileSlot.hidden = !open || !narrow;
       nav.querySelectorAll('[data-judgement-view]').forEach(b => {

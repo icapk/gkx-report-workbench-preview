@@ -24,27 +24,13 @@
 .gjs .gjs-outcome h2 { margin: 6px 0 4px; padding: 0; border: 0; color: #202e48; font-size: 19px; font-weight: 650; line-height: 1.45; letter-spacing: -.015em; }
 .gjs .gjs-outcome p { margin: 0; color: #475870; font-size: 13px; line-height: 1.75; }
 .gjs .gjs-path { margin-top: 16px; }
-.gjs .gjs-replay-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.gjs .gjs-replay-bar > strong { color: #283449; font-size: 15px; font-weight: 650; }
-.gjs .gjs-replay-bar > div { display: flex; align-items: center; gap: 5px; }
-.gjs .gjs-replay-bar button {
-  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-  min-width: 28px; min-height: 28px; padding: 2px 8px;
-  border: 1px solid #dce3ee; border-radius: 5px; background: #fff;
-  color: #4d5e76; font-size: 12px; line-height: 1.4; white-space: nowrap;
-}
-.gjs .gjs-replay-bar [data-gjs-play] { min-width: 57px; border-color: #c6d5f6; color: #2e53ad; background: #eff4ff; font-weight: 600; }
-.gjs .gjs-replay-bar button:hover { border-color: #9eafe0; color: #274ca6; background: #eaf0fd; }
-.gjs [data-gjs-restart] span[aria-hidden="true"] { font: 17px/1 Arial, sans-serif; }
-.gjs [data-gjs-restart] .gjs-restart-text { font-size: 12px; }
-.gjs .gjs-play-icon { display: block; width: 8px; height: 9px; border: solid currentColor; border-width: 0 2.5px; }
-.gjs .is-paused .gjs-play-icon { width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 8px; border-color: transparent transparent transparent currentColor; }
+.gjs .gjs-process-heading { margin: 0; color: #283449; font-size: 15px; font-weight: 650; line-height: 1.65; }
 .gjs .gjs-visual {
   --gjs-motion: paused;
   display: grid; grid-template-columns: 86px minmax(9px,1fr) 45px minmax(9px,1fr) 86px;
   align-items: center; max-width: 490px; margin: 1px auto 0; padding: 4px 4px 0;
 }
-.gjs.gjs-playing .gjs-visual { --gjs-motion: running; }
+.gjs.gjs-in-view .gjs-visual { --gjs-motion: running; }
 .gjs .gjs-seat { --rim: #435fd0; --rim-hi: #a4b5ff; --shell: #667feb; --shadow: #4e68c4; display: grid; justify-items: center; gap: 0; }
 .gjs .gjs-seat-peer { --rim: #7760b8; --rim-hi: #d1c2f8; --shell: #a58ccc; --shadow: #8974af; }
 .gjs .gjs-seat-name { white-space: nowrap; text-align:center; color: #526079; font-size: 11px; font-weight: 550; line-height: 1.5; }
@@ -111,9 +97,7 @@
   position: relative; min-height: 37px; margin-bottom: -1px; padding: 6px 2px; border: 0; border-bottom: 2px solid transparent;
   background: transparent; color: #536477; font-size: 13px; font-weight: 500; line-height: 1.4;
 }
-.gjs .gjs-sequence button[aria-pressed="true"] { border-bottom-color: #dce5fc; color: #304fc1; font-weight: 650; }
-.gjs .gjs-stage-progress { position: absolute; inset: auto 0 -2px; height: 3px; transform: scaleX(0); transform-origin: left center; background: #496beb; border-radius: 3px; pointer-events: none; }
-.gjs .gjs-sequence button:not([aria-pressed="true"]) .gjs-stage-progress { visibility: hidden; }
+.gjs .gjs-sequence button[aria-pressed="true"] { border-bottom-color: #496beb; color: #304fc1; font-weight: 650; }
 .gjs .gjs-sequence button:hover { background: #f4f6fc; }
 .gjs .gjs-step-no { display: inline-grid; place-items: center; flex: none; width: 16px; height: 16px; border-radius: 50%; background: #eef1f5; color: #637083; font-size: 10px; font-variant-numeric: tabular-nums; }
 .gjs [aria-pressed="true"] .gjs-step-no { background: #e1e9ff; color: #345ad1; }
@@ -186,6 +170,5 @@
   .gjs .gjs-avatar::after { transform: scale(.95); opacity: .32; }
   .gjs .gjs-stream > b { left: 55%; }
   .gjs .gjs-stream > b::before { display: none; }
-  .gjs .gjs-stage-progress { visibility: hidden; }
   .gjs .gjs-sequence button[aria-pressed="true"] { border-bottom-color: #6580c6; }
 }

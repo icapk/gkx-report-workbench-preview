@@ -12,15 +12,15 @@ i[data-icon] svg{width:16px;height:16px;display:block}
 
 .report-surface {
   display: grid;
-  grid-template-columns: minmax(285px, 39%) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 28%, 350px);
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 .report-surface.conversation-only { grid-template-columns: minmax(0, 1fr); }
-.conversation { overflow: auto; min-height: 0; overscroll-behavior: contain; }
-.conversation-content { max-width: 800px; margin: auto; padding: 25px clamp(18px, 2.4vw, 40px) 40px; }
-.document-pane { border-left: 1px solid var(--line); }
+.conversation { min-width: 0; border-left: 1px solid var(--line); overflow: auto; min-height: 0; overscroll-behavior: contain; }
+.conversation-content { max-width: 800px; margin: auto; padding: 17px clamp(12px, 1.25vw, 18px) 30px; }
+.conversation-only .conversation { border-left: 0; }
 .tool-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 47px; padding: 6px 14px; border-bottom: 1px solid var(--line); flex: none; }
 .tool-row button,.icon-btn { display: inline-flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: 5px; color: #4e5969; gap: 5px; font-size: 12px; white-space: nowrap; }
 .tool-row button { height: 29px; padding: 0 6px; }
@@ -34,10 +34,10 @@ i[data-icon] svg{width:16px;height:16px;display:block}
 .reading-layout{min-height:0;flex:1;display:flex;position:relative}
 .reader{flex:1;min-width:0;overflow:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
 .paper{max-width:1240px;margin:0 auto;padding:24px clamp(17px,1.8vw,36px) 60px}
-.report-text{font-size:15px;line-height:1.75;overflow-wrap:anywhere;color:#404c5d;display:flow-root;caret-color:#345cf4;min-height:60px}
+.report-text{font-size:16px;line-height:1.8;overflow-wrap:anywhere;color:#404c5d;display:flow-root;caret-color:#345cf4;min-height:60px}
 .report-text:focus-visible{outline:0}
 .report-text h1,.report-text h2,.report-text h3,.references h2,.references h3{color:#1d2532;text-align:left}
-.report-text h1{font-size:clamp(20px,1.65vw,26px);font-weight:600;line-height:1.45;margin:0 0 17px;padding-bottom:12px;border-bottom:1px solid #e5e8ee;letter-spacing:.2px}
+.report-text h1{font-size:clamp(23px,2.15vw,30px);font-weight:650;line-height:1.45;margin:0 0 17px;padding-bottom:12px;border-bottom:1px solid #e5e8ee;letter-spacing:.2px}
 .report-text h2,.references h2{font-size:18px;font-weight:600;line-height:1.5;margin:26px 0 12px;padding-bottom:7px;border-bottom:1px solid #e6e9ee}
 .report-text h3,.references h3{font-size:16px;font-weight:600;margin:18px 0 9px}
 .report-text p{margin:0 0 12px}
@@ -59,10 +59,9 @@ i[data-icon] svg{width:16px;height:16px;display:block}
 #toc-items button[data-level="2"]{padding-left:17px}#toc-items button[data-level="3"]{padding-left:28px}
 #toc-items button:hover,#toc-items button[aria-current="location"]{background:#eaf0ff;color:#315add}
 
-@media (max-width: 800px) {
+@media (max-width: 680px) {
   .report-surface { grid-template-columns: minmax(0, 1fr); }
   .report-surface:not(.conversation-only) .conversation { display: none; }
-  .document-pane { border-left: 0; }
 }
 @media (max-width: 760px) {
   .tool-row { padding: 6px; align-items: flex-start; }
@@ -70,6 +69,8 @@ i[data-icon] svg{width:16px;height:16px;display:block}
   .paper { padding: 22px 17px 44px; }
   .report-text { font-size: 14px; }
   .report-text h1 { font-size: 21px; }
+}
+@media (max-width: 940px) {
   .toc { position: absolute; inset: 0 auto 0 0; width: min(235px,80%); z-index: 2; box-shadow: 3px 0 18px #253b5922; }
 }
 .report-date{white-space:nowrap}

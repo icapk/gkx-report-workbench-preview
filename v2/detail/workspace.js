@@ -68,7 +68,7 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8'
       b.title = b.textContent;
       b.dataset.level = heading.tagName.slice(1);
       b.addEventListener('click', () => {
-        if (window.matchMedia('(max-width:760px)').matches) setToc(false);
+        if (window.matchMedia('(max-width:940px)').matches) setToc(false);
         reader.scrollTop += heading.getBoundingClientRect().top - reader.getBoundingClientRect().top - 15;
         // Near the end several headings share the same maximum scroll position.
         clickedScrollTop = reader.scrollTop;
@@ -141,7 +141,7 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8'
     }
   });
   renderToc();
-  if (window.matchMedia('(max-width:760px)').matches) setToc(false);
+  if (window.matchMedia('(max-width:940px)').matches) setToc(false);
   // Keep pasted material local and preserve the current document's formatting.
   editor.addEventListener('paste', event => {
     event.preventDefault();
@@ -192,7 +192,7 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8'
     downloadReport: (format, anchor) => window.reportActions.run(format, anchor)
   });
   conversation.prepend(flow);
-  if (window.matchMedia('(max-width:800px)').matches &&
+  if (window.matchMedia('(max-width:680px)').matches &&
       new URLSearchParams(host.location.search).get('panel') === 'process') {
     showDocument(false);
     conversation.parentElement.scrollTop = 0;

@@ -1,5 +1,5 @@
 import {renderVersionPicker} from "../../preview-versions.js";
-import {createGeneration, createSessionPane} from "./session-pane.js?v=0fd869629ffe";
+import {createGeneration, createSessionPane} from "./session-pane.js?v=c5407f660694";
 import {createOutlineReview} from "./outline-review.js?v=8144869783e1";
 import {createKnowledgeLibrary} from "./knowledge-library.js?v=be5b8a530cde";
 import {lookupTemplate} from "./template-library.js?v=88ba6a39fbc1";

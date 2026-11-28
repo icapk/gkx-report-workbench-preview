@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>报告详情 · 智能创作报告</title>
   <link rel="icon" href="../assets/portal-brand.png">
-  <link rel="stylesheet" href="layout.css?v=c0209d6eae04">
+  <link rel="stylesheet" href="layout.css?v=8aafd62e1389">
   <link rel="stylesheet" href="process-history.css?v=39767ab51e20">
   <link rel="stylesheet" href="report-actions.css?v=0c7db3e26fca">
   <script defer src="process-history.js?v=3f927d03b2f8"></script>
@@ -15,25 +15,17 @@
   <script defer src="trace-model.js?v=8c914d935681"></script>
   <script defer src="trace-view.js?v=3becdcfedeb7"></script>
   <script defer src="trace-workspace.js?v=9f508e4ac620"></script>
-  <link rel="stylesheet" href="judgement-studio.css?v=65c3b4448b53">
-  <link rel="stylesheet" href="judgement-workspace.css?v=b8c7442ca4aa">
+  <link rel="stylesheet" href="judgement-studio.css?v=2cd05be20c78">
+  <link rel="stylesheet" href="judgement-workspace.css?v=98e641a66d96">
   <script defer src="judgement-cases.js?v=55f7dc74b8a9"></script>
-  <script defer src="judgement-studio.js?v=41865e5b2f9f"></script>
-  <script defer src="judgement-workspace.js?v=7e6a7bcbc29f"></script>
+  <script defer src="judgement-studio.js?v=2d2b46a4d770"></script>
+  <script defer src="judgement-workspace.js?v=266b373b8893"></script>
   <link rel="stylesheet" href="../assets/research-flow.css?v=126123b9aa34">
-  <script type="module" src="workspace.js?v=4351206d6857"></script>
+  <script type="module" src="workspace.js?v=7eea29a0efa2"></script>
 </head>
 <body>
   <main class="workspace">
     <section class="report-surface" id="detail" hidden aria-label="报告写作工作区">
-      <section class="conversation" aria-label="报告研判与写作过程">
-        <div class="judgement-mode" id="judgement-mode" role="group" aria-label="查看报告过程">
-          <button type="button" data-judgement-view="review" aria-controls="judgement-left-slot" aria-pressed="true">研判回放</button>
-          <button type="button" data-judgement-view="process" aria-controls="process-content" aria-pressed="false">写作过程</button>
-        </div>
-        <div id="judgement-left-slot"><div id="judgement-host" tabindex="-1"></div></div>
-        <div id="process-content" class="conversation-content"></div>
-      </section>
       <section class="document-pane" id="document-pane" aria-label="报告阅读区">
         <div class="tool-row">
           <div class="report-tools" id="report-tools" role="toolbar" aria-label="报告工具栏">
@@ -69,6 +61,14 @@
             </div>
           </div>
         </div>
+      </section>
+      <section class="conversation" aria-label="报告研判与写作过程">
+        <div class="judgement-mode" id="judgement-mode" role="group" aria-label="查看报告过程">
+          <button type="button" data-judgement-view="review" aria-controls="judgement-review-slot" aria-pressed="true">研判回放</button>
+          <button type="button" data-judgement-view="process" aria-controls="process-content" aria-pressed="false">写作过程</button>
+        </div>
+        <div id="judgement-review-slot"><div id="judgement-host" tabindex="-1"></div></div>
+        <div id="process-content" class="conversation-content"></div>
       </section>
     </section>
     <section id="unavailable" class="detail-unavailable" hidden><h1>暂时无法打开这份报告</h1><p id="unavailable-message">请返回工作台，从所属会话打开已生成的报告。</p><button type="button" id="return-home">返回工作台</button></section>
