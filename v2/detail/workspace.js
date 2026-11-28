@@ -1,5 +1,5 @@
-import {buildResearchFlow} from '../assets/research-flow-model.js?v=8106cbb7c02f';
-import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8';
+import {buildResearchFlow} from '../assets/research-flow-model.js?v=d0d2a7ab98b0';
+import {mountResearchFlow} from '../assets/research-flow-view.js?v=8ef3e6eeed42';
 
 (() => {
   'use strict';
@@ -149,10 +149,10 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8'
     if(plain) document.execCommand('insertText',false,plain);
   });
   editor.addEventListener('drop', e => e.preventDefault());
-  const officialUrls = new Set(report.demoCaseId === 'sz-blood-network-2024'
-    ? (window.bloodNetworkDemo?.sources || []).filter(source =>
-      ['network-2024','nanshan-flight'].includes(source.id) && source.url.startsWith('https://')).map(source => source.url)
-    : []);
+  const caseSources = report.demoCaseId === 'sz-city-logistics-policy' ? window.cityLogisticsDemo?.sources :
+    report.demoCaseId === 'sz-blood-network-2024' ? window.bloodNetworkDemo?.sources?.filter(source =>
+      ['network-2024','nanshan-flight'].includes(source.id)) : [];
+  const officialUrls = new Set((caseSources || []).map(source => source.url).filter(url => url?.startsWith('https://')));
   function prepareSourceLinks() {
     editor.querySelectorAll('a[href]').forEach(link => {
       if (officialUrls.has(link.getAttribute('href'))) link.tabIndex = 0;

@@ -94,9 +94,20 @@
     }
   }
 };
-  function addTo(workspace) {
-    if (workspace.reports.some(report=>report.id===example.id)) return workspace;
-    const {fields, history, answers, runId, startedAt, ...info}=example;
+  const cityReportId = 'sample-city-logistics-policy';
+
+  function addTo(workspace, sampleId = example.id) {
+    if (workspace.reports.some(report=>report.id===sampleId)) return workspace;
+    const city = sampleId === cityReportId ? window.cityLogisticsDemo : null;
+    if (sampleId !== example.id && !city) return workspace;
+    const openedAt = Date.now();
+    const sample = city ? {
+      id:cityReportId, demoCaseId:city.id, title:city.title, prompt:city.prompt,
+      folderId:example.folderId, project:example.project, type:'决策咨询报告',
+      model:example.model, template:example.template, fields:city.fields, history:[], answers:{},
+      runId:'sample-city-policy-final-1', startedAt:openedAt, updatedAt:openedAt
+    } : example;
+    const {fields, history, answers, runId, startedAt, ...info}=sample;
     const folders=workspace.folders.slice();
     let project=folders.find(item=>item.id===info.folderId);
     if (!project) {
@@ -104,7 +115,14 @@
       folders.push(project);
     }
     const definition={prompt:info.prompt,consent:true,attachments:[],fields:fields.map(({id,name,value,origin})=>({id,name,value,origin,unresolved:null}))};
-    definition.outline=window.sessionOutline.propose({definition,launch:info});
+    if (city) {
+      definition.demoCaseId=city.id;
+      definition.outlineSettings={title:city.title};
+      definition.outline=window.sessionReports.demoOutline(city);
+      definition.researchStages=structuredClone(city.researchStages);
+    } else {
+      definition.outline=window.sessionOutline.propose({definition,launch:info});
+    }
     definition.outlineConfirmed=true;
     const state={phase:'complete',material:{prompt:info.prompt,attachments:[],answers,edits:{}},
       definition,fields,history,questions:[],round:history.length,index:0,answers:{},error:'',ending:false,
@@ -168,5 +186,5 @@
     return changed ? {...workspace, reports} : workspace;
   }
 
-  window.workbenchExample = {id:example.id, addTo, prepareHistory};
+  window.workbenchExample = {id:example.id, cityReportId, addTo, prepareHistory};
 })();

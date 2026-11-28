@@ -6,7 +6,7 @@
   const generationDuration = 24000;
   const oldGenerationDuration = 6000;
   const home = new URL('../index.html', document.currentScript.src);
-  const detail = new URL('../detail/index.html?v=30bfead4d27d', document.currentScript.src);
+  const detail = new URL('../detail/index.html?v=547b0f0296b4', document.currentScript.src);
   // The composer can omit the report type, including on tasks saved by older versions.
   function normalizeWorkspace(workspace) {
     if (Array.isArray(workspace?.reports)) {
@@ -88,6 +88,15 @@
     if (definition?.outlineConfirmed) history.push({role:'user',title:'已确认报告大纲',items:definition.outline.map(section=>section.title)});
     if (state?.phase === 'complete' || (!session.runId && report.draft)) history.push({role:'assistant',title:'报告已生成',text:report.draft?.title || report.title});
     return history;
+  }
+  function demoOutline(demo) {
+    return window.sessionOutline.normalize(demo.outline).map(({skillId, ...chapter}) => {
+      if (!skillId || chapter.skillSnapshot) return chapter;
+      const skill = window.WorkbenchSkills.catalog.find(item => item.id === skillId);
+      if (!skill) return chapter;
+      const [skillSnapshot] = window.WorkbenchSkills.taskSkillFields([skill.name]).skillSnapshots;
+      return {...chapter,skillSnapshot};
+    });
   }
   function begin(input, confirmedState) {
     const workspace = load();
@@ -354,5 +363,5 @@
     sessionStorage.removeItem('gkx-v2-writing-prototype:clarification-launch');
     return navigate('compose',id);
   }
-  window.sessionReports = {normalizeWorkspace,resumeGeneration:scheduleClock,begin,save,cancelOutline,restore,getReport,generationFor,launchFor,openSession,returnToSession,showReport,again,openProject,embeddedUrl,readRoute,hashFor,sessionView,routeId,sessionHash,writingLocked,finishedWriting,sameRequest,historyFor:timeline};
+  window.sessionReports = {normalizeWorkspace,demoOutline,resumeGeneration:scheduleClock,begin,save,cancelOutline,restore,getReport,generationFor,launchFor,openSession,returnToSession,showReport,again,openProject,embeddedUrl,readRoute,hashFor,sessionView,routeId,sessionHash,writingLocked,finishedWriting,sameRequest,historyFor:timeline};
 })();

@@ -55,12 +55,13 @@ export function mountResearchFlow(host, initialModel) {
   detailHead.append(detailTitle,follow);
   const summary = node('p','gkx-rf-description'), detail = node('p','gkx-rf-explanation');
   const items = node('ul','gkx-rf-items');
-  details.append(detailHead,summary,detail,items);
+  const dialogue = node('div','gkx-rf-dialogue');
+  details.append(detailHead,summary,detail,items,dialogue);
   const note = node('p','gkx-rf-note');
   root.append(header,board,details,note);host.replaceChildren(root);
 
   let stages = [], rows = [], selection = null, current = null;
-  let report = '', itemSignature = '', scheduled = 0, observer;
+  let report = '', itemSignature = '', dialogueSignature = '', scheduled = 0, observer;
   function draw() {
     scheduled = 0;
     if (!root.isConnected || !rows.length) return;
@@ -96,6 +97,23 @@ export function mountResearchFlow(host, initialModel) {
     if (focused) rows.find(row=>row.id===focused)?.button.focus({preventScroll:true});
     redraw();
   }
+  function renderDialogue(turns) {
+    const signature = JSON.stringify(turns);
+    if (signature === dialogueSignature) return;
+    dialogueSignature = signature;
+    dialogue.hidden = !turns.length;
+    dialogue.replaceChildren(...turns.map(({label,counter,authorReply}, index) => {
+      const group = node('details','gkx-rf-exchange');
+      group.open = index === 0;
+      group.append(node('summary','',label));
+      for (const [role, text, style] of [['反方智能体',counter,'counter'], ['写作智能体',authorReply,'author']]) {
+        const message = node('div','gkx-rf-message gkx-rf-message-'+style);
+        message.append(node('strong','',role),node('p','',text));
+        group.append(message);
+      }
+      return group;
+    }));
+  }
   function select() {
     const selected = stages.find(stage=>stage.id===(selection??current));
     for (const row of rows) {
@@ -115,6 +133,7 @@ export function mountResearchFlow(host, initialModel) {
       itemSignature=next;
     }
     items.hidden=!values.length;
+    renderDialogue(selected.dialogue || []);
   }
   function update(model = {}) {
     model=model||{};
@@ -150,6 +169,10 @@ export function mountResearchFlow(host, initialModel) {
   }
   function choose(id) { selection=id;select(); }
   function onClick(event) {
+    if (dialogue.contains(event.target)) {
+      if (selection === null && current) choose(current);
+      return;
+    }
     const button=event.target.closest('button');
     if(button===follow) {
       selection=null;select();rows.find(row=>row.id===current)?.button.focus({preventScroll:true});return;

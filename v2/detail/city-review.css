@@ -1,0 +1,50 @@
+@media (min-width: 681px) {
+  .report-surface.city-logistics-report:not(.conversation-only) {grid-template-columns:minmax(0,1fr) clamp(332px,36%,472px)}
+  .city-logistics-report #judgement-review-slot {padding:17px clamp(13px,1.2vw,22px) 36px}
+}
+.city-review {font-size:13px;line-height:1.65;color:#26354a}
+.city-review-head {display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.city-review-head .city-review-heading {margin-right:auto}
+.city-review-back {border:0;background:none;color:#225c9d;padding:2px 0;font-size:12px;cursor:pointer}
+.city-review .city-review-heading {margin:0;color:#182640;font-size:18px;font-weight:650;line-height:1.45}
+.city-review-demo {padding:2px 7px;border-radius:4px;background:#edf2f9;color:#445573;font-size:11px;white-space:nowrap}
+.city-review-pick {display:flex;align-items:center;gap:10px;color:#536379;font-size:12px}
+.city-review-pick select {flex:1;min-width:0;padding:6px 8px;border:1px solid #c8d5e7;border-radius:5px;color:#243951;background:white;font:inherit;font-weight:550}
+.city-review-tabs {display:flex;gap:0;margin:13px 0 14px;border-bottom:1px solid #d6dfec}
+.city-review-tabs button {flex:1;min-width:0;min-height:33px;padding:4px 1px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:#505f76;font-family:inherit;font-size:12px;font-weight:500;line-height:1.45;cursor:pointer;white-space:nowrap}
+.city-review-tabs button[aria-selected="true"] {color:#184c9c;font-weight:650;border-bottom-color:#245eb0;background:#f2f6fc}
+.city-review-tabs button:hover {background:#edf3fa}
+.city-review-record {display:flex;flex-direction:column;gap:10px;min-width:0}
+.city-review-note {margin:0;padding:9px 11px;border:1px solid #dce4f0;border-left:3px solid #90a7c4;border-radius:4px;background:#fff}
+.city-review-note h4 {margin:0 0 3px;font-size:12px;font-weight:650;color:#395574;line-height:1.5}
+.city-review-note p {margin:0;font-size:13px;color:#29384d;line-height:1.65;overflow-wrap:anywhere}
+.city-review-record[data-stage="counter"] {gap:8px}
+.city-review-record[data-stage="counter"] .city-review-original {padding:5px 8px;background:#f7f8fb;border-width:0 0 0 2px;border-radius:0}
+.city-review-record[data-stage="counter"] .city-review-original p {color:#586578;font-size:12px}
+.city-review-note.city-chat-author,.city-review-note.city-chat-counter {box-sizing:border-box;max-width:92%;width:fit-content;padding:6px 9px;border:1px solid;line-height:1.5}
+.city-review-note.city-chat-author {align-self:flex-end;margin-left:5%;border-color:#d1e1f6;border-radius:11px 3px 11px 11px;background:#eef5ff}
+.city-review-note.city-chat-counter {align-self:flex-start;margin-right:5%;border-color:#e8d7c3;border-radius:3px 11px 11px 11px;background:#fff8ee}
+.city-chat-author h4 {color:#2d5689}
+.city-chat-counter h4 {color:#835727}
+.city-review-note.city-chat-author p,.city-review-note.city-chat-counter p {line-height:1.55}
+.city-chat-citations {display:inline-flex;gap:3px;margin-left:8px;vertical-align:baseline}
+.city-review .city-chat-citations .city-review-reference {background:transparent;font-size:11px;text-decoration:none}
+.city-review .city-chat-citations .city-review-reference:hover {text-decoration:underline}
+.city-review-original {background:#f7f9fc;border-left-color:#b1bbc9}
+.city-review-challenge {background:#fffaf4;border-left-color:#b97533}
+.city-review-challenge h4 {color:#81501e}
+.city-review-ruling {background:#f2f8f5;border-left-color:#4a856b}
+.city-review-ruling h4 {color:#2c634d}
+.city-review-instruction {background:#f3f7fe;border-left-color:#557ba8}
+.city-review-minutes {background:#f2f5fb;border-left-color:#5977a2}
+.city-minutes-issues {display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.city-minutes-issues button {padding:3px 6px;border:1px solid #bfcee4;border-radius:4px;background:white;color:#3b526c;font:inherit;font-size:11px;cursor:pointer}
+.city-minutes-issues button[aria-pressed="true"] {background:#e4edfb;border-color:#5277b1;color:#244d88}
+.city-logistics-report #trace-summary {padding-bottom:18px}
+.city-review-sources {display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:6px}
+.city-review .city-review-reference,.city-review .city-review-locate {padding:0;border:0;background:none;color:#215fa0;text-align:left;cursor:pointer;line-height:1.55}
+.city-review .city-review-reference {font-size:12px;text-decoration:underline;text-underline-offset:2px}
+.city-review .city-review-locate {align-self:flex-start;min-height:28px;padding:2px 8px;border:1px solid #c9d8ed;border-radius:4px;font-size:12px}
+.city-review :focus-visible,.city-logistics-report #editor button[data-review-issue]:focus-visible {outline:2px solid #2b66bd;outline-offset:2px}
+.city-logistics-report #editor button[data-review-issue] {margin:0 4px;padding:2px 7px;vertical-align:middle;border:1px solid #c7d6ec;border-radius:4px;background:#f3f7fd;color:#225c9d;font-size:12px;cursor:pointer}
+.city-logistics-report #editor button[data-review-issue]:hover {background:#e8f1fc}

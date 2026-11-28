@@ -35,6 +35,13 @@
     const mobile = matchMedia('(max-width:680px)'), reduceMotion = matchMedia('(prefers-reduced-motion:reduce)');
     const trace = window.GkxTraceWorkspace.init({report,entries,editor,locateRange});
     const baseText = visibleText(report.html);
+    const cityCase = report.demoCaseId === 'sz-city-logistics-policy';
+    let cityView;
+    if (cityCase) {
+      get('detail').classList.add('city-logistics-report');
+      // Reading starts at the decision summary; the toolbar opens the same trace dialog.
+      reader.append(get('trace-summary'));
+    }
     let preferred = new URLSearchParams(window.parent.location.search).get('panel') === 'process' ? 'process' : 'review';
     let editTimer = 0;
     function update() {
@@ -44,7 +51,12 @@
       });
       const sources = trace.refresh(model);
       onReviewChange?.(model, sources);
-      window.GkxJudgementStudio.mount(studio, model);
+      if (model.kind === 'city-logistics') {
+        if (!cityView) cityView = window.CityLogisticsReview.mount(studio,window.cityLogisticsDemo);
+      } else {
+        cityView = null;
+        window.GkxJudgementStudio.mount(studio, model);
+      }
     }
     function sync(open = !get('document-pane').hidden) {
       const narrow = mobile.matches;
@@ -64,6 +76,15 @@
       if (!button) return;
       preferred = button.dataset.judgementView;
       sync();
+    });
+    if (cityCase) editor.addEventListener('click', e => {
+      const issue = e.target.closest('button[data-review-issue]');
+      if (!issue) return;
+      e.preventDefault();
+      clearTimeout(editTimer); update();
+      preferred = 'review'; sync();
+      if (cityView) cityView.openIssue(issue.dataset.reviewIssue,true,issue);
+      else {studio.focus({preventScroll:true});studio.scrollIntoView({block:'nearest'});}
     });
     get('compact-judgement-link').addEventListener('click', () => {
       studio.scrollIntoView({block:'start', behavior:reduceMotion.matches?'auto':'smooth'});

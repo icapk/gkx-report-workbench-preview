@@ -64,6 +64,7 @@
       if (!allowed.has(tag)) { el.replaceWith(...el.childNodes); continue; }
       for (const attr of [...el.attributes]) {
         if (['alt','title','scope','rowspan','colspan','start','aria-label','data-source','class'].includes(attr.name)) continue;
+        if (tag === 'button' && attr.name === 'data-review-issue' && ['medical','instant','branch'].includes(attr.value)) continue;
         if (tag === 'img' && attr.name === 'src' && /^(?:data:image\/(?:png|jpeg|webp|gif);base64,|(?:\.\/)?assets\/[\w./%-]+$)/i.test(attr.value)) continue;
         if (tag === 'a' && attr.name === 'href' && /^(?:https?:\/\/|#)/i.test(attr.value)) continue;
         el.removeAttribute(attr.name);
@@ -392,11 +393,77 @@
     };
   }
 
-  function bloodReferences(sources) {
+  function publicReferences(sources) {
     return '<p><strong>数据来源与参考文献</strong></p>' + sources.map(source =>
       '<p>' + escape(source.agency) + '，' + escape(source.date) + '，《' + escape(source.title) + '》<br>' +
       '<a href="' + escape(source.url) + '">' + escape(source.url) + '</a></p>'
     ).join('');
+  }
+
+  function cityReport({demo,title,definition,chapters,steps,sources}) {
+    const issues = Object.values(demo.discussions);
+    const sourceIds = {
+      'city-network-base':['city-network','annual-flights'], 'city-measures':['support-rules'],
+      'city-medical':['network-2024','nanshan-flight'], 'city-instant':['district-routes'], 'city-branch':['district-routes']
+    };
+    const references = ids => (ids || []).map(id => {
+      const index = sources.findIndex(source=>source.id === id);
+      return index < 0 ? '' : marker(index);
+    }).join('');
+    const issueButton = issue => '<button type="button" contenteditable="false" data-review-issue="'+issue.id+'">查看审查依据</button>';
+    const summaryRows = [
+      ['medical','优先保障医疗急件收发及地面接续；新增医院先做同线路对照。'],
+      ['instant','对已有订单的商圈有条件支持提效，按高峰履约和成本决定能否复制。'],
+      ['branch','先验证跨城固定货源与双向装载，再研究新增转运节点。']
+    ];
+    const html = [heading(1,title,definition.outlineSettings?.titleConfig)];
+    for (const section of chapters) {
+      const preset = demo.outline.find(row=>row.id===section.id || (!section.id && row.title===section.title));
+      html.push(heading(2,section.title,section.config));
+      if (section.body && section.body !== preset?.body) html.push(styledBody(paragraph(section.body),section.config));
+      if (preset?.id === 'city-summary') {
+        html.push(styledBody([
+          '<p><strong>主要判断</strong>　建议2027年分三类安排支持事项，并采用各自的验收标准。</p>',
+          '<ul>'+summaryRows.map(([id,value])=>'<li><strong>'+escape(demo.discussions[id].label)+'</strong>　'+escape(value)+'　'+issueButton(demo.discussions[id])+'</li>').join('')+'</ul>',
+          '<p><strong>判断依据</strong>　2025年全市累计开通310条低空物流航线，网络具备分场景验证条件。送血已有运行记录，龙华已有商圈配送和跨城通道案例；三者仍分别需要同程签收、真实订单和连续货源证据。'+references(['city-network','network-2024','district-routes'])+'</p>',
+          '<p><strong>提请会议研究</strong>　是否按三类场景分别组织保障试点、存量提效和货源验证，并请拟牵头单位在立项前报送对象、地面对照、费用承担与退出条件。</p>',
+          paragraph('本报告供模拟市政府专题会议参阅。运行数据来自公开资料，支持次序、责任分工和审查意见均为研究建议。')
+        ].join(''),section.config));
+      }
+      if (preset?.id === 'city-baseline') html.push(styledBody(paragraph(demo.anchors.scope),section.config));
+      section.children.forEach((child,index)=>{
+        const options = section.childDetails?.[index] || {};
+        const original = preset?.children.find(row=>options.id ? row.id===options.id : row.title===child);
+        html.push(heading(3,child,options.config));
+        const body = options.body || original?.body;
+        if (body) html.push(styledBody('<p>'+escape(body)+(body === original?.body ? references(sourceIds[original.id]) : '')+'</p>',options.config));
+      });
+      if (preset?.id === 'city-support') {
+        for (const issue of issues) {
+          html.push('<p><strong>'+escape(issue.label)+'</strong></p>',paragraph(issue.quote));
+          html.push('<p>'+escape(issue.action)+references(issue.sourceIds)+'　'+issueButton(issue)+'</p>');
+        }
+      }
+      if (preset?.id === 'city-actions') {
+        html.push('<table><thead><tr><th scope="col">场景与拟牵头方</th><th scope="col">首项行动</th><th scope="col">扩大支持前须核查</th></tr></thead><tbody>' +
+          issues.map(issue=>'<tr><th scope="row">'+escape(issue.label)+paragraph(issue.owner)+'</th><td>'+escape(issue.action)+'</td><td>'+escape(issue.gate)+'</td></tr>').join('')+'</tbody></table>');
+        html.push(paragraph('建议一季度由拟牵头单位与运营方订立统计口径和地面对照，二至三季度按线路记录运营表现、成本与异常，四季度依据台账作出扩大、调整或暂缓决定。正式预算和项目安排另行履行决策程序。'));
+
+      }
+      for (const item of list(section.placeholders)) {
+        html.push(heading(3,item.title || item.kind,item.config),styledBody(window.WorkbenchPlaceholders.render(item),item.config));
+      }
+    }
+    html.push('<h2>附录　审查纪要</h2>', paragraph('以下记录呈现本次演示的质询、裁决与复核，供查阅政策建议的形成依据。'));
+    for (const issue of issues) {
+      html.push('<p><strong>'+escape(issue.label)+'</strong></p>',
+        paragraph('反方质询　'+issue.counter),
+        paragraph('写作回应　'+issue.authorReply),
+        paragraph('圆桌裁决　'+issue.ruling),
+        paragraph('写后质量复核　'+issue.qaFailure+' '+issue.qaFix));
+    }
+    html.push(publicReferences(sources));
+    return {demoCaseId:demo.id,title,html:html.join('\n'),sources,outline:chapters,steps};
   }
 
   function promptAlreadyShown(prompt, task) {
@@ -424,6 +491,8 @@
     const saved = generating ? null : savedContent(report, draft, context.existing);
     const demoCaseId = definition.demoCaseId || report.demoCaseId || draft.taskDefinition?.demoCaseId;
     const blood = demoCaseId === 'sz-blood-network-2024' ? window.bloodNetworkDemo : null;
+    const city = demoCaseId === 'sz-city-logistics-policy' ? window.cityLogisticsDemo : null;
+    const publicCase = city || blood;
     const fields = new Map(list(definition.fields).map(field => [field.id, field]));
     const field = id => text(fields.get(id)?.value);
     const prompt = text(definition.prompt) || text(draft.prompt) || text(report.prompt) || text(launch.prompt);
@@ -435,7 +504,7 @@
     const task = {topic:field('F01') || title, goal:field('F02'), scope:field('F03'), reader:field('F04')};
     const confirmedOutline = Array.isArray(definition.outline) ? normaliseOutline(definition.outline) : null;
     const preferredOutline = confirmedOutline ?? [!generating && context.existing?.outline, context.outline, definition.templateSpec?.outline, draft.templateSpec?.outline, launch.templateSpec?.outline, !generating && report.templateSpec?.outline].map(normaliseOutline).find(rows => rows.length);
-    const sources = blood ? blood.sources.map(source => ({...source, text:source.detail, location:source.agency+' · '+source.date})) : files.map(file => file.name);
+    const sources = publicCase ? publicCase.sources.map(source => ({...source, text:source.detail, location:source.agency+' · '+source.date})) : files.map(file => file.name);
     const complete = definition.consent === true && (report.progress === 100 || !!draft.taskDefinition || context.phase === 'complete');
     const steps = complete ? writingSteps(definition) : [];
     if (saved) {
@@ -445,8 +514,10 @@
         const heading = document.createElement('h1'); heading.textContent = title; saved.doc.content.prepend(heading);
       }
       const knownSources = list(saved.record.sources).map(item => text(item) || text(item?.title) || text(item?.name)).filter(Boolean);
-      return {title, html:saved.doc.innerHTML, sources:blood ? sources : knownSources.length ? knownSources : sources, outline, steps:list(saved.record.steps).length ? saved.record.steps : steps, ...(blood && {demoCaseId})};
+      return {title, html:saved.doc.innerHTML, sources:publicCase ? sources : knownSources.length ? knownSources : sources, outline, steps:list(saved.record.steps).length ? saved.record.steps : steps, ...(publicCase && {demoCaseId})};
     }
+
+    if (city) return cityReport({demo:city,title,definition,chapters:preferredOutline ?? normaliseOutline(city.outline),steps,sources});
 
     const chapters = preferredOutline || (blood ? normaliseOutline(blood.outline) : (structure[type] || structure['战略分析报告']).map(title => ({title,body:'',children:[]})));
     const bloodChapters = blood && bloodSections(blood.anchors);
@@ -503,7 +574,7 @@
         html.push(files.length ? evidence(files) : paragraph(missingEvidence));
       }
     });
-    if (blood) html.push(bloodReferences(sources));
-    return {title, html:html.join('\n'), sources, outline:confirmedOutline ?? publishedOutline(chapters), steps, ...(blood && {demoCaseId})};
+    if (blood) html.push(publicReferences(sources));
+    return {title, html:html.join('\n'), sources, outline:confirmedOutline ?? publishedOutline(chapters), steps, ...(publicCase && {demoCaseId})};
   };
 })();

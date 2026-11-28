@@ -86,6 +86,7 @@
       for (const attr of [...el.attributes]) {
         const {name,value}=attr;
         if (name === 'style') { keepReportFormatting(el); continue; }
+        if (name==='data-review-issue' && el.localName==='button' && ['medical','instant','branch'].includes(value)) continue;
         if(['alt','title','rowspan','colspan','data-source','aria-label','start'].includes(name)) continue;
         if (name==='src' && el.localName==='img') {
           try { const url=new URL(value,document.baseURI);
@@ -104,6 +105,7 @@
   }
   function preview(html) {
     const box = node('article','ra-preview'); box.innerHTML = sanitiseHTML(html);
+    box.querySelectorAll('button[data-review-issue]').forEach(button => button.remove());
     box.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
     return box;
   }
@@ -282,7 +284,12 @@
     document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),45000);
   }
   async function copyReport() {
-    const text=editor.innerText;
+    let text=editor.innerText;
+    if (editor.querySelector('button[data-review-issue]')) {
+      const copy=preview(editor.innerHTML);
+      copy.style.cssText='position:fixed;left:-99999px;top:0';
+      document.body.append(copy); text=copy.innerText; copy.remove();
+    }
     try { await navigator.clipboard.writeText(text); }
     catch {
       const field=node('textarea'); field.value=text; field.className='ra-clipboard'; document.body.append(field);
@@ -302,6 +309,16 @@
     }
     document.body.append(paper); return paper;
   }
+  // A leading decision brief is also a standalone handout in Word and PDF.
+  function afterMeetingBrief(paper) {
+    if (!editor.closest('.city-logistics-report')) return null;
+    const [first, next] = paper.querySelectorAll(':scope > h2');
+    if (!first || !next) return null;
+    for (let block = first.nextElementSibling; block && block !== next; block = block.nextElementSibling) {
+      if (block.querySelector('strong')?.textContent === '提请会议研究') return next;
+    }
+    return null;
+  }
   async function imageBytes(element) {
     const image=element.tagName==='IMG'?element:element.querySelector('img');
     let canvas;
@@ -318,6 +335,7 @@
   }
   async function wordBlob(html, documentTitle) {
     const D=await loadLibrary('docx.js','docx'); const paper=exportRoot(html);
+    const afterBrief=afterMeetingBrief(paper);
     try {
       function runs(element,styles = {}) {
         if(element.nodeType===Node.TEXT_NODE) return [new D.TextRun({text:element.nodeValue,...styles})];
@@ -336,6 +354,7 @@
         if (fontSize) run.size = Math.round(parseFloat(fontSize) * (fontSize.endsWith('px') ? 1.5 : 2));
         if (el.tagName === 'TH') run.bold = true;
         const paragraph = {children:runs(el, run)};
+        if (el === afterBrief) paragraph.pageBreakBefore=true;
         if (/^H[1-6]$/.test(el.tagName)) paragraph.heading = D.HeadingLevel['HEADING_' + el.tagName[1]];
         if (textAlign) paragraph.alignment = textAlign === 'justify' ? D.AlignmentType.BOTH : textAlign;
         if (lineHeight) paragraph.spacing = {line:Math.round(240 * Number(lineHeight)), lineRule:D.LineRuleType.AUTO};
@@ -376,6 +395,8 @@
       await Promise.all([...paper.querySelectorAll('img')].map(img=>img.decode?.().catch(()=>{}))); await document.fonts?.ready;
       const width=paper.clientWidth, pageHeight=Math.round(width*297/210), margin=52;
       const content=pageHeight-margin*2, height=paper.scrollHeight, scale=1.4;
+      const afterBrief=afterMeetingBrief(paper);
+      const briefEnd=afterBrief && Math.floor(afterBrief.getBoundingClientRect().top-paper.getBoundingClientRect().top);
       const lines=[], walker=document.createTreeWalker(paper,NodeFilter.SHOW_TEXT);
       while(walker.nextNode()){
         const range=document.createRange(); range.selectNodeContents(walker.currentNode);
@@ -390,6 +411,7 @@
       const ratio=whole.width/width, pages=[];
       for(let y=0; y<height-1;) {
         let cut=Math.min(y+content,height);
+        if (briefEnd > y && briefEnd < cut) cut=briefEnd;
         if(cut < height) {
           let old;
           do {

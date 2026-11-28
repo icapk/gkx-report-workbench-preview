@@ -239,6 +239,9 @@
     const material = Array.isArray(entries) ? entries : (Array.isArray(report.sources) ? report.sources.map(s => typeof s === 'string' ? report.sourceDetails?.find(detail=>detail?.title===s) || s : s) : []);
     const sources=reportSources(material,editor);
     const id=clean(report.sessionId) || clean(report.id);
+    if (report.demoCaseId === 'sz-city-logistics-policy' && window.cityLogisticsDemo?.id === report.demoCaseId) {
+      return window.CityLogisticsReview.trace(window.cityLogisticsDemo,material,review?.id===id && review?.kind==='city-logistics');
+    }
     if (report.demoCaseId === 'sz-blood-network-2024' && window.bloodNetworkDemo?.id === report.demoCaseId)
       return bloodNetworkTrace(window.bloodNetworkDemo, material, review?.id === id ? review : null);
     if (review?.demo === true && review.id === id) {

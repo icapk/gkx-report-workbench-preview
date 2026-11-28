@@ -93,6 +93,15 @@
 .gkx-rf .gkx-rf-details p { margin: 4px 0 0; color: #53657a; font-size: 12px; line-height: 1.65; }
 .gkx-rf .gkx-rf-items { max-height: 10em; overflow: auto; margin: 5px 0 0; padding-left: 18px; color: #52657b; font-size: 12px; line-height: 1.65; }
 .gkx-rf .gkx-rf-items li { margin: 1px 0; }
+.gkx-rf-dialogue { display: grid; gap: 5px; margin-top: 8px; }
+.gkx-rf-exchange { min-width: 0; padding: 0 9px; border: 1px solid #dce3ec; border-radius: 6px; background: #fff; }
+.gkx-rf-exchange > summary { padding: 6px 1px; color: #354760; font-size: 12px; font-weight: 600; cursor: pointer; }
+.gkx-rf-exchange > summary:focus-visible { outline: 2px solid #365fc8; outline-offset: 1px; }
+.gkx-rf-message { max-width: 94%; margin: 2px 0 8px; padding: 6px 9px; border-radius: 6px; }
+.gkx-rf-message-counter { background: #f7f2ed; color: #795434; }
+.gkx-rf-message-author { margin-left: auto; background: #edf3ff; color: #385d9a; }
+.gkx-rf-message strong { font-size: 11px; font-weight: 650; }
+.gkx-rf .gkx-rf-message p { margin: 1px 0 0; color: #35455b; }
 .gkx-rf .gkx-rf-note { margin: 6px 0 0; color: #68788c; font-size: 11px; line-height: 1.5; }
 @container (max-width: 430px) {
   .gkx-rf .gkx-rf-board { padding: 10px; }

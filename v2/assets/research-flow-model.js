@@ -121,6 +121,38 @@ function bloodResearchFlow({demo,title,goal,chapterPlan,complete,position,progre
     ? '按本次模拟研究整理。公开数据出处和审阅修订见报告正文。' : '模拟研究随写作进度推进，可选择节点查看研究任务和已整理的依据。'};
 }
 
+function cityResearchFlow({title, reportId, records, discussions, chapters, progress, complete, review}) {
+  const position = Math.min(records.length - 1, Math.floor(progress * records.length / 100));
+  const chapterWork = chapters.map(chapter => {
+    const name = nameOf(chapter);
+    const skill = text(chapter?.skillSnapshot?.name);
+    return skill ? name + ' · ' + skill : name;
+  }).filter(Boolean);
+  const edited = complete && review?.demo === false;
+  const stages = records.map((stage, index) => {
+    const needsReview = edited && (stage.id === 'quality' || stage.id === 'final');
+    const done = complete || index < position;
+    const active = !complete && index === position;
+    const tasks = list(stage.inputs);
+    const outputs = list(stage.outputs);
+    const items = done ? [...outputs] : active ? [...tasks, ...outputs] : [...tasks];
+    if (stage.id === 'draft') items.push(...chapterWork);
+    const dialogue = stage.id === 'counter' && (active || done)
+      ? Object.values(discussions || {}).filter(entry => entry.label && entry.counter && entry.authorReply)
+          .map(({label, counter, authorReply}) => ({label, counter, authorReply}))
+      : [];
+    return {
+      id:stage.id, title:stage.title, state:needsReview ? 'pending' : done ? 'done' : active ? 'active' : 'pending',
+      statusLabel:needsReview ? '待复核' : done ? '已完成' : active ? '进行中' : '待开展',
+      summary:needsReview ? '已保留定稿记录，当前文稿需要重新核对。' : done ? stage.result : stage.plan,
+      detail:stage.detail, items:dialogue.length ? [] : items, dialogue
+    };
+  });
+  return {title,reportId,stages,progress,complete,progressNote:complete
+    ? (edited ? '回放保留定稿时的写作过程，当前编辑稿需要重新复核。' : '选择环节可回看本次演示的初稿、评审意见与修改结果。')
+    : '模拟写作按顺序推进，选择环节可查看该步的任务和材料。'};
+}
+
 export function buildResearchFlow(input = {}) {
   const report = input.report || {};
   const definition = input.definition || report.taskDefinition || report.draft?.taskDefinition || report.session?.state?.definition || {};
@@ -163,6 +195,14 @@ export function buildResearchFlow(input = {}) {
     return items;
   });
   const demoCaseId = definition.demoCaseId || report.demoCaseId;
+  if (demoCaseId === 'sz-city-logistics-policy') {
+    const demo = window.cityLogisticsDemo || window.parent.cityLogisticsDemo;
+    const records = definition.researchStages || demo?.researchStages;
+    if (Array.isArray(records) && records.length) {
+      return cityResearchFlow({title, reportId:report.sessionId || report.id || input.sessionId || demoCaseId,
+        records, discussions:demo?.discussions, chapters:outlineRows, progress, complete, review:input.review});
+    }
+  }
   if (demoCaseId === 'sz-blood-network-2024') {
     // Detail renders inside the same-origin workbench frame. Both views use the shared case.
     const demo = window.bloodNetworkDemo || window.parent.bloodNetworkDemo;

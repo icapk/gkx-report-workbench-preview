@@ -318,6 +318,9 @@
 
   function forReport(context = {}) {
     const id = textOf(context.id), title = textOf(context.title) || '当前报告', body = textOf(context.text);
+    if (context.demoCaseId === 'sz-city-logistics-policy') {
+      return window.CityLogisticsReview.model(context);
+    }
     if (context.demoCaseId === 'sz-blood-network-2024') {
       const demo = window.bloodNetworkDemo;
       const anchors = demo?.anchors;

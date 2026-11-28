@@ -1,5 +1,5 @@
-import {buildResearchFlow} from './research-flow-model.js?v=8106cbb7c02f';
-import {mountResearchFlow} from './research-flow-view.js?v=5433332dfec8';
+import {buildResearchFlow} from './research-flow-model.js?v=d0d2a7ab98b0';
+import {mountResearchFlow} from './research-flow-view.js?v=8ef3e6eeed42';
 
 export function createGeneration(React) {
   const el = React.createElement;
@@ -43,7 +43,7 @@ export function createGeneration(React) {
     ].map(file => typeof file === 'string' ? file : file?.name || file?.title).filter(Boolean))];
     const completed = Math.min(steps.length, Math.floor((clock?.progress || 0) * steps.length / 100));
     const model = buildResearchFlow({
-      title, goal, sections, steps, completed, materialNames, definition,
+      title, goal, sections, steps, completed, materialNames, definition, sessionId:id,
       progress:clock?.progress || 0, complete:clock?.phase === 'complete'
     });
 
