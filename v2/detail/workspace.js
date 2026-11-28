@@ -211,6 +211,7 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=8ef3e6eeed42'
     downloadReport: (format, anchor) => window.reportActions.run(format, anchor)
   });
   conversation.prepend(flow);
+  window.GkxFeedbackPanel.init({editor,sessionId,revision,sources:entries,title:report.title});
   window.addEventListener('gkx-open-report',focusDocument);
   document.addEventListener('keydown', e => {
     if(e.key==='Escape' && !document.querySelector('dialog[open]') && !toc.hidden) {

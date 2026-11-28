@@ -111,10 +111,75 @@
   }
   function timeLabel(value) { const date=new Date(value); return value && !isNaN(date) ? date.toLocaleString('zh-CN',{hour12:false}) : '未记录'; }
   function versions() { return read('versions', [{name:'原始版本', date:created, html:original}]); }
+  function currentVersionName() { return read('currentVersion','原始版本'); }
+  function versionChanged() { window.dispatchEvent(new Event('gkx-version-changed')); }
+  function feedbackKeys() {
+    return {
+      versions:storagePrefix+'versions', current:storagePrefix+'currentVersion',
+      draft:'gkx-v2-writing-detail:draft:v1:'+JSON.stringify([sessionId,revision])
+    };
+  }
+  function feedbackStamp() {
+    const keys=feedbackKeys();
+    return {scope:storagePrefix,versions:localStorage.getItem(keys.versions),current:localStorage.getItem(keys.current),draft:localStorage.getItem(keys.draft)};
+  }
+  function feedbackResult(id) {
+    if (!id) return null;
+    const record=versions().find(item=>item.feedbackId===id);
+    return record ? {name:record.name,previousName:record.previousName,appliedCount:record.appliedCount,...(Array.isArray(record.selected)?{selected:record.selected}:{})} : null;
+  }
+  function feedbackOrigin(name) {
+    const record=versions().find(item=>item.name===name && item.feedbackId);
+    return record?.sourceVersion || record?.previousName || null;
+  }
+  async function saveFeedbackRevision({id,baseHTML,nextHTML,stamp,appliedCount,selected}) {
+    function save() {
+      const prior=feedbackResult(id);
+      if (prior) return prior;
+      const current=feedbackStamp(), keys=feedbackKeys();
+      const sameHTML=(left,right)=>left===right || (typeof left==='string' && typeof right==='string' && sanitiseHTML(left)===sanitiseHTML(right));
+      if (!stamp || stamp.scope!==current.scope || ['versions','current'].some(key=>current[key]!==stamp[key]) ||
+          !sameHTML(baseHTML,editor.innerHTML) || (current.draft!==null && !sameHTML(current.draft,baseHTML)) ||
+          (!sameHTML(stamp.draft,current.draft) && !sameHTML(current.draft,baseHTML))) {
+        throw Object.assign(Error('正文或版本已更新，请重新评议。'),{code:'STALE_REVIEW'});
+      }
+      const history=current.versions===null ? [{name:'原始版本',date:created,html:original}] : JSON.parse(current.versions);
+      if (!Array.isArray(history) || !history.length) throw Error('版本记录暂不可读，请重新打开报告后重试。');
+      const date=new Date().toISOString(), priorName=currentVersionName();
+      let previous=history.find(item=>item.name===priorName && sanitiseHTML(item.html)===sanitiseHTML(baseHTML));
+      if (!previous) {
+        previous={name:'V'+history.length,date,html:baseHTML,note:'修订前工作稿'};
+        history.push(previous);
+      }
+      const name='V'+history.length;
+      history.push({name,date,html:nextHTML,note:'建议评议修订',feedbackId:id,sourceVersion:priorName,previousName:previous.name,appliedCount,selected});
+      const changes=[
+        {key:keys.versions,old:current.versions,value:JSON.stringify(history)},
+        {key:keys.current,old:current.current,value:JSON.stringify(name)},
+        {key:keys.draft,old:current.draft,value:nextHTML}
+      ];
+      const written=[];
+      try {
+        for (const change of changes) { localStorage.setItem(change.key,change.value); written.push(change); }
+      } catch {
+        // Each setItem is atomic. All state stays untouched in the editor until every durable write succeeds.
+        for (const change of written.reverse()) {
+          if (localStorage.getItem(change.key)!==change.value) continue;
+          if (change.old===null) localStorage.removeItem(change.key); else localStorage.setItem(change.key,change.old);
+        }
+        throw Error('修订版本未能保存，请检查浏览器存储空间后重试。');
+      }
+      editor.innerHTML=nextHTML;
+      editor.dispatchEvent(new Event('input',{bubbles:true}));
+      versionChanged();
+      return {name,previousName:previous.name,appliedCount,selected};
+    }
+    return navigator.locks?.request ? navigator.locks.request(storagePrefix+'feedback-write',save) : save();
+  }
   function saveVersion() {
     const history = versions(); const name = 'V' + history.length;
     history.push({name,date:new Date().toISOString(),html:editor.innerHTML});
-    write('versions',history); write('currentVersion',name); notify('已创建版本 ' + name);
+    write('versions',history); write('currentVersion',name); versionChanged(); notify('已创建版本 ' + name);
   }
   function listVersions() {
     modal('版本管理');
@@ -124,7 +189,7 @@
       const row = node('div','ra-version-row'), info = node('div');
       const heading = node('div','ra-ver-title');
       heading.append(node('b','',record.name),node('span',record.name === current ? 'ra-current' : 'ra-past',record.name === current ? '当前' : '历史'));
-      info.append(heading,node('small','','更新时间 ' + timeLabel(record.date)));
+      info.append(heading,node('small','',[record.note,'更新时间 ' + timeLabel(record.date)].filter(Boolean).join(' · ')));
       const actions = node('div','ra-row-actions'); actions.append(button('预览',() => {
         modal('版本预览 · ' + record.name,{wide:true}); body.append(preview(record.html)); footer.append(button('返回版本管理',listVersions));
       },'ra-link'));
@@ -134,7 +199,7 @@
           try {
             const restored = sanitiseHTML(record.html);
             write('currentVersion',record.name); editor.innerHTML = restored;
-            editor.dispatchEvent(new Event('input',{bubbles:true})); dismiss(); notify('已恢复至' + record.name);
+            editor.dispatchEvent(new Event('input',{bubbles:true})); versionChanged(); dismiss(); notify('已恢复至' + record.name);
           } catch { notify('恢复失败，请检查浏览器存储空间后重试。'); }
         },'ra-primary'));
       },'ra-link'));
@@ -535,5 +600,5 @@
     document.addEventListener('scroll',e=>{if(!selectionBar?.contains(e.target))hideSelection();if(menu)removeMenu();},true);
     window.addEventListener('resize',()=>{removeMenu();hideSelection();});
   }
-  window.reportActions={init,run,notify,safeHTML:sanitiseHTML};
+  window.reportActions={init,run,notify,safeHTML:sanitiseHTML,currentVersionName,feedbackStamp,feedbackResult,feedbackOrigin,saveFeedbackRevision};
 })();

@@ -11,7 +11,10 @@
   <script src="../assets/blood-network-demo.js?v=76696b1dc0ee"></script>
   <script src="../assets/city-logistics-demo.js?v=623781e9fcd5"></script>
   <script defer src="process-history.js?v=69815a0821b0"></script>
-  <script defer src="report-actions.js?v=1f603e51a26f"></script>
+  <script defer src="report-actions.js?v=921e0fd3eb73"></script>
+  <link rel="stylesheet" href="feedback-panel.css?v=0480598be099">
+  <script defer src="feedback-review.js?v=96cba6c16294"></script>
+  <script defer src="feedback-panel.js?v=4fbca9457b6f"></script>
   <link rel="stylesheet" href="trace-view.css?v=bc0b53eb7b76">
   <link rel="stylesheet" href="trace-workspace.css?v=668650940250">
   <script defer src="trace-model.js?v=8d04915102ad"></script>
@@ -27,7 +30,7 @@
   <script defer src="judgement-studio.js?v=ea52d9bc2271"></script>
   <script defer src="judgement-workspace.js?v=9aa208a78e90"></script>
   <link rel="stylesheet" href="../assets/research-flow.css?v=d3768c73092d">
-  <script type="module" src="workspace.js?v=7eb18161b327"></script>
+  <script type="module" src="workspace.js?v=2a1b3b4bc496"></script>
 </head>
 <body>
   <main class="workspace">
@@ -47,6 +50,7 @@
             <button data-action="knowledge"><i data-icon="upload"></i>保存至知识库</button>
           </div>
         </div>
+        <div id="report-feedback" aria-label="报告评价"></div>
         <div class="reading-layout" id="reading-layout">
           <aside class="toc" id="toc" aria-label="报告目录">
             <div class="toc-heading"><strong>目录</strong><button class="icon-btn" id="close-toc" aria-label="收起目录"><i data-icon="panel-close"></i></button></div>
