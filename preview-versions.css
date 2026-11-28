@@ -1,0 +1,53 @@
+.workspace-crumb-row:has(> .preview-version-picker) {
+  align-self: stretch;
+}
+
+.preview-version-picker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  margin-inline-start: auto;
+  color: #35455d;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.preview-version-picker > span {
+  position: absolute;
+  inset-inline-start: 9px;
+  color: #657388;
+  pointer-events: none;
+}
+
+.preview-version-picker::after {
+  position: absolute;
+  inset-inline-end: 10px;
+  width: 6px;
+  height: 6px;
+  border: solid #657388;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-2px) rotate(45deg);
+  pointer-events: none;
+  content: "";
+}
+
+.preview-version-picker > select {
+  appearance: none;
+  box-sizing: border-box;
+  height: 28px;
+  padding: 0 24px 0 39px;
+  border: 1px solid var(--color-border, #d9dfe8);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 78%);
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.preview-version-picker > select:hover { background: white; }
+.preview-version-picker > select:focus-visible {
+  outline: 2px solid var(--color-primary, #2867ed);
+  outline-offset: 2px;
+}
