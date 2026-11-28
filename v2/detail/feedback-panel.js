@@ -90,34 +90,93 @@
     dialog.addEventListener('close', () => {
       if (trigger?.isConnected) trigger.focus({preventScroll:true});
       else bar.querySelector('button')?.focus({preventScroll:true});
+      showInvitation();
+    });
+    const inviteCopy = '写得不好，快来吐槽';
+    const prompted = new Set();
+    const shortcut = document.getElementById('report-feedback-shortcut');
+    let currentInvite, titleVisible = false, introTimer, foldTimer;
+    function clearMotion() {
+      clearTimeout(introTimer);
+      clearTimeout(foldTimer);
+    }
+    function foldInvite() {
+      clearMotion();
+      if (currentInvite) currentInvite.dataset.state = 'compact';
+    }
+    function showInvitation() {
+      clearMotion();
+      const invite = currentInvite, current = version();
+      if (!invite || !titleVisible || dialog.open || document.hidden || prompted.has(current)) return;
+      introTimer = setTimeout(() => {
+        prompted.add(current);
+        invite.dataset.state = 'invite';
+        foldTimer = setTimeout(foldInvite, 6400);
+      }, 750);
+    }
+    function openFeedback() {
+      const current = version();
+      prompted.add(current);
+      foldInvite();
+      const record = read(current);
+      if (record) openRecord(record);
+      else openForm();
+    }
+    shortcut.addEventListener('click', openFeedback);
+    new IntersectionObserver(([entry]) => {
+      titleVisible = entry.isIntersecting;
+      shortcut.hidden = titleVisible;
+      if (titleVisible) showInvitation();
+      else foldInvite();
+    }, {root:document.getElementById('reader')}).observe(bar);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) foldInvite();
+      else showInvitation();
     });
     function renderBar() {
-      const current = version();
-      const record = read(current);
-      const line = node('div', 'rfb-strip');
-      const prior = window.reportActions.feedbackOrigin?.(current);
+      clearMotion();
+      const current = version(), record = read(current);
+      const line = node('div', 'rfb-title-line');
+      const invite = button('', 'rfb-invite', openFeedback);
+      const face = node('span', 'rfb-face');
+      face.setAttribute('aria-hidden', 'true');
+      face.append(node('i'));
+      const label = node('span', 'rfb-invite-label');
+      invite.setAttribute('aria-haspopup', 'dialog');
+      invite.append(face, label);
+      currentInvite = record ? null : invite;
       if (record) {
-        line.append(node('strong', '', '我的评分'), node('span', 'rfb-rating', '★ ' + record.score + ' / 5'),
-          button(record.review ? '查看建议评议' : '查看评价', 'rfb-link', () => openRecord(record)));
+        invite.dataset.state = 'rated';
+        const action = record.review ? '查看建议评议' : '查看评价';
+        label.textContent = '★ ' + record.score + ' 分 · ' + action;
+        invite.setAttribute('aria-label', '我的评分 ' + record.score + ' 分，' + action);
+        shortcut.lastElementChild.textContent = action;
       } else {
-        line.append(node('strong', '', '写得不好？快来吐槽。'), stars(0, openForm));
+        invite.dataset.state = 'compact';
+        invite.setAttribute('aria-label', inviteCopy + '，评价报告');
+        const short = node('span', 'rfb-short', '吐槽一下');
+        const full = node('span', 'rfb-full', inviteCopy);
+        label.append(short, full);
+        shortcut.lastElementChild.textContent = '评价报告';
       }
+      line.append(invite);
+      const prior = window.reportActions.feedbackOrigin?.(current);
       if (prior && !record) {
         const previous = read(prior);
         if (previous) line.append(button('上次建议评议', 'rfb-link', () => openRecord(previous)));
       }
-      const name = node('span', 'rfb-current', current);
-      line.append(name);
+      line.append(node('span', 'rfb-current', current));
       bar.replaceChildren(line);
+      showInvitation();
     }
-    function openForm(score) {
+    function openForm() {
       const current = version();
       const existing = read(current);
       if (existing) { openRecord(existing); return; }
-      form = {version:current, score, reasons:new Set(), explanation:'', suggestions:[], previous:null};
+      form = {version:current, score:0, reasons:new Set(), explanation:'', suggestions:[], previous:null};
       showDialog();
       renderForm();
-      dialog.querySelector('.rfb-stars button[aria-pressed="true"]')?.focus();
+      dialog.querySelector('.rfb-stars button')?.focus();
     }
 
     function amend(record) {
@@ -146,7 +205,7 @@
           updateReason();
           error.textContent = '';
         }));
-        scoreName.textContent = form.score + ' 分 · ' + scoreLabels[form.score - 1];
+        scoreName.textContent = form.score ? form.score + ' 分 · ' + scoreLabels[form.score - 1] : '请选择星级';
       }
       paintScore();
       grade.append(gradeTitle, starSlot, scoreName);
@@ -171,7 +230,8 @@
       explanation.setAttribute('aria-label', '补充原因');
       explanation.addEventListener('input', () => { form.explanation = explanation.value; error.textContent = ''; });
       function updateReason() {
-        const low = form.score <= 3;
+        section.hidden = !form.score;
+        const low = form.score > 0 && form.score <= 3;
         reasonTitle.textContent = low ? '哪里需要改进？' : '评分原因（选填）';
         chips.hidden = !low;
         explanation.placeholder = low ? '选择上方原因，或写下你的理由' : '可以说说哪些内容对你有帮助';
@@ -227,6 +287,11 @@
         submit.textContent = form.suggestions.length ? '提交并评议' : '提交评价';
       }
       const submit = button('提交评价', 'rfb-primary', () => {
+        if (!form.score) {
+          error.textContent = '请先为报告打分。';
+          starSlot.querySelector('button')?.focus();
+          return;
+        }
         if (form.score <= 3 && !form.reasons.size && !form.explanation.trim()) {
           error.textContent = '请选一个需要改进的原因，或写下你的理由。';
           explanation.focus(); return;

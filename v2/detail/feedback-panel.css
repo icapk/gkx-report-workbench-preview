@@ -1,13 +1,58 @@
-#report-feedback{flex:none}
-.rfb-strip,.rfb-dialog{color:#253344;font:13px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.rfb-strip{display:flex;align-items:center;gap:12px;min-height:40px;padding:3px 18px;background:#f6f8ff;border-bottom:1px solid #e2e8f5}
-.rfb-strip strong{font-size:13px;font-weight:600;color:#344464}
+#report-feedback,.rfb-dialog{color:#253344;font:13px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+#report-feedback{position:relative;margin:-6px 0 9px}
+.rfb-title-line{display:flex;align-items:center;gap:10px;min-height:33px}
 .rfb-current{margin-left:auto;font-size:12px;color:#637187;white-space:nowrap}
+.rfb-invite{
+  position:relative;display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:4px 12px 4px 8px;
+  border:1px solid #c9d4f6;border-radius:13px 13px 13px 6px;background:#eff3ff;color:#405baf;
+  font-family:inherit;font-size:13px;font-weight:600;line-height:1.45;
+  box-shadow:0 2px 4px #263d710a;isolation:isolate;transform-origin:17px 100%;
+  transition:background-color .25s,color .25s,border-color .25s,box-shadow .25s;
+}
+.rfb-invite::after{
+  content:"";position:absolute;left:13px;bottom:-4px;width:7px;height:7px;box-sizing:border-box;
+  background:inherit;border:solid #c9d4f6;border-width:0 1px 1px 0;border-color:inherit;transform:skewY(-10deg) rotate(45deg);
+}
+.rfb-face{
+  position:relative;display:inline-block;flex:none;width:19px;height:17px;transform:rotate(-7deg);
+  border-radius:7px 7px 7px 3px;background:#526fc5;color:white;
+}
+.rfb-face::before,.rfb-face::after{
+  content:"";position:absolute;left:5px;top:5px;background:currentColor;border-radius:50%;width:2px;height:3px;
+}
+.rfb-face::after{left:12px}
+.rfb-face i{position:absolute;left:6px;top:9px;width:7px;height:4px;border:solid currentColor;border-width:0 0 1.4px;border-radius:0 0 70% 70%}
+.rfb-invite-label{display:grid;align-items:center;text-align:left;white-space:nowrap}
+.rfb-invite:not([data-state="rated"]) .rfb-invite-label{width:4em;transition:width .32s cubic-bezier(.2,.85,.25,1)}
+.rfb-short,.rfb-full{grid-area:1/1;transition:opacity .16s}
+.rfb-full{opacity:0;pointer-events:none}
+.rfb-invite:is([data-state="invite"],[data-state="compact"]:hover,[data-state="compact"]:focus-visible){
+  color:white;border-color:#465acf;background-color:#465acf;box-shadow:0 4px 12px #384abc30;
+}
+.rfb-invite:is([data-state="invite"],[data-state="compact"]:hover,[data-state="compact"]:focus-visible) .rfb-invite-label{width:9em}
+.rfb-invite:is([data-state="invite"],:hover,:focus-visible) .rfb-full{opacity:1;transition-delay:.1s}
+.rfb-invite:is([data-state="invite"],:hover,:focus-visible) .rfb-short{opacity:0}
+.rfb-invite:is([data-state="invite"],[data-state="compact"]:hover,[data-state="compact"]:focus-visible) .rfb-face{background:#ffe0a0;color:#303a6a}
+.rfb-invite[data-state="invite"]{animation:rfb-pop .62s both}
+.rfb-invite[data-state="invite"] .rfb-face::after{animation:rfb-wink .38s .85s}
+.rfb-invite[data-state="rated"] .rfb-face{display:none}
+.rfb-invite[data-state="rated"]{padding-inline:10px}
+.rfb-invite[data-state="rated"]:hover{background-color:#e4ebff}
+@keyframes rfb-pop{
+  0%{transform:translateY(3px) rotate(1deg) scale(.97)}
+  40%{transform:translateY(-5px) rotate(-3deg) scale(1.055)}
+  70%{transform:translateY(1px) rotate(1deg) scale(.99)}
+  100%{transform:none}
+}
+@keyframes rfb-wink{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.26)}}
+@media(prefers-reduced-motion:reduce){
+  .rfb-invite,.rfb-invite *,.rfb-invite *::after{animation:none!important;transition:none!important}
+}
 .rfb-stars{display:inline-flex;align-items:center;gap:1px}
 .rfb-stars button{display:grid;place-items:center;border:0;background:transparent;color:#667aa2;font:22px/1 Arial,sans-serif;padding:1px;width:26px;height:28px;border-radius:4px}
 .rfb-stars .rfb-lit,.rfb-rating{color:#936006}
 .rfb-dialog .rfb-stars button{font-size:26px;width:32px;height:34px}
-.rfb-strip button:focus-visible,.rfb-dialog :is(button,input,select,textarea):focus-visible{outline:2px solid #4169e1;outline-offset:2px}
+#report-feedback button:focus-visible,.rfb-dialog :is(button,input,select,textarea):focus-visible{outline:2px solid #4169e1;outline-offset:2px}
 .rfb-rating{font-weight:650}
 .rfb-link,.rfb-muted{border:0;background:transparent;padding:2px 4px;color:#315bc8;font:inherit;font-size:13px}
 .rfb-link:hover,.rfb-muted:hover{text-decoration:underline}

@@ -12,9 +12,9 @@
   <script src="../assets/city-logistics-demo.js?v=623781e9fcd5"></script>
   <script defer src="process-history.js?v=69815a0821b0"></script>
   <script defer src="report-actions.js?v=921e0fd3eb73"></script>
-  <link rel="stylesheet" href="feedback-panel.css?v=0480598be099">
+  <link rel="stylesheet" href="feedback-panel.css?v=b9c8e325dac3">
   <script defer src="feedback-review.js?v=96cba6c16294"></script>
-  <script defer src="feedback-panel.js?v=f61e3d6d2379"></script>
+  <script defer src="feedback-panel.js?v=bce7bc264f69"></script>
   <link rel="stylesheet" href="trace-view.css?v=bc0b53eb7b76">
   <link rel="stylesheet" href="trace-workspace.css?v=668650940250">
   <script defer src="trace-model.js?v=8d04915102ad"></script>
@@ -48,9 +48,9 @@
             <button data-action="versions"><i data-icon="history"></i>版本管理</button>
             <span class="tool-sep"></span>
             <button data-action="knowledge"><i data-icon="upload"></i>保存至知识库</button>
+            <button type="button" id="report-feedback-shortcut" aria-haspopup="dialog" hidden><i data-icon="history-chat"></i><span>评价报告</span></button>
           </div>
         </div>
-        <div id="report-feedback" aria-label="报告评价"></div>
         <div class="reading-layout" id="reading-layout">
           <aside class="toc" id="toc" aria-label="报告目录">
             <div class="toc-heading"><strong>目录</strong><button class="icon-btn" id="close-toc" aria-label="收起目录"><i data-icon="panel-close"></i></button></div>
@@ -60,6 +60,7 @@
             <div id="judgement-mobile" hidden><button type="button" id="jump-to-editor">阅读报告正文 ↓</button></div>
             <div class="paper">
               <div id="trace-pins"></div>
+              <div id="report-feedback" aria-label="报告评价"></div>
               <article class="report-text" id="editor" contenteditable="true" role="textbox" aria-label="报告正文" aria-multiline="true" spellcheck="false"></article>
               <section class="references" id="references" hidden aria-label="数据来源与参考文献">
                 <h2>数据来源与参考文献</h2>

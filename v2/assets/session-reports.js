@@ -6,7 +6,7 @@
   const generationDuration = 24000;
   const oldGenerationDuration = 6000;
   const home = new URL('../index.html', document.currentScript.src);
-  const detail = new URL('../detail/index.html?v=07a3143fdd5e', document.currentScript.src);
+  const detail = new URL('../detail/index.html?v=9dc299020d98', document.currentScript.src);
   // The composer can omit the report type, including on tasks saved by older versions.
   function normalizeWorkspace(workspace) {
     if (Array.isArray(workspace?.reports)) {
