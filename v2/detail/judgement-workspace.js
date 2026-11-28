@@ -28,22 +28,19 @@
     return range;
   }
 
-  function init({report,sessionId,editor,entries,onReviewChange}) {
+  function init({report,sessionId,editor,entries,attachments,onReviewChange}) {
     const get = id => document.getElementById(id);
     const studio = get('judgement-host'), reviewSlot = get('judgement-review-slot'), mobileSlot = get('judgement-mobile');
     const process = get('process-content'), nav = get('judgement-mode'), reader = get('reader');
     const surface = get('detail'), panel = get('review-panel'), opener = get('open-review-panel');
     const mobile = matchMedia('(max-width:680px)'), reduceMotion = matchMedia('(prefers-reduced-motion:reduce)');
-    const trace = window.GkxTraceWorkspace.init({report,entries,editor,locateRange});
+    const trace = window.GkxTraceWorkspace.init({report,entries,editor,attachments,locateRange,showTrace:() => setPanelOpen(true,'trace')});
     const baseText = visibleText(report.html);
     const cityCase = report.demoCaseId === 'sz-city-logistics-policy';
     let cityView;
-    if (cityCase) {
-      get('detail').classList.add('city-logistics-report');
-      // Reading starts at the decision summary; the toolbar opens the same trace dialog.
-      reader.append(get('trace-summary'));
-    }
-    let preferred = new URLSearchParams(window.parent.location.search).get('panel') === 'process' ? 'process' : 'review';
+    if (cityCase) surface.classList.add('city-logistics-report');
+    const requested = new URLSearchParams(window.parent.location.search).get('panel');
+    let preferred = ['process','trace'].includes(requested) ? requested : 'review';
     let editTimer = 0;
     function update() {
       const text = editor.textContent.trim();
@@ -67,12 +64,14 @@
       get('compact-judgement-link').hidden = panel.hidden;
       reviewSlot.hidden = preferred !== 'review';
       process.hidden = preferred !== 'process';
+      get('trace-summary').hidden = preferred !== 'trace';
       nav.querySelectorAll('[data-judgement-view]').forEach(b => {
         b.setAttribute('aria-pressed',String(b.dataset.judgementView === preferred));
       });
     }
-    function setPanelOpen(open) {
-      if (open) preferred = 'review';
+    function setPanelOpen(open,view = 'review') {
+      if (open && preferred !== view) panel.scrollTop = 0;
+      if (open) preferred = view;
       surface.classList.toggle('review-collapsed', !open);
       panel.hidden = !open;
       opener.hidden = open;
@@ -95,6 +94,7 @@
     nav.addEventListener('click', e => {
       const button = e.target.closest('[data-judgement-view]');
       if (!button) return;
+      if (preferred !== button.dataset.judgementView) panel.scrollTop = 0;
       preferred = button.dataset.judgementView;
       sync();
     });

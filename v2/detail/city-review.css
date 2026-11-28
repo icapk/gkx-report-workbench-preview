@@ -40,7 +40,6 @@
 .city-minutes-issues {display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
 .city-minutes-issues button {padding:3px 6px;border:1px solid #bfcee4;border-radius:4px;background:white;color:#3b526c;font:inherit;font-size:11px;cursor:pointer}
 .city-minutes-issues button[aria-pressed="true"] {background:#e4edfb;border-color:#5277b1;color:#244d88}
-.city-logistics-report #trace-summary {padding-bottom:18px}
 .city-review-sources {display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:6px}
 .city-review .city-review-reference,.city-review .city-review-locate {padding:0;border:0;background:none;color:#215fa0;text-align:left;cursor:pointer;line-height:1.55}
 .city-review .city-review-reference {font-size:12px;text-decoration:underline;text-underline-offset:2px}

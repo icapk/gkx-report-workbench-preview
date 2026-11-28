@@ -10,6 +10,24 @@
 .gtv button { cursor: pointer; }
 .gtv button:focus-visible, .gtv select:focus-visible, .gtv a:focus-visible, .gtv [tabindex]:focus-visible { outline: 2px solid #466bdc; outline-offset: 2px; }
 .gtv svg { display: block; flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.gtv-channels {display:grid;gap:17px;margin-bottom:20px}
+.gtv-channel {min-width:0}
+.gtv-channel-head {display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.gtv-channel-head h3 {margin:0;color:#263950;font-size:14px;font-weight:650}
+.gtv-channel-icon {display:grid;place-items:center;width:25px;height:25px;border-radius:6px;color:#3b62bb;background:#edf2fc}
+.gtv-channel[data-channel="metric"] .gtv-channel-icon {color:#39796e;background:#eaf5f2}
+.gtv-channel[data-channel="web"] .gtv-channel-icon {color:#69588d;background:#f1eef7}
+.gtv-channel-count {margin-left:auto;color:#637389;font-size:12px;font-variant-numeric:tabular-nums}
+.gtv .gtv-channel-record {display:grid;gap:3px;width:100%;padding:9px 11px;border:1px solid #dce3ed;border-radius:6px;background:#fff;text-align:left;overflow-wrap:anywhere}
+.gtv .gtv-channel-record:hover {border-color:#a3b9e8;background:#f8faff}
+.gtv-record-title {display:flex;align-items:baseline;justify-content:space-between;gap:6px;color:#283e5a;font-size:13px;line-height:1.55}
+.gtv-record-arrow {flex:none;color:#637aa0;font-size:17px;line-height:1}
+.gtv-record-meta {color:#5e7088;font-size:11px;line-height:1.5}
+.gtv-record-excerpt {display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;color:#465971;font-size:12px;line-height:1.55}
+.gtv-channel-empty {margin:0;padding:7px 10px;border-left:2px solid #dce4ef;color:#627388;font-size:12px}
+.gtv-more-records summary {width:fit-content;padding:5px 0;color:#365eb3;cursor:pointer;font-size:12px}
+.gtv-more-records summary:focus-visible {outline:2px solid #466bdc;outline-offset:2px}
+.gtv-more-records .gtv-channel-record {margin-top:4px}
 .gtv .gtv-summary { display: flex; align-items: center; gap: 13px; padding: 10px 12px; border: 1px solid #dce4f1; border-radius: 6px; background: #f7f9fd; }
 .gtv .gtv-summary h2 { flex: none; margin: 0; padding: 0; border: 0; color: #334b76; font-size: 14px; font-weight: 650; line-height: 1.5; }
 .gtv .gtv-summary.has-overview { display: block; }

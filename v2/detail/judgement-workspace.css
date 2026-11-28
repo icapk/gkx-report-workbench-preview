@@ -1,10 +1,10 @@
 .judgement-mode {
-  position:sticky; top:0; z-index:3; display:flex; align-items:center; gap:18px;
-  min-height:47px; padding:0 clamp(16px,1.8vw,28px); border-bottom:1px solid var(--line); background:#fff;
+  position:sticky; top:0; z-index:3; display:flex; align-items:center; gap:clamp(5px,1vw,14px);
+  min-height:47px; padding:0 clamp(10px,1.25vw,18px); border-bottom:1px solid var(--line); background:#fff;
 }
 .judgement-mode button {
   align-self:stretch; padding:0 3px; border:0; border-bottom:2px solid transparent; background:none;
-  color:#617084; font-family:inherit; font-size:13px;
+  color:#617084; font-family:inherit; font-size:13px; white-space:nowrap;
 }
 .judgement-mode button[aria-pressed="true"] {color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
 .judgement-mode button:hover {color:var(--blue)}

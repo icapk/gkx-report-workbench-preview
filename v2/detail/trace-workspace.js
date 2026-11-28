@@ -1,17 +1,16 @@
 /* Reading controls live beside the editable article, so drafts and exports contain only the report. */
 (() => {
   'use strict';
-  function init({report, entries, editor, locateRange}) {
+  function init({report, entries, editor, attachments, locateRange, showTrace}) {
     const host = document.getElementById('trace-summary');
     const layer = document.getElementById('trace-pins');
-    const tool = document.getElementById('open-report-trace');
     const paper = editor.parentElement;
     let groups = [], modelKey = '', view, pins = [], frame = 0;
 
     function open(key, index, trigger) {
+      showTrace();
       view?.open(key, index, trigger);
     }
-    tool.addEventListener('click', () => open('source', 0, tool));
     document.getElementById('judgement-host').addEventListener('click', event => {
       const link = event.target.closest('[data-trace-stage]');
       if (!link) return;
@@ -71,7 +70,7 @@
       schedulePins();
     }
     function refresh(review) {
-      const model = window.GkxTraceModel.build({report,entries,editor,review});
+      const model = window.GkxTraceModel.build({report,entries,editor,review,attachments});
       const nextKey = JSON.stringify(model);
       if (nextKey !== modelKey) {
         view?.destroy();

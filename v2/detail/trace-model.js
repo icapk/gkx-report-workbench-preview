@@ -34,14 +34,18 @@
     });
     return small(parts.filter(text=>text.length>2).sort((a,b)=>b.length-a.length)[0] || '',120);
   }
+  function restricted(entry) {
+    const status = clean(entry.access || entry.status).toLowerCase();
+    return entry.accessDenied === true || entry.hasPermission === false || entry.canRead === false ||
+      entry.status === 403 || ['403','forbidden','denied','无权限','权限不足','无权访问','无权查看原文'].includes(status);
+  }
   function reportSources(entries,editor) {
     return entries.map((value,index)=>{
       const entry = typeof value === 'string' ? {title:value} : value || {};
       const title = clean(entry.title) || clean(entry.name) || '来源 '+(index+1);
       const keyed = entry.id ?? entry.sourceId;
       const anchor = (keyed != null && editorAnchor(editor,keyed)) || editorAnchor(editor,index+1);
-      const statusText = clean(entry.access || entry.status).toLowerCase();
-      const denied = entry.accessDenied === true || entry.hasPermission === false || entry.canRead === false || entry.status === 403 || ['403','forbidden','denied','无权限','权限不足','无权访问'].includes(statusText);
+      const denied = restricted(entry);
       const excerpt = denied ? '' : clean(entry.excerpt) || clean(entry.text);
       const summary = denied ? '' : clean(entry.summary);
       const original = denied ? '' : secureLink(entry.url || entry.href || entry.sourceUrl);
@@ -235,8 +239,15 @@
       groups:[sourceGroup,makeGroup('metric','指标溯源','公开数据复算',[metric]),makeGroup('reason','推断溯源','预设审查建议',[reason])]};
   }
 
-  function build({report={},entries,editor,review}={}) {
-    const material = Array.isArray(entries) ? entries : (Array.isArray(report.sources) ? report.sources.map(s => typeof s === 'string' ? report.sourceDetails?.find(detail=>detail?.title===s) || s : s) : []);
+  function savedEntries(report, entries) {
+    if (Array.isArray(entries)) return entries;
+    const details = Array.isArray(report.sourceDetails) ? report.sourceDetails : [];
+    const listed = report.sources?.length && Array.isArray(report.sources) ? report.sources : details;
+    return listed.map(item => typeof item === 'string'
+      ? details.find(detail => detail?.title === item || detail?.name === item) || item : item);
+  }
+
+  function judgementTrace({report={},editor,review}={}, material=[]) {
     const sources=reportSources(material,editor);
     const id=clean(report.sessionId) || clean(report.id);
     if (report.demoCaseId === 'sz-city-logistics-policy' && window.cityLogisticsDemo?.id === report.demoCaseId) {
@@ -269,6 +280,221 @@
       : '本报告登记了 '+sources.length+' 项来源，当前没有可逐字核对的原文。';
     return {summary,groups:[makeGroup('source','原文溯源',sources.length?'当前报告来源':'暂无来源',sources.length ? sources : [noSource]),
       makeGroup('metric','指标溯源','待补充',[noMetric()]),makeGroup('reason','推断溯源','待核验',[reason])]};
+  }
+  const channelSpecs = [
+    ['knowledge','知识库','本报告没有留存已选用的知识库条目。'],
+    ['metric','指标库','本报告没有留存指标值或计算口径。'],
+    ['web','Web 搜索','本报告没有留存公开网页来源或检索记录。'],
+    ['attachment','上传附件','本报告没有关联上传附件。'],
+    ['other','其他来源','本报告没有其他来源。']
+  ];
+  const array = value => Array.isArray(value) ? value : [];
+  const asSource = value => typeof value === 'string' ? {title:value} : value || {};
+  const nameOf = value => clean(value.title) || clean(value.name);
+  const sourceKey = value => String(value.id ?? value.sourceId ?? '');
+
+  function originChannel(record) {
+    const origin = clean(record.channel || record.sourceType || record.source || record.type).toLowerCase();
+    if (['knowledge','knowledge-base','知识库'].includes(origin) || record.collectionId && record.fileId) return 'knowledge';
+    if (['metric','indicator','指标','指标库'].includes(origin)) return 'metric';
+    if (['upload','local','outline','attachment','本地上传','上传附件'].includes(origin)) return 'attachment';
+    if (['web','web-search','web_search','web 搜索','网页检索','网页'].includes(origin) || secureLink(record.url || record.href || record.sourceUrl)) return 'web';
+    return 'other';
+  }
+
+  function sourceChannels(model, {report={},review,editor,attachments}, material) {
+    const channels = Object.fromEntries(channelSpecs.map(([key,label,empty]) => [key,{key,label,empty,items:[]}]));
+    const groups = Object.fromEntries(model.groups.map(group => [group.key,group.items]));
+    function include(channel, detailKey, detailIndex, display={}) {
+      const detail = groups[detailKey][detailIndex];
+      channels[channel].items.push({
+        title:detail.title, meta:detail.location || '', excerpt:detail.quote || detail.claim || '',
+        status:detail.status, ...display, detailKey, detailIndex
+      });
+    }
+    function append(channel,detailKey,detail,display) {
+      const index = groups[detailKey].push(detail)-1;
+      include(channel,detailKey,index,display);
+    }
+    const currentId = clean(report.sessionId) || clean(report.id);
+    const reviewHere = review && review.id === currentId;
+    const city = report.demoCaseId === 'sz-city-logistics-policy' && window.cityLogisticsDemo?.id === report.demoCaseId;
+    const blood = report.demoCaseId === 'sz-blood-network-2024' && window.bloodNetworkDemo?.id === report.demoCaseId;
+    const curated = reviewHere && review.kind === 'curated';
+    const logisticsCase = curated && currentId === 'sample-low-altitude-logistics';
+    const robotics = curated && currentId === '1:153';
+    const listed = new Set();
+
+    // A saved demo binds each public citation to its original detail and index. Edited drafts retain the source history.
+    if (city || blood || logisticsCase) {
+      const queries = {
+        'city-network':'深圳 2025 新开低空物流航线 年度计划执行情况',
+        'annual-flights':'深圳 2024 无人机载货飞行架次 年度盘点',
+        'network-2024':'深圳 无人机送血 2024 全年 航线 飞行架次',
+        'nanshan-flight':'深圳市血液中心 南山 首飞 15分钟 地面往返',
+        'district-routes':'深圳龙华 无人机 配送架次 跨城货运航线',
+        'support-rules':'深圳 支持低空经济 交通运输实施细则 物流航线 奖励'
+      };
+      const preset = city ? window.cityLogisticsDemo : blood ? window.bloodNetworkDemo : null;
+      groups.source.forEach((detail,index) => {
+        if (preset ? !preset.sources.some(source => source.id === detail.sourceId) : index !== 0) return;
+        const query = queries[detail.sourceId] || '深圳 低空经济产业促进条例 第二十八条 即时配送';
+        detail.fields = [field('演示检索词',query),...(detail.fields || [])];
+        include('web','source',index,{status:'预置公开来源',excerpt:city ? detail.claim : detail.fields?.find(row=>row.label==='资料要点')?.value || detail.quote});
+        if (detail.sourceIndex >= 0) listed.add(detail.sourceIndex);
+      });
+    }
+    if (city || blood || logisticsCase || robotics) {
+      const comparison = robotics ? '操作任务复测记录规范' : city ? '三类低空物流场景评审要点' : '空地配送对照采样清单';
+      const content = robotics ? '固定任务、物体与运行环境，逐轮记录任务结果、人工介入和异常恢复。'
+        : city ? '医疗应急核对收发交接和停航接续，即时配送核对按时签收与单均成本，城际货运核对双向货源和装载率。'
+          : '同一线路、同类任务分别记录受理、出发、签收和地面接续时间，保留未完成的任务。';
+      const anchor = city ? window.cityLogisticsDemo.anchors.scope : blood ? window.bloodNetworkDemo.anchors.timing : '';
+      append('knowledge','source',extract(comparison,'预置演示条目',{
+        demo:true,claim:content, location:'演示知识库 · 研究方法',
+        fields:[field('条目内容',content),field('应用环节','确定需要补采的记录与对照口径。')],
+        boundary:'这张研究方法卡为本案例预置。业务核验需要另取现场记录。',
+        ...(anchor && editor?.textContent?.includes(anchor) ? {anchor} : {})
+      }));
+    }
+    if (city) {
+      const source = window.cityLogisticsDemo.sources.find(item => item.id === 'city-network');
+      const annual = window.cityLogisticsDemo.sources.find(item => item.id === 'annual-flights');
+      for (const [title,scope,sourceRecord,anchor] of [
+        ['2025年新开低空物流航线 · 82条','统计2025年在深圳新开的低空物流航线，同期累计开通310条。',source,window.cityLogisticsDemo.anchors.scale],
+        ['2024年无人机载货飞行量 · 约77.6万架次','统计2024年深圳全市无人机载货飞行架次。公开盘点未提供订单量与分场景收益。',annual,'2024年全市无人机载货飞行约77.6万架次。']
+      ]) {
+        append('metric','metric',extract(title,'公开数据 · 演示指标条目',{
+          claim:scope,location:'演示指标库 · 深圳全市',fields:[field('指标口径',scope),field('数据出处',sourceRecord.title),field('发布机构',sourceRecord.agency)],
+          links:[{label:'查看公开数据原文',href:sourceRecord.url}], boundary:'原始公开资料反映网络或运行规模。修订正文后应重新核对指标的适用范围。',
+          ...(reviewHere && review.kind === 'city-logistics' && editor?.textContent?.includes(anchor) ? {anchor} : {})
+        }));
+      }
+    } else if ((blood && reviewHere && review.kind === 'blood-network') || logisticsCase || (robotics && groups.metric[0]?.demo)) {
+      include('metric','metric',0,{status:blood?'预置指标 · 公开数据复算':'预置模拟指标'});
+    }
+    if (robotics) {
+      append('web','source',extract('机器人抓取性能指标与测试方法','预置公开资料',{
+        claim:'美国国家标准与技术研究院介绍了如何用统一条件测试机械手的抓取性能，并提供测试方法与示例。',
+        location:'美国国家标准与技术研究院（NIST） · 方法参考',
+        fields:[field('演示检索词','NIST robotic grasping performance metrics test methods')],
+        links:[{label:'查看 NIST 方法原文',href:'https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/grasping'}],
+        boundary:'本条是演示补充的方法背景。报告中的模拟试次由原型提供，NIST 未对该案例设备开展测试。'
+      }));
+    }
+
+    const supplied = [...array(attachments),...array(report.attachments),...array(report.knowledgeFiles).map(value => ({...asSource(value),source:'knowledge'}))];
+    const origins = [];
+    for (const value of supplied) {
+      const file = asSource(value);
+      if (!nameOf(file)) continue;
+      if (origins.some(other => file === other || (sourceKey(file) && sourceKey(other) === sourceKey(file)))) continue;
+      origins.push(file);
+    }
+    const matched = new Set();
+    const matchOrigin = entry => {
+      const id = sourceKey(entry);
+      const exact = id && origins.find(file => sourceKey(file) === id);
+      if (exact) return exact;
+      const matches = origins.filter(file => nameOf(file) === nameOf(entry) && (!id || !sourceKey(file)));
+      if (matches.length === 1) return matches[0];
+      const version = clean(entry.text) && matches.filter(file => file.text === entry.text);
+      return version?.length === 1 ? version[0] : null;
+    };
+    function includeSaved(value, listIndex, origin) {
+      const entry = asSource(value);
+      const record = origin ? {...origin,...entry} : entry;
+      const bucket = originChannel(record);
+      const existing = listIndex < 0 ? -1 : groups.source.findIndex(detail=>detail.sourceIndex===listIndex);
+      // Rehydrate older sourceDetails that only retained title and text, while respecting both access records.
+      if (origin && (restricted(origin) || restricted(entry))) record.accessDenied = true;
+      const refreshed = existing < 0 || origin;
+      let detail = refreshed ? reportSources([record],null)[0] : groups.source[existing];
+      if (refreshed && existing >= 0) {
+        const previous = groups.source[existing];
+        detail.sourceIndex = listIndex;
+        detail.fields[0] = field('来源记录','当前会话 · 引用 '+(listIndex+1));
+        if (previous.anchor) {
+          detail.anchor = previous.anchor;
+          detail.claim = previous.claim;
+          detail.fields.push(field('正文关联','已找到当前报告中的引用标记'));
+        }
+        groups.source[existing] = detail;
+      }
+      if (existing < 0) {
+        if (listIndex >= 0) detail.sourceIndex=listIndex;
+        else {
+          delete detail.sourceIndex;
+          detail.fields[0]=field('来源记录','本次写作任务的关联材料');
+          detail.claim='本次写作任务关联了这份材料。';
+        }
+      }
+      const denied = detail.status === '无权查看原文';
+      const priorLink = existing >= 0 ? detail.links?.find(link=>secureLink(link.href)) : null;
+      const addr = denied ? '' : secureLink(record.url || record.href || record.sourceUrl || priorLink?.href);
+      const collection = clean(record.collectionName) || clean(record.collectionTitle) || clean(record.libraryName);
+      if (bucket === 'knowledge') {
+        if (collection) detail.fields.push(field('所属知识库',collection));
+        else if (clean(record.collectionId)) detail.fields.push(field('知识库标识',record.collectionId));
+        if (clean(record.sourceLabel)) detail.fields.push(field('入库来源',record.sourceLabel));
+      }
+      const searched = [record.channel,record.sourceType,record.source,record.type].some(value =>
+        ['web-search','web_search','web 搜索','网页检索'].includes(clean(value).toLowerCase()));
+      if (bucket === 'web' && searched && !denied) {
+        const query = clean(record.searchQuery) || clean(record.query) || clean(record.keyword);
+        const searchedAt = clean(record.searchedAt) || clean(record.searchTime) || clean(record.searchDate);
+        if (query) detail.fields.push(field('检索词',query));
+        if (searchedAt) detail.fields.push(field('检索时间',searchedAt));
+      }
+      const meta = bucket === 'knowledge' ? collection || '本次任务选用的知识材料' : bucket === 'attachment' ? '本次任务关联的附件'
+        : bucket === 'web' ? (searched ? '保存的检索结果' : '网页引用 · 正文或材料清单提供') : bucket === 'metric' ? '报告留存的指标记录' : '当前报告的来源清单';
+      // A selected attachment need not have been cited or retrieved. Only mark excerpts actually saved in the source record.
+      if (!denied && addr && !priorLink && existing >= 0) detail.links = [...(detail.links || []),{label:'打开来源地址',href:addr}];
+      const excerpt = denied ? '此材料的原文访问受限。' : detail.quote || clean(record.summary) || (addr ? new URL(addr).hostname : '已登记材料名称，尚未留存原文摘录。');
+      if (bucket === 'metric') {
+        const figure = typeof record.value === 'number' || typeof record.value === 'string' ? String(record.value) : '';
+        const definition = clean(record.definition) || clean(record.formula);
+        const valueText = [figure,clean(record.unit)].filter(Boolean).join(' ');
+        detail = {...detail,fields:[...detail.fields],links:[...(detail.links || [])]};
+        if (!denied && valueText) detail.fields.push(field('记录值',valueText));
+        if (!denied && definition) detail.fields.push(field('指标口径',definition));
+        if (!denied && clean(record.period)) detail.fields.push(field('统计期',record.period));
+        append(bucket,'metric',detail,{meta,excerpt:denied ? excerpt : [valueText,definition].filter(Boolean).join(' · ') || excerpt});
+      } else {
+        const index = existing >= 0 ? existing : groups.source.push(detail)-1;
+        include(bucket,'source',index,{meta,excerpt});
+      }
+    }
+    material.forEach((value,index) => {
+      const file = matchOrigin(asSource(value));
+      if (file) matched.add(file);
+      if (!listed.has(index)) includeSaved(value,index,file);
+    });
+    origins.filter(file=>!matched.has(file)).forEach(file=>includeSaved(file,-1));
+
+    const seenLinks = new Set(groups.source.flatMap(detail => (detail.links || []).map(link => secureLink(link.href))).filter(Boolean));
+    // Editable reports can contain standalone source links even when the task had no attachment manifest.
+    for (const link of editor?.querySelectorAll?.('a[href]') || []) {
+      const href = secureLink(link.getAttribute('href'));
+      if (!href || seenLinks.has(href) || link.closest('[data-source]')) continue;
+      seenLinks.add(href);
+      const anchor = small(clean(link.closest('p,li,td,blockquote')?.textContent),120);
+      const name = clean(link.textContent);
+      const title = !name || /^https?:/i.test(name) ? new URL(href).hostname : small(name,100);
+      append('web','source',extract(title,'正文外链',{
+        claim:'当前正文保留了这个网页链接。', location:'报告正文 · '+new URL(href).hostname,
+        links:[{label:'打开正文中的网页',href}], ...(anchor ? {anchor} : {}),
+        boundary:'此处仅登记正文保存的公开链接，当前记录未提供检索过程或网页快照。'
+      }),{excerpt:anchor || '正文保留了网页地址，可打开核对原文。'});
+    }
+    return Object.values(channels).filter(channel => ['knowledge','metric','web'].includes(channel.key) || channel.items.length);
+  }
+
+  function build(input={}) {
+    const material = savedEntries(input.report || {},input.entries);
+    const model = judgementTrace(input,material);
+    model.channels = sourceChannels(model,input,material);
+    return model;
   }
   window.GkxTraceModel=Object.freeze({build});
 })();

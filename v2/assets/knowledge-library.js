@@ -78,7 +78,7 @@ export async function persist(collection, remove = false) {
 }
 
 function attachment(collection, file) {
-  return {id: "kb:" + collection.id + ":" + file.id, name: file.name, text: file.text || "", source: "knowledge", sourceLabel: file.source, collectionId: collection.id, fileId: file.id, size: file.size, status: file.status, uploadedAt: file.added};
+  return {id: "kb:" + collection.id + ":" + file.id, name: file.name, text: file.text || "", source: "knowledge", sourceLabel: file.source, collectionId: collection.id, collectionName: collection.name, fileId: file.id, size: file.size, status: file.status, uploadedAt: file.added};
 }
 
 function saveOriginal(file) {

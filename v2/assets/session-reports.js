@@ -6,7 +6,7 @@
   const generationDuration = 24000;
   const oldGenerationDuration = 6000;
   const home = new URL('../index.html', document.currentScript.src);
-  const detail = new URL('../detail/index.html?v=7f6ba5f93aab', document.currentScript.src);
+  const detail = new URL('../detail/index.html?v=617cbf944276', document.currentScript.src);
   // The composer can omit the report type, including on tasks saved by older versions.
   function normalizeWorkspace(workspace) {
     if (Array.isArray(workspace?.reports)) {
@@ -216,7 +216,11 @@
         const content = window.buildSessionReportContent({report,draft,definition,launch,phase:'complete',project:draft.project});
         report.publishedReport = {...content,revision:launch.runId,date:report.updatedAt,type:report.type,
           ...(report.demoCaseId ? {demoCaseId:report.demoCaseId} : {}),
-          history:timeline(report,state),sourceDetails:[...filesFor(report), ...(definition.outlineSettings?.files || [])].map(file=>({title:file.name,text:file.text || ''}))};
+          history:timeline(report,state),sourceDetails:[...filesFor(report), ...(definition.outlineSettings?.files || [])].map(file=>({
+            title:file.name, text:file.text || '', id:file.id, source:file.source, sourceLabel:file.sourceLabel,
+            collectionName:file.collectionName, collectionId:file.collectionId, fileId:file.fileId,
+            access:file.access, accessDenied:file.accessDenied, canRead:file.canRead, hasPermission:file.hasPermission, status:file.status
+          }))};
         report.generated = true;
       }
     }

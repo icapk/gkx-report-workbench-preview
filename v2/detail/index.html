@@ -11,21 +11,21 @@
   <script src="../assets/blood-network-demo.js?v=9812d5e55b35"></script>
   <script src="../assets/city-logistics-demo.js?v=623781e9fcd5"></script>
   <script defer src="process-history.js?v=69815a0821b0"></script>
-  <script defer src="report-actions.js?v=8be01497ccad"></script>
-  <link rel="stylesheet" href="trace-view.css?v=9a381e0eb93d">
-  <link rel="stylesheet" href="trace-workspace.css?v=16d5340ee26e">
-  <script defer src="trace-model.js?v=98db62bb169f"></script>
-  <script defer src="trace-view.js?v=3becdcfedeb7"></script>
-  <script defer src="trace-workspace.js?v=0db3c370b0b9"></script>
+  <script defer src="report-actions.js?v=1f603e51a26f"></script>
+  <link rel="stylesheet" href="trace-view.css?v=bc0b53eb7b76">
+  <link rel="stylesheet" href="trace-workspace.css?v=668650940250">
+  <script defer src="trace-model.js?v=2abc5e490c60"></script>
+  <script defer src="trace-view.js?v=61fd149f8cda"></script>
+  <script defer src="trace-workspace.js?v=de7c7950f548"></script>
   <link rel="stylesheet" href="judgement-studio.css?v=2cd05be20c78">
-  <link rel="stylesheet" href="judgement-workspace.css?v=d95946290ace">
-  <link rel="stylesheet" href="city-review.css?v=4c08f3c42dc6">
+  <link rel="stylesheet" href="judgement-workspace.css?v=3a03ab4a88d1">
+  <link rel="stylesheet" href="city-review.css?v=8e3e5e015a4f">
   <script defer src="city-review.js?v=0078e560cb57"></script>
   <script defer src="judgement-cases.js?v=e8e6b5b04f31"></script>
   <script defer src="judgement-studio.js?v=db89a8991c0f"></script>
-  <script defer src="judgement-workspace.js?v=56a2742ef25f"></script>
+  <script defer src="judgement-workspace.js?v=9e25202559a8"></script>
   <link rel="stylesheet" href="../assets/research-flow.css?v=d3768c73092d">
-  <script type="module" src="workspace.js?v=e16e7903677c"></script>
+  <script type="module" src="workspace.js?v=40fe5aafe76d"></script>
 </head>
 <body>
   <main class="workspace">
@@ -35,7 +35,6 @@
           <div class="report-tools" id="report-tools" role="toolbar" aria-label="报告工具栏">
             <button data-action="toc" aria-expanded="true" aria-controls="toc"><i data-icon="list"></i>目录</button>
             <button type="button" id="open-review-panel" aria-controls="review-panel" aria-expanded="true" hidden><i data-icon="history-chat"></i>打开研判回放</button>
-            <button type="button" id="open-report-trace" aria-haspopup="dialog"><i data-icon="trace"></i>数据溯源</button>
             <button type="button" id="compact-judgement-link" aria-controls="judgement-host">研判回放</button>
             <button data-action="copy"><i data-icon="copy"></i>复制</button>
             <button data-action="download" aria-haspopup="true"><i data-icon="download"></i>下载</button>
@@ -52,7 +51,6 @@
             <nav id="toc-items" aria-label="定位到章节"></nav>
           </aside>
           <div class="reader" id="reader">
-            <div id="trace-summary" aria-label="报告数据溯源"></div>
             <div id="judgement-mobile" hidden><button type="button" id="jump-to-editor">阅读报告正文 ↓</button></div>
             <div class="paper">
               <div id="trace-pins"></div>
@@ -66,14 +64,16 @@
           </div>
         </div>
       </section>
-      <section class="conversation" id="review-panel" aria-label="报告研判与写作过程">
+      <section class="conversation" id="review-panel" aria-label="研判回放、写作过程与数据溯源">
         <div class="judgement-mode" id="judgement-mode" role="group" aria-label="查看报告过程">
           <button type="button" data-judgement-view="review" aria-controls="judgement-review-slot" aria-pressed="true">研判回放</button>
           <button type="button" data-judgement-view="process" aria-controls="process-content" aria-pressed="false">写作过程</button>
+          <button type="button" data-judgement-view="trace" aria-controls="trace-summary" aria-pressed="false">数据溯源</button>
           <button type="button" class="icon-btn" id="close-review-panel" aria-label="关闭研判回放" title="关闭研判回放" aria-controls="review-panel"><i data-icon="close"></i></button>
         </div>
         <div id="judgement-review-slot"><div id="judgement-host" tabindex="-1"></div></div>
         <div id="process-content" class="conversation-content"></div>
+        <section id="trace-summary" aria-label="报告数据溯源" hidden></section>
       </section>
     </section>
     <section id="unavailable" class="detail-unavailable" hidden><h1>暂时无法打开这份报告</h1><p id="unavailable-message">请返回工作台，从所属会话打开已生成的报告。</p><button type="button" id="return-home">返回工作台</button></section>

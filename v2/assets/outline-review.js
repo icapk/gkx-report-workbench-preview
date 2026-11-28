@@ -1,4 +1,4 @@
-import { readLocal } from './knowledge-library.js?v=be5b8a530cde';
+import { readLocal } from './knowledge-library.js?v=9ff6c6e29980';
 import { createPlaceholderEditor, placeholderKinds, validatePlaceholder } from './outline-placeholders.js?v=6bd7c0cf42c6';
 
 const defaults = {font:'微软雅黑', size:15, lineHeight:1.8, align:'left'};

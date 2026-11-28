@@ -131,6 +131,7 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=8ef3e6eeed42'
   let graph;
   const trace = window.GkxJudgementWorkspace.init({
     report, sessionId, editor, entries,
+    attachments:[...(state?.definition?.attachments ?? launch?.attachments ?? []), ...(state?.definition?.outlineSettings?.files ?? [])],
     onReviewChange(review, traceModel) {
       const model = buildResearchFlow({
         title:report.title, report, definition:state?.definition, progress:100,

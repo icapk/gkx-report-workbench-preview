@@ -1,8 +1,7 @@
 #reader {position:relative}
-#trace-summary {max-width:1240px;margin:0 auto;padding:16px clamp(17px,1.8vw,36px) 0}
+#trace-summary {max-width:760px;margin:0 auto;padding:16px clamp(12px,1.25vw,18px) 28px}
 .paper {position:relative}
 #trace-pins {position:absolute;inset:0;pointer-events:none}
 .trace-pin {position:absolute;pointer-events:auto;background:#f0f5ff;border:1px solid #dbe6fd;border-radius:4px;padding:2px 6px;color:#3154bd;font:500 11px/1.35 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
 .trace-pin:hover {background:#e5edff;color:#2347b4}
 .gjs button.gjs-trace-link {border:0;background:transparent;color:#345cf4;padding:4px 0;font-family:inherit;font-size:12px;font-weight:500;line-height:1.5;cursor:pointer}
-.tool-row #open-report-trace {color:#3154bd}

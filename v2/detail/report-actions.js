@@ -172,7 +172,7 @@
   async function knowledge(draft={name:title.slice(0,80),query:'',selected:''}) {
     const host=modal('保存至知识库'); dialog.classList.add('ra-kb-dialog');
     body.append(node('p','ra-hint','正在读取知识库…'));
-    const kb=await import('../assets/knowledge-library.js?v=be5b8a530cde');
+    const kb=await import('../assets/knowledge-library.js?v=9ff6c6e29980');
     const catalog=await kb.listCollections();
     if(!host.isConnected) return;
     body.replaceChildren();
@@ -255,7 +255,7 @@
       const value=name.value.trim(); if(!value || creating) return;
       creating=true; create.disabled=true;
       try {
-        const kb=await import('../assets/knowledge-library.js?v=be5b8a530cde');
+        const kb=await import('../assets/knowledge-library.js?v=9ff6c6e29980');
         const catalog=await kb.listCollections();
         if(catalog.some(lib=>lib.name.toLocaleLowerCase()===value.toLocaleLowerCase())) { error.textContent='该知识库名称已存在';name.focus();return; }
         const id=crypto.randomUUID();await kb.persist({id,version:0,created:Date.now(),name:value,summary:note.value.trim(),files:[]});
@@ -267,7 +267,7 @@
     body.append(nameLabel,name,noteLabel,note,error);footer.append(button('取消',back),create);name.focus();
   }
   async function knowledgeList() {
-    const host=modal('已保存的报告'),kb=await import('../assets/knowledge-library.js?v=be5b8a530cde');
+    const host=modal('已保存的报告'),kb=await import('../assets/knowledge-library.js?v=9ff6c6e29980');
     const records=savedCopies(await kb.listCollections());if(!host.isConnected)return;
     if(!records.length)body.append(node('p','ra-hint','此会话暂无已保存的副本。'));
     for (const {lib,file} of records) {

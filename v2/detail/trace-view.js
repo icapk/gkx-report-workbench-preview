@@ -6,6 +6,13 @@
     {key:'metric', label:'指标计算', section:'计算口径与记录', icon:['M5 3h14v18H5z','M8 7h8M8 11h1m3 0h1m3 0h.1M8 15h1m3 0h1m3 0h.1']},
     {key:'reason', label:'判断依据', section:'推断依据', icon:['M4 4h5v5H4zM15 15h5v5h-5zM4 15h5v5H4z','M6.5 9v6m0-3h11v3']}
   ];
+  const channelIcons = {
+    knowledge:['M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z','M12 6v14'],
+    metric:categories[1].icon,
+    web:['M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0','M2 12h20M12 2c5 5 5 15 0 20-5-5-5-15 0-20'],
+    attachment:['m8 13 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 1 1-7-7l9-9'],
+    other:categories[0].icon
+  };
   function text(value) { return typeof value === 'string' || typeof value === 'number' ? String(value).trim() : ''; }
   function safeAddress(doc, raw) {
     if (typeof raw !== 'string' || !raw.trim()) return '';
@@ -64,15 +71,53 @@
     root.setAttribute('aria-label','数据溯源');
     const summary=el('div','gtv-summary'),groupList=el('div','gtv-categories');
     const intro=el('div','gtv-summary-intro'), overview=el('p','gtv-overview');
-    intro.append(el('h2','','数据溯源'),overview);summary.append(intro,groupList);
+    const channels=el('div','gtv-channels');
+    intro.append(el('h2','','核对报告依据'),overview);summary.append(intro,groupList);
     const dialog=el('dialog','gtv-dialog');dialog.setAttribute('aria-label','数据溯源详情');
     const header=el('header','gtv-head'),heading=el('h2','','数据溯源'),closeBtn=button('gtv-close','×');
     closeBtn.setAttribute('aria-label','关闭数据溯源详情');closeBtn.title='关闭';
     header.append(heading,closeBtn);
     const nav=el('div','gtv-nav');nav.setAttribute('role','group');nav.setAttribute('aria-label','溯源类别');
     const body=el('div','gtv-body');
-    dialog.append(header,nav,body);root.append(summary,dialog);host.replaceChildren(root);
+    dialog.append(header,nav,body);root.append(channels,summary,dialog);host.replaceChildren(root);
     let groups=[], key='source', selected=0, signature='', returnTo=null;
+    function renderChannels(data) {
+      const sections = [];
+      for (const channel of data) {
+        const block = el('section','gtv-channel');
+        block.dataset.channel = channel.key;
+        const head = el('div','gtv-channel-head'), mark = el('span','gtv-channel-icon');
+        mark.append(icon({icon:channelIcons[channel.key] || channelIcons.other}));
+        head.append(mark,el('h3','',channel.label),el('span','gtv-channel-count',channel.items.length+' 条'));
+        block.append(head);
+        function record(item) {
+          const card = button('gtv-channel-record');
+          card.dataset.detailKey = item.detailKey;
+          card.dataset.detailIndex = String(item.detailIndex);
+          card.setAttribute('aria-haspopup','dialog');
+          card.setAttribute('aria-label','查看'+channel.label+'记录：'+item.title);
+          const title = el('span','gtv-record-title');
+          const arrow = el('span','gtv-record-arrow','›');
+          arrow.setAttribute('aria-hidden','true');
+          title.append(el('strong','',item.title),arrow);
+          card.append(title);
+          const meta = [item.status,item.meta].filter(Boolean).join(' · ');
+          if (meta) card.append(el('span','gtv-record-meta',meta));
+          if (item.excerpt) card.append(el('span','gtv-record-excerpt',item.excerpt));
+          return card;
+        }
+        if (channel.items.length) {
+          block.append(record(channel.items[0]));
+          if (channel.items.length>1) {
+            const more=el('details','gtv-more-records');
+            more.append(el('summary','','其余 '+(channel.items.length-1)+' 条记录'),...channel.items.slice(1).map(record));
+            block.append(more);
+          }
+        } else block.append(el('p','gtv-channel-empty',channel.empty));
+        sections.push(block);
+      }
+      channels.replaceChildren(...sections);
+    }
     function renderSummary() {
       groupList.replaceChildren();nav.replaceChildren();
       for (const group of groups) {
@@ -167,6 +212,9 @@
     function onClick(event) {
       const target=event.target.closest?.('button');
       if(target===closeBtn){dialog.close();return;}
+      if(target?.hasAttribute('data-detail-key')){
+        open(target.dataset.detailKey,Number(target.dataset.detailIndex),target);return;
+      }
       if(target?.hasAttribute('data-gtv-locate')){
         const quote=text(groups.find(group=>group.key===key)?.items[selected]?.anchor);
         if(quote){dialog.close();host.dispatchEvent(new win.CustomEvent('gkx-trace-locate',{bubbles:true,detail:{quote}}));}
@@ -184,7 +232,8 @@
     }
     function restoreFocus() {
       const target=returnTo;returnTo=null;
-      if(target?.isConnected)target.focus({preventScroll:true});
+      if(target?.isConnected && target.getClientRects().length) target.focus({preventScroll:true});
+      else doc.querySelector('[data-judgement-view="trace"]')?.focus({preventScroll:true});
     }
     function update(data) {
       const next=JSON.stringify(data || {});
@@ -200,6 +249,7 @@
       });
       signature=next;selected=Math.max(0,groups.find(group=>group.key===key)?.items.findIndex(item=>old&&item.title===old)??-1);
       const previousOriginKey=returnTo?.dataset?.gtvKey;
+      renderChannels(data.channels || []);
       renderSummary();
       if(previousOriginKey) returnTo=groupList.querySelector('[data-gtv-key="'+previousOriginKey+'"]');
       if(dialog.open)renderBody();
