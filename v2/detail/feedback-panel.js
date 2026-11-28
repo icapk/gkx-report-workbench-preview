@@ -100,7 +100,7 @@
         line.append(node('strong', '', '我的评分'), node('span', 'rfb-rating', '★ ' + record.score + ' / 5'),
           button(record.review ? '查看建议评议' : '查看评价', 'rfb-link', () => openRecord(record)));
       } else {
-        line.append(node('strong', '', '这份报告对你有帮助吗？'), stars(0, openForm));
+        line.append(node('strong', '', '写得不好？快来吐槽。'), stars(0, openForm));
       }
       if (prior && !record) {
         const previous = read(prior);
