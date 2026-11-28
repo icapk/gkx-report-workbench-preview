@@ -1,5 +1,5 @@
 @media (min-width: 681px) {
-  .report-surface.city-logistics-report:not(.conversation-only) {grid-template-columns:minmax(0,1fr) clamp(332px,36%,472px)}
+  .report-surface.city-logistics-report:not(.review-collapsed) {grid-template-columns:minmax(0,1fr) clamp(332px,36%,472px)}
   .city-logistics-report #judgement-review-slot {padding:17px clamp(13px,1.2vw,22px) 36px}
 }
 .city-review {font-size:13px;line-height:1.65;color:#26354a}

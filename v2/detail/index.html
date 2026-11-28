@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>报告详情 · 智能创作报告</title>
   <link rel="icon" href="../assets/portal-brand.png">
-  <link rel="stylesheet" href="layout.css?v=8aafd62e1389">
+  <link rel="stylesheet" href="layout.css?v=e86173a0767d">
   <link rel="stylesheet" href="process-history.css?v=39767ab51e20">
   <link rel="stylesheet" href="report-actions.css?v=0c7db3e26fca">
   <script src="../assets/blood-network-demo.js?v=9812d5e55b35"></script>
   <script src="../assets/city-logistics-demo.js?v=623781e9fcd5"></script>
-  <script defer src="process-history.js?v=3f927d03b2f8"></script>
+  <script defer src="process-history.js?v=69815a0821b0"></script>
   <script defer src="report-actions.js?v=8be01497ccad"></script>
   <link rel="stylesheet" href="trace-view.css?v=9a381e0eb93d">
   <link rel="stylesheet" href="trace-workspace.css?v=16d5340ee26e">
@@ -18,14 +18,14 @@
   <script defer src="trace-view.js?v=3becdcfedeb7"></script>
   <script defer src="trace-workspace.js?v=0db3c370b0b9"></script>
   <link rel="stylesheet" href="judgement-studio.css?v=2cd05be20c78">
-  <link rel="stylesheet" href="judgement-workspace.css?v=98e641a66d96">
-  <link rel="stylesheet" href="city-review.css?v=b0cda5368440">
+  <link rel="stylesheet" href="judgement-workspace.css?v=d95946290ace">
+  <link rel="stylesheet" href="city-review.css?v=4c08f3c42dc6">
   <script defer src="city-review.js?v=0078e560cb57"></script>
   <script defer src="judgement-cases.js?v=e8e6b5b04f31"></script>
   <script defer src="judgement-studio.js?v=db89a8991c0f"></script>
-  <script defer src="judgement-workspace.js?v=8e1a5ffba0ed"></script>
+  <script defer src="judgement-workspace.js?v=56a2742ef25f"></script>
   <link rel="stylesheet" href="../assets/research-flow.css?v=d3768c73092d">
-  <script type="module" src="workspace.js?v=649a150793f4"></script>
+  <script type="module" src="workspace.js?v=e16e7903677c"></script>
 </head>
 <body>
   <main class="workspace">
@@ -34,6 +34,7 @@
         <div class="tool-row">
           <div class="report-tools" id="report-tools" role="toolbar" aria-label="报告工具栏">
             <button data-action="toc" aria-expanded="true" aria-controls="toc"><i data-icon="list"></i>目录</button>
+            <button type="button" id="open-review-panel" aria-controls="review-panel" aria-expanded="true" hidden><i data-icon="history-chat"></i>打开研判回放</button>
             <button type="button" id="open-report-trace" aria-haspopup="dialog"><i data-icon="trace"></i>数据溯源</button>
             <button type="button" id="compact-judgement-link" aria-controls="judgement-host">研判回放</button>
             <button data-action="copy"><i data-icon="copy"></i>复制</button>
@@ -44,7 +45,6 @@
             <span class="tool-sep"></span>
             <button data-action="knowledge"><i data-icon="upload"></i>保存至知识库</button>
           </div>
-          <button class="icon-btn" id="close-report" type="button" aria-label="关闭报告" title="关闭报告"><i data-icon="close"></i></button>
         </div>
         <div class="reading-layout" id="reading-layout">
           <aside class="toc" id="toc" aria-label="报告目录">
@@ -66,10 +66,11 @@
           </div>
         </div>
       </section>
-      <section class="conversation" aria-label="报告研判与写作过程">
+      <section class="conversation" id="review-panel" aria-label="报告研判与写作过程">
         <div class="judgement-mode" id="judgement-mode" role="group" aria-label="查看报告过程">
           <button type="button" data-judgement-view="review" aria-controls="judgement-review-slot" aria-pressed="true">研判回放</button>
           <button type="button" data-judgement-view="process" aria-controls="process-content" aria-pressed="false">写作过程</button>
+          <button type="button" class="icon-btn" id="close-review-panel" aria-label="关闭研判回放" title="关闭研判回放" aria-controls="review-panel"><i data-icon="close"></i></button>
         </div>
         <div id="judgement-review-slot"><div id="judgement-host" tabindex="-1"></div></div>
         <div id="process-content" class="conversation-content"></div>

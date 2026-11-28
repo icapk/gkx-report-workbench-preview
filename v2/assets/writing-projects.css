@@ -84,3 +84,23 @@
 .writing-library-link:hover { background: rgb(255 255 255 / 76%); }
 
 .writing-project-tools button:focus-visible { outline: 1px solid var(--color-primary); outline-offset: -1px; }
+
+.report-row[data-review-closed] { flex-wrap: wrap; height: auto; }
+.report-row[data-review-closed] .report-row-open { height: 36px; }
+.report-review-reopen {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 4px 6px;
+  padding: 2px 8px;
+  min-height: 26px;
+  border: 1px solid #bdcff7;
+  border-radius: 5px;
+  background: white;
+  color: #315bb7;
+  font: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}
+.report-review-reopen:hover { background: #f4f7ff; border-color: #89a9eb; }
+.report-review-reopen:focus-visible { outline: 2px solid #416ad0; outline-offset: 1px; }

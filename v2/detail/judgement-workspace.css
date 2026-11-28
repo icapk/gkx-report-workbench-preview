@@ -8,6 +8,8 @@
 }
 .judgement-mode button[aria-pressed="true"] {color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
 .judgement-mode button:hover {color:var(--blue)}
+.judgement-mode #close-review-panel {margin-left:auto;align-self:center;border:0;color:#5b687a}
+.judgement-mode #close-review-panel:hover {background:#f1f4fa;color:var(--blue)}
 #judgement-review-slot {max-width:760px;margin:auto;padding:16px clamp(12px,1.25vw,18px) 28px}
 #judgement-review-slot .gjs-outcome h2 {font-size:17px;line-height:1.45}
 #judgement-host {min-width:0;scroll-margin:10px}

@@ -102,7 +102,6 @@
     opener.type = 'button';
     opener.setAttribute('aria-label', '查看报告：' + report.title);
     opener.setAttribute('aria-controls', 'document-pane');
-    opener.setAttribute('aria-expanded', 'true');
     opener.addEventListener('click', controls.openReport);
     const cover = make('span', 'ph-cover');
     cover.setAttribute('aria-hidden', 'true');

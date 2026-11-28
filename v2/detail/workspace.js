@@ -35,7 +35,7 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=8ef3e6eeed42'
   });
   const get = id => document.getElementById(id);
   const reader = get('reader'), editor = get('editor'), toc = get('toc'), tocItems = get('toc-items');
-  const documentPane = get('document-pane'), conversation = get('process-content');
+  const conversation = get('process-content');
   const tocToggle = document.querySelector('[data-action="toc"]');
   let report;
   try {if(sessionId)report=api?.getReport(sessionId);}catch {}
@@ -198,34 +198,21 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=8ef3e6eeed42'
     } else window.reportActions.run(button.dataset.action,button);
   });
   get('close-toc').addEventListener('click', () => { setToc(false); tocToggle.focus(); });
-  function showDocument(open) {
-    documentPane.hidden = !open;
-    get('detail').classList.toggle('conversation-only', !open);
-    get('detail').dispatchEvent(new CustomEvent('gkx-document-visibility',{detail:{open}}));
-    const card = conversation.querySelector('.ph-file-open');
-    card.setAttribute('aria-expanded', String(open));
-    if (open) {
-      get('close-report').focus({preventScroll:true});
-      highlightSection();
-    } else card.focus({preventScroll:true});
+  function focusDocument() {
+    editor.focus({preventScroll:true});
+    if (window.matchMedia('(max-width:680px)').matches) editor.scrollIntoView({block:'start'});
   }
   window.renderProcessHistory(conversation, report, {
     request: launch?.prompt,
     definition: state?.definition,
     durationMs: generation?.durationMs,
-    openReport: () => showDocument(true),
+    openReport: focusDocument,
     downloadReport: (format, anchor) => window.reportActions.run(format, anchor)
   });
   conversation.prepend(flow);
-  if (window.matchMedia('(max-width:680px)').matches &&
-      new URLSearchParams(host.location.search).get('panel') === 'process') {
-    showDocument(false);
-    conversation.parentElement.scrollTop = 0;
-  }
-  window.addEventListener('gkx-open-report', () => { if (documentPane.hidden) showDocument(true); });
-  get('close-report').addEventListener('click', () => showDocument(false));
+  window.addEventListener('gkx-open-report',focusDocument);
   document.addEventListener('keydown', e => {
-    if(e.key==='Escape' && !documentPane.hidden && !document.querySelector('dialog[open]') && !toc.hidden) {
+    if(e.key==='Escape' && !document.querySelector('dialog[open]') && !toc.hidden) {
       setToc(false); tocToggle.focus();
     }
   });

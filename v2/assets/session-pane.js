@@ -62,7 +62,7 @@ export function createSessionPane(React, ReactDOM) {
     if (!slot) return null;
     return ReactDOM.createPortal(el('section', {className:'workbench-session-pane', 'data-pane':kind, 'aria-label':title},
       kind === 'report' && launch
-        ? el('iframe', {className:'workbench-report-frame', title:'报告详情', src:window.sessionReports.embeddedUrl(launch.sessionId)})
+        ? el('iframe', {className:'workbench-report-frame', 'data-report-session':launch.sessionId, title:'报告详情', src:window.sessionReports.embeddedUrl(launch.sessionId)})
         : el('div', {className:'workbench-session-empty'}, '当前浏览器中未找到这份报告，请从左侧选择会话。')), slot);
   };
 }
