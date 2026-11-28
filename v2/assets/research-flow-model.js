@@ -59,7 +59,7 @@ function describeFinishedStages(stages, {report, review, trace, hasRequest, mate
 
   const records = ['counter','round','quality'].map(key=>list(review.stages).find(stage=>stage?.key===key && text(stage.summary)));
   if (records.every(Boolean)) {
-    challenge.summary = '本报告留有反方校验、圆桌仲裁与质量审查的示例回放。';
+    challenge.summary = '本报告留有对抗审查、圆桌仲裁与质量审查的示例回放。';
     challenge.detail = '在「研判回放」中可查看三项审阅意见，以及每项意见对应的正文。';
     challenge.items = records.map(record=>text(record.label)+'：'+text(record.summary));
     saved(challenge,'done','有示例');
@@ -94,7 +94,7 @@ function bloodResearchFlow({demo,title,goal,chapterPlan,complete,position,progre
       plan:'由反方质疑初稿，圆桌比较方案，再由质量审查复核。', result:'模拟审阅撤回全面扩围建议，保留可执行的单线对照试点。',
       detail:'检查同一组事实可以支持哪些行动，以及哪些判断仍需补证。',
       inputs:['反方：检验单次首飞能否代表各医院签收表现。','圆桌：比较维持现状、单线验证、多线扩围的取舍。','质量审查：逐项核对数字、单位、统计期和结论适用范围。'],
-      outputs:['反方校验：初稿“全市普遍节时约八成，应全面扩围”的推论缺少同程签收对照。','圆桌仲裁：先试一条具备同线路地面对照的候选线路，保留地面接续。','质量审查：撤回全市普遍节时约八成的推论，保留全市规模数据与附条件试点建议。']
+      outputs:['对抗审查：初稿“全市普遍节时约八成，应全面扩围”的推论缺少同程签收对照。','圆桌仲裁：先试一条具备同线路地面对照的候选线路，保留地面接续。','质量审查：撤回全市普遍节时约八成的推论，保留全市规模数据与附条件试点建议。']
     },
     {
       id:'compose', title:'生成扩围评估报告',

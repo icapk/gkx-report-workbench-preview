@@ -12,9 +12,10 @@
     return '<div class="gjs-stream gjs-stream-' + side + '" aria-hidden="true"><i></i><b></b></div>';
   }
   function stageDiagram(stages) {
-    return '<div class="gjs-visual" aria-hidden="true">' + avatar('author','反方校验智能体') + stream('left') +
-      '<div class="gjs-junction"><span></span></div>' + stream('right') + avatar('peer','质量审查智能体') + '</div>' +
-      '<nav class="gjs-sequence" aria-label="研判阶段">' + stages.map((stage, i) =>
+    const visual = stages.some(stage => stage.chat) ? '' :
+      '<div class="gjs-visual" aria-hidden="true">' + avatar('author','写作智能体') + stream('left') +
+      '<div class="gjs-junction"><span></span></div>' + stream('right') + avatar('peer','质量审查智能体') + '</div>';
+    return visual + '<nav class="gjs-sequence" aria-label="研判阶段">' + stages.map((stage, i) =>
         '<button type="button" data-gjs-stage="' + i + '"><span class="gjs-step-no">' + (i + 1) + '</span><span>' + esc(stage.label) + '</span></button>'
       ).join('') + '</nav>';
   }
@@ -33,7 +34,7 @@
     ).join('')+'</dl></section>';
   }
   function scenarioAnswer(option) {
-    const responses=[['反方校验',option.counter],['质量审查',option.quality],['主持取舍',option.ruling]];
+    const responses=[['反方智能体',option.counter],['质量审查',option.quality],['主持取舍',option.ruling]];
     return '<strong>此假设下的回应</strong>' + responses.map(([role,answer]) =>
       '<div><b>' + role + '</b><p>' + esc(answer) + '</p></div>').join('');
   }
@@ -41,6 +42,10 @@
     let body = '<div class="gjs-stage-role"><i></i>' + esc(stage.role || stage.label) + '</div><h3>' + esc(stage.summary) + '</h3>';
     body += recordList(stage.recordsTitle || '模拟记录',stage.records,'value');
     if (stage.detail) body += '<p class="gjs-stage-detail">' + esc(stage.detail) + '</p>';
+    if (stage.chat && window.GkxReviewChat?.mount) {
+      body = '<div class="gjs-chat-host" tabindex="0" aria-label="对抗审查对话"></div>' +
+        '<details class="gjs-chat-calculation"><summary>查看审查摘要与依据</summary>' + body + '</details>';
+    }
     if (stage.key === 'quality') body += recordList('逐项审查', stage.checks, 'result');
     if (stage.key === 'round' && Array.isArray(model.scenarios) && model.scenarios.length) {
       body += '<details class="gjs-sim"><summary><strong>条件推演</strong><span>假如补一份材料</span><i aria-hidden="true"></i></summary>' +
@@ -91,7 +96,8 @@
       const inView = visible && !doc.hidden && root.isConnected;
       root.classList.toggle('gjs-in-view', inView);
       // Keep interactive details in place while the reader is checking a scenario or a source.
-      if (!inView || reduceMotion.matches || root.querySelector('.gjs-sim[open], .gjs-panel :focus-visible') || doc.querySelector('dialog[open]')) return;
+      if (!inView || reduceMotion.matches || root.querySelector('.gjs-chat-host, .gjs-sim[open], .gjs-panel :focus-visible') ||
+          doc.querySelector('dialog[open]')) return;
       timer = win.setTimeout(() => show((index + 1) % stages.length), duration);
     }
     function onFocusChange() {
@@ -101,9 +107,25 @@
       index = next;
       const stage = stages[index];
       root.dataset.stage = stage.key;
-      root.querySelector('.gjs-junction span').textContent = phaseNames[stage.key];
+      const junction = root.querySelector('.gjs-junction span');
+      if (junction) junction.textContent = phaseNames[stage.key];
       root.querySelectorAll('[data-gjs-stage]').forEach((button,i) => button.setAttribute('aria-pressed', String(i === index)));
-      root.querySelector('.gjs-panel').innerHTML = panelContent(stage, model);
+      const panel = root.querySelector('.gjs-panel');
+      panel.innerHTML = panelContent(stage, model);
+      const chat = panel.querySelector('.gjs-chat-host');
+      if (chat) {
+        window.GkxReviewChat.mount(chat,{...stage.chat,onRuling:() => {
+          const round = stages.findIndex(s => s.key==='round');
+          show(round);
+          const tab = root.querySelector('[data-gjs-stage="'+round+'"]');
+          tab.focus({preventScroll:true}); tab.scrollIntoView({block:'nearest'});
+        }});
+      }
+      if (stage.key==='quality' && window.GkxReviewChat?.avatar) {
+        const role = panel.querySelector('.gjs-stage-role');
+        role.querySelector('i')?.remove();
+        role.prepend(window.GkxReviewChat.avatar(doc,'quality'));
+      }
       sync();
     }
     function onClick(event) {
@@ -153,7 +175,7 @@
       visible = entries[entries.length-1].isIntersecting;
       sync();
     });
-    observer.observe(root.querySelector('.gjs-visual'));
+    observer.observe(root.querySelector('.gjs-sequence'));
     show(0);
     return api;
   }

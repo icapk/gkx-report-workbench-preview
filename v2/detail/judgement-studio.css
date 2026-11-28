@@ -102,9 +102,15 @@
 .gjs .gjs-step-no { display: inline-grid; place-items: center; flex: none; width: 16px; height: 16px; border-radius: 50%; background: #eef1f5; color: #637083; font-size: 10px; font-variant-numeric: tabular-nums; }
 .gjs [aria-pressed="true"] .gjs-step-no { background: #e1e9ff; color: #345ad1; }
 .gjs .gjs-panel { padding: 13px 1px 0; }
+.gjs:not([data-stage="quality"]) .gjs-visual {display:none}
+.gjs .gjs-chat-host {min-width:0;outline-offset:3px}
+.gjs .gjs-chat-calculation {margin:12px 0 8px;border-top:1px solid #e0e7f0;padding-top:7px}
+.gjs .gjs-chat-calculation summary {cursor:pointer;color:#476184;font-size:12px;font-weight:550}
+.gjs .gjs-chat-calculation .gjs-stage-role {margin-top:6px}
+.gjs .gjs-stage-role > :first-child:not(i) {flex:none;width:24px;height:24px}
 .gjs .gjs-stage-role { display: flex; align-items: center; gap: 6px; color: #626e83; font-size: 11px; line-height: 1.5; }
-.gjs .gjs-stage-role i { width: 6px; height: 6px; border-radius: 2px; background: #8a76bb; }
-.gjs[data-stage="quality"] .gjs-stage-role i { background: #488a78; }
+.gjs .gjs-stage-role > i { width: 6px; height: 6px; border-radius: 2px; background: #8a76bb; }
+.gjs[data-stage="quality"] .gjs-stage-role > i { background: #488a78; }
 .gjs .gjs-panel h3 { margin: 4px 0; padding: 0; border: 0; color: #27354a; font-size: 15px; font-weight: 650; line-height: 1.6; }
 .gjs .gjs-panel .gjs-stage-detail { margin: 0; color: #506075; font-size: 13px; line-height: 1.75; }
 .gjs .gjs-voices { margin: 9px 0 10px; padding-left: 11px; border-left: 2px solid #d6ddec; }

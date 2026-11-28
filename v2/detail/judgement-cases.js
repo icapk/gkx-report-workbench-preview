@@ -17,7 +17,19 @@
         ruling:'若急件记录符合约定且停运接续可行，可先安排该线路小范围试点，园区配送另做高峰期验证。'}
     ],
     stages: [{
-      key: 'counter', label: '反方校验', role: '反方校验智能体',
+      key: 'counter', label: '对抗审查', role: '反方智能体',
+      chat:{
+        rounds:[
+          {writer:'急送样表里，签收的3单有2单准时，约66.7%。我准备把这个数写在准时率一栏。',
+            opponent:'第4单已经到期，只是还没签收。按全部到期受理件算，2单准时、1单超时、1单未签收，应是2/4＝50%。'},
+          {writer:'同意，改成50%，并注明是4笔模拟单。拿这个口径跟园区比，可以判断哪类场景先试吗？',
+            opponent:'计时都可以从受理到签收，但园区的全量订单和两边的同线路地面对照都缺。这个50%只能演示算法。'},
+          {writer:'那就不按50%排队。如果医疗线路能取得地面记录、明确交接并保障停运接续，我仍建议优先把它列入首批。',
+            opponent:'我接受这三个条件。园区也可能先满足它们，眼下没有材料证明医疗更接近就绪。首批是预先指定医疗，还是让实际准备情况决定？'}
+        ],
+        consensus:'全部到期受理件计入分母，样表2/4＝50%。该数值只说明模拟口径；首批试点须具备地面对照、交接责任与停运接续。',
+        dispute:'首批先指定医疗急送，还是由两类场景实际满足试点条件的先后决定？'
+      },
       summary: '把到期未签收的订单计入分母，样表准时率从约66.7%降到50%。',
       detail: '医疗急送和园区配送都值得比较。若有人主张医疗急送优先，请先拿出同类急件的地面配送记录，并说明停运后由谁接手。',
       evidence: [
@@ -26,14 +38,14 @@
       ]
     }, {
       key:'round', label:'圆桌仲裁', role:'圆桌主持',
-      summary:'圆桌采纳全部到期订单的口径，两类场景先做对照验证。',
-      detail:'本轮处理的是能否先排顺序。医疗急送更看重急件交接，园区配送更看重连续履约；两类试点应分别约定通过条件，再交业务部门决定是否扩大。',
+      summary:'暂不预排医疗和园区。哪个场景先具备条件，哪个先做小范围对照验证。',
+      detail:'圆桌只处理试点次序。保留作者提出的医疗急件交接要求，采纳反方提出的就绪条件。双方已确认的50%只作为样表计算结果。',
       evidence:[
         {label:'本稿 · 现状分析',quote:'两者可以共用从受理到签收的计时口径，但应分别评价时效与连续服务能力。'}
       ],
       voices:[
         {name:'执笔研究员',text:'主管部门要排示范次序，能否先选医疗急送？'},
-        {name:'反方校验智能体',text:'急件要看能否按时交接，园区要看高峰期能否持续履约。现在还缺两边的对照记录。'},
+        {name:'反方智能体',text:'急件要看能否按时交接，园区要看高峰期能否持续履约。现在还缺两边的对照记录。'},
         {name:'圆桌主持',text:'先选能做对照、能接续地面配送的场景。拿到实测记录，再提交优先次序建议。'}
       ]
     }, {
@@ -62,7 +74,19 @@
         ruling:'若重复表现与异常恢复满足该工位要求，可安排限定工位试用；其他工位另行验证。'}
     ],
     stages:[{
-      key:'counter', label:'反方校验', role:'反方校验智能体',
+      key:'counter', label:'对抗审查', role:'反方智能体',
+      chat:{
+        rounds:[
+          {writer:'10轮模拟抓取里有8轮最终完成，我想用80%说明自主抓取能力。',
+            opponent:'其中2轮由人接管，只有6轮独立完成。分开记录，自主完成是6/10＝60%，含接管的最终完成才是80%。'},
+          {writer:'同意分开。固定工位的模拟表能演示这种统计方法，实际设备要补哪类记录？',
+            opponent:'要看目标工位的连续试次，记录每次介入、失败和异常恢复。现在没有对应的现场日志。'},
+          {writer:'既然是限定工位，可否直接安排小范围试用，同时收集这些日志？',
+            opponent:'我倾向先复测目标工位。否则还不清楚重复表现和异常能否恢复。是否应先复测，再决定试用？'}
+        ],
+        consensus:'模拟试次须分列自主完成60%与含接管完成80%，两者均不能代替现场部署证据。',
+        dispute:'先进入限定工位试用，还是先做目标工位复测、核对介入与恢复记录？'
+      },
       summary:'10轮模拟抓取中有2轮靠人工接管完成，自主完成率应为60%。',
       detail:'如果把“演示成功”写成“可部署”，需要说明成功条件、测试环境和人工介入情况。报告提出了这几项核验要求，当前会话没有附上实际测试记录。',
       evidence:[
@@ -71,14 +95,14 @@
       ]
     }, {
       key:'round', label:'圆桌仲裁', role:'圆桌主持',
-      summary:'圆桌分别记录自主完成与人工接管，先安排目标工位复测。',
+      summary:'先复测目标工位，核对自主完成、人工接管与异常恢复后，再决定是否限定试用。',
       detail:'双方的分歧在于演示结果能支持多强的结论。先固定操作任务，记录何时介入、出了异常能否恢复。试用方取得这些记录后，再判断是否适合自己的作业环境。',
       evidence:[
         {label:'本稿 · 信号与证据',quote:'可选取同一操作任务，对照感知、规划、执行和异常恢复四个环节，记录任务成功条件、人工介入方式及采样环境。'}
       ],
       voices:[
         {name:'执笔研究员',text:'一次演示能说明设备在那组条件下完成了任务。能否据此判断部署价值？'},
-        {name:'反方校验智能体',text:'要先知道操作是否可重复、出了异常由谁恢复，以及跟实际应用环境差多少。'},
+        {name:'反方智能体',text:'要先知道操作是否可重复、出了异常由谁恢复，以及跟实际应用环境差多少。'},
         {name:'圆桌主持',text:'保留这条技术观察，把部署判断列为待复测事项；后续用同一任务的记录回来复核。'}
       ]
     }, {
@@ -256,12 +280,12 @@
         {label:'补齐对照材料',counter:'补充材料是否覆盖原先的例外情况？',quality:'逐项核对'+sheet.source+'。',ruling:sheet.sufficient}
       ],
       stages:[
-        {key:'counter',label:'反方校验',role:'反方校验智能体',summary:sheet.challenge,
+        {key:'counter',label:'对抗审查',role:'反方智能体',summary:sheet.challenge,
           detail:'这次为《'+title+'》模拟审阅“'+sheet.focus+'”。'+sheet.limit,
           records:records.counter,evidence:evidence(main,'模拟复核表',sheet.sample)},
         {key:'round',label:'圆桌仲裁',role:'圆桌主持',summary:sheet.decision,detail:sheet.limit,
           records:records.round,voices:[
-            {name:'执笔研究员',text:sheet.initial},{name:'反方校验智能体',text:sheet.challenge+' '+sheet.calculation},
+            {name:'执笔研究员',text:sheet.initial},{name:'反方智能体',text:sheet.challenge+' '+sheet.calculation},
             {name:'质量审查智能体',text:sheet.rule},{name:'圆桌主持',text:sheet.decision}
           ],evidence:evidence(support,'模拟裁定依据',sheet.rule)},
         {key:'quality',label:'质量审查',role:'质量审查智能体',summary:sheet.check,
@@ -286,7 +310,19 @@
           quality:'核查备用车辆、交接责任和异常改派记录。',ruling:'暂缓该线路试点或扩围，恢复接续并验证后再议。'}
       ],
       stages:[
-        {key:'counter',label:'反方校验',role:'反方校验智能体',traceSourceId:'nanshan-flight',
+        {key:'counter',label:'对抗审查',role:'反方智能体',traceSourceId:'nanshan-flight',
+          chat:{
+            rounds:[
+              {writer:'南山首飞用时15分钟。把它与报道里的地面90分钟并列，能作为全市扩围的依据吗？',
+                opponent:'90分钟是原地面往返，15分钟只是这次空运。先统一同线路、同起讫点的受理至签收口径，不能把首飞节时推广到全市。'},
+              {writer:'接受。报告只保留这次首飞事实。2024年全市7,070架次，至少能说明什么？',
+                opponent:'能说明运行规模。7,070除以366天约19.3架次/日，无法据此推出逐单平均节时或成本。'},
+              {writer:'同意不全面扩围。有地面接续的候选医院，能否先做小试点，在试点期间同步收集可比的地面签收记录？',
+                opponent:'我倾向先取得地面基线，避免试点开始后找不到可比样本。我们只需请圆桌决定基线采集和启动试点的先后。'}
+            ],
+            consensus:'南山首飞须按同线路、同起讫点核验。年度架次只支持运行规模描述，现有证据不足以全面扩围。',
+            dispute:'具备地面接续的候选线路，应先做小试点并同步采集地面基线，还是先取得基线再启动？'
+          },
           summary:'15分钟首飞与90分钟地面往返，能代表全市签收时效吗？',
           detail:'南山报道给出的是一次空中送血与原地面往返的比较。运输方式、行程边界与样本范围都要核对。全市航线数和架次也无法补出同线路的签收时长。',
           recordsTitle:'质询的证据',
@@ -294,13 +330,13 @@
             {label:'要求补证',value:'同线路、同时段，分别登记空地两种方式从受理至签收的起止时间，并纳入异常改派。'}],
           evidence:[{label:'报告中的首飞口径',quote:anchors.timing}]},
         {key:'round',label:'圆桌仲裁',role:'圆桌主持智能体',
-          summary:'采纳有限试点，全面扩围与暂缓分别保留触发条件。',
+          summary:'有地面接续且能同步采集可比记录的线路，先做有限试点；取不到地面基线的线路暂缓。',
           recordsTitle:'三种方案的取舍',
           records:[{label:'全面扩围',value:'驳回当前提议。缺少跨线路的同口径签收时效、成本与异常记录。'},
-            {label:'有限试点',value:'采纳。选有地面接续的线路做空地对照，事前确定起止时点、成本项目及异常处理。'},
+            {label:'有限试点',value:'采纳作者的同步试点，附反方的取证条件。事前约定同线路、同起讫点、签收和异常记录；无法同步采集则先补基线。'},
             {label:'暂缓',value:'暂不采纳全市暂缓。对交接责任或地面接续未落实的具体线路，推迟试点。'}],
           voices:[{name:'执笔研究员',text:'16条航线已有运行基础，哪些条件足以支持下一步？'},
-            {name:'反方校验智能体',text:'年度合计能说明运行规模，缺少全市时效分布与成本。'},
+            {name:'反方智能体',text:'年度合计能说明运行规模，缺少全市时效分布与成本。'},
             {name:'圆桌主持',text:'把比较范围收回到具体线路；达到事先约定的条件后再决定是否推广。'}],
           evidence:[{label:'采纳后的正文建议',quote:anchors.decision}]},
         {key:'quality',label:'质量审查',role:'质量审查智能体',
@@ -341,6 +377,9 @@
         const recordSet = stageData(worksheet);
         const model = structuredClone(original);
         for (const stage of model.stages) stage.records = recordSet[stage.key];
+        const round = model.stages.find(stage=>stage.key==='round');
+        round.records = [{label:'提交圆桌的分歧',value:model.stages[0].chat.dispute},
+          {label:'裁定',value:round.summary}];
         model.stages[2].checks=recordSet.checks;
         return {...model,id,kind:'curated',demo:true};
       }

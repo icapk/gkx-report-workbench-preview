@@ -170,7 +170,7 @@
   function mockGroups(sources,review) {
     const [counter,round,quality] = review.stages;
     const source = extract('反方质询所用的模拟记录','模拟材料',{
-      demo:true, claim:counter.summary, location:'研判回放 · 反方校验',
+      demo:true, claim:counter.summary, location:'研判回放 · 对抗审查',
       fields:counter.records.map(row=>field(row.label,row.value)),
       boundary:'此处展示质询所用的演示条件。'
     });

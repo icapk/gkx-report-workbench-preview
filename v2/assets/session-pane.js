@@ -1,4 +1,4 @@
-import {buildResearchFlow} from './research-flow-model.js?v=d0d2a7ab98b0';
+import {buildResearchFlow} from './research-flow-model.js?v=902df019ecdf';
 import {mountResearchFlow} from './research-flow-view.js?v=8ef3e6eeed42';
 
 export function createGeneration(React) {

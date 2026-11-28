@@ -47,6 +47,7 @@
       const model = window.GkxJudgementCases.forReport({
         id:sessionId, title:report.title, demoCaseId:report.demoCaseId, revision:report.revision, text, editor, modified:text !== baseText
       });
+      surface.classList.toggle('has-review-conversation', Boolean(model.stages?.some(stage => stage.chat)));
       const sources = trace.refresh(model);
       onReviewChange?.(model, sources);
       if (model.kind === 'city-logistics') {

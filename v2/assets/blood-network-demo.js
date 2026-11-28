@@ -34,7 +34,7 @@
     ]},
     { id: 'blood-comparison', title: '首飞时效与空地对照', body: '追溯15分钟和90分钟各自记录了哪一段运输。', children: [
       {id:'blood-clock', title:'南山首飞与地面往返的计时范围', body:'核对记录的起讫点、方向和样本次数。'},
-      {id:'blood-counter', title:'反方校验：全市节时能否成立', body:'检验从一条航线的首飞外推全市平均表现的依据。'},
+      {id:'blood-counter', title:'对抗审查：全市节时能否成立', body:'检验从一条航线的首飞外推全市平均表现的依据。'},
     ]},
     { id: 'blood-ruling', title: '试点方案与圆桌裁决', body: '记录支持方与反方的证据，说明采纳了什么以及理由。', children: [
       {id:'blood-hearing', title:'三种方案的取舍', body:'对照运行基础、服务收益和缺失材料，形成有边界的建议。'},

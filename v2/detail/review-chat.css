@@ -1,0 +1,37 @@
+@media (min-width:681px) {
+  .report-surface.has-review-conversation:not(.review-collapsed) {
+    grid-template-columns:minmax(0,1fr) clamp(332px,36%,472px);
+  }
+}
+.review-chat {min-width:0;color:#293445;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.review-chat-log {padding:4px 9px 12px;border:1px solid #e2e7ee;border-radius:8px;background:#f4f6f8}
+.review-chat-round + .review-chat-round {margin-top:15px}
+.review-chat .review-chat-round-title {display:flex;align-items:center;justify-content:center;gap:9px;margin:7px 0 8px;color:#647285;font-size:11px;font-weight:500;line-height:1.5}
+.review-chat-round-title::before,.review-chat-round-title::after {content:"";width:20px;height:1px;background:#d6dce3}
+.review-chat-message {display:flex;align-items:flex-start;gap:6px;min-width:0}
+.review-chat-message + .review-chat-message {margin-top:9px}
+.review-chat-message[data-speaker="opponent"] {flex-direction:row-reverse}
+.review-chat-avatar {--sprite-scale:.68;position:relative;display:inline-block;width:35px;height:35px;flex:none;overflow:visible;vertical-align:middle}
+.review-chat-avatar img {display:block;width:100%;height:100%;object-fit:contain}
+.review-chat-avatar.gjs .gjs-seat {position:absolute;top:50%;left:50%;width:51px;height:50px;transform:translate(-50%,-50%) scale(var(--sprite-scale))}
+.review-chat-avatar.gjs .gjs-avatar::after,.review-chat-avatar.gjs .gjs-shell {animation:none}
+.review-chat-avatar.gjs .gjs-avatar::after {display:none}
+.review-chat-avatar[data-role="quality"] {--sprite-scale:.5;width:25px;height:25px}
+button .review-chat-avatar[data-role="quality"] {--sprite-scale:.36}
+.review-chat-body {display:flex;flex-direction:column;align-items:flex-start;gap:2px;max-width:calc(100% - 62px);min-width:0}
+[data-speaker="opponent"] .review-chat-body {align-items:flex-end}
+.review-chat-name {color:#59677a;font-size:11px;line-height:1.45}
+.review-chat .review-chat-bubble {--bubble-bg:white;--bubble-line:#dce2e9;position:relative;margin:0;padding:7px 10px;border:1px solid var(--bubble-line);border-radius:7px;background:var(--bubble-bg);color:#1e2b3b;font-size:13px;line-height:1.65;text-align:left;overflow-wrap:anywhere}
+.review-chat-bubble::before {position:absolute;top:8px;left:-4px;width:6px;height:6px;border-left:1px solid var(--bubble-line);border-bottom:1px solid var(--bubble-line);background:var(--bubble-bg);transform:rotate(45deg);content:""}
+.review-chat [data-speaker="opponent"] .review-chat-bubble {--bubble-bg:#dcf2ce;--bubble-line:#c7dfba}
+[data-speaker="opponent"] .review-chat-bubble::before {right:-4px;left:auto;transform:rotate(225deg)}
+.review-chat-outcome {margin:12px 0 0;padding:12px;border:1px solid #d4deeb;border-radius:7px;background:white}
+.review-chat .review-chat-outcome-title {margin:0 0 8px;color:#243853;font-size:15px;font-weight:650;line-height:1.5}
+.review-chat-outcome dl {margin:0}
+.review-chat-outcome dt {margin:7px 0 2px;color:#435875;font-size:12px;font-weight:650}
+.review-chat-outcome dd {margin:0;color:#2e3b4f;font-size:13px;line-height:1.6}
+.review-chat-handoff {display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1px solid #e5eaf1}
+.review-chat-status {color:#4a6175;font-size:12px}
+.review-chat .review-chat-ruling {padding:3px 9px;border:1px solid #bccfeb;border-radius:4px;color:#245597;background:#f5f8fe;font:inherit;font-size:12px;font-weight:600;line-height:1.6;cursor:pointer}
+.review-chat .review-chat-ruling:hover {background:#e9f1fe}
+.review-chat .review-chat-ruling:focus-visible {outline:2px solid #285dc2;outline-offset:2px}
