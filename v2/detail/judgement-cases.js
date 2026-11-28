@@ -271,8 +271,63 @@
     };
   }
 
+  function bloodNetworkReview(id, title, anchors) {
+    return {
+      id, title, kind:'blood-network', demo:true, reviewLabel:'预设审查（模拟）',
+      beforeLabel:'被驳回的初稿判断', before:'全市无人机送血可节省约八成时间，应全面扩围。',
+      afterLabel:'采纳的试点建议', afterShort:'先开展同线路对照试点', after:anchors.decision,
+      scenarios:[
+        {label:'只有首飞报道',counter:'原地面耗时包含返程。哪一项记录能说明每家医院从发出到签收都节时八成？',
+          quality:'两个公开来源都没有全市逐单签收时间和地面对照。',ruling:'维持有限试点，在候选线路同步采集可比记录。'},
+        {label:'假设多线对照达标',counter:'天气、时段与血液交接要求是否一致？异常和改派订单是否纳入？',
+          quality:'先核对同起讫点的签收、成本和异常明细，确认均达到事前约定的条件。',
+          ruling:'只向已达标且可地面接续的同类线路分批扩围，其他线路继续试点。'},
+        {label:'假设地面接续中断',counter:'停飞后谁负责将血液送至医院并完成交接？',
+          quality:'核查备用车辆、交接责任和异常改派记录。',ruling:'暂缓该线路试点或扩围，恢复接续并验证后再议。'}
+      ],
+      stages:[
+        {key:'counter',label:'反方校验',role:'反方校验智能体',traceSourceId:'nanshan-flight',
+          summary:'15分钟首飞与90分钟地面往返，能代表全市签收时效吗？',
+          detail:'南山报道给出的是一次空中送血与原地面往返的比较。运输方式、行程边界与样本范围都要核对。全市航线数和架次也无法补出同线路的签收时长。',
+          recordsTitle:'质询的证据',
+          records:[{label:'被质询的外推',value:'把单条航线首飞的“约八成”直接写成全市普遍节时。'},
+            {label:'要求补证',value:'同线路、同时段，分别登记空地两种方式从受理至签收的起止时间，并纳入异常改派。'}],
+          evidence:[{label:'报告中的首飞口径',quote:anchors.timing}]},
+        {key:'round',label:'圆桌仲裁',role:'圆桌主持智能体',
+          summary:'采纳有限试点，全面扩围与暂缓分别保留触发条件。',
+          recordsTitle:'三种方案的取舍',
+          records:[{label:'全面扩围',value:'驳回当前提议。缺少跨线路的同口径签收时效、成本与异常记录。'},
+            {label:'有限试点',value:'采纳。选有地面接续的线路做空地对照，事前确定起止时点、成本项目及异常处理。'},
+            {label:'暂缓',value:'暂不采纳全市暂缓。对交接责任或地面接续未落实的具体线路，推迟试点。'}],
+          voices:[{name:'执笔研究员',text:'16条航线已有运行基础，哪些条件足以支持下一步？'},
+            {name:'反方校验智能体',text:'年度合计能说明运行规模，缺少全市时效分布与成本。'},
+            {name:'圆桌主持',text:'把比较范围收回到具体线路；达到事先约定的条件后再决定是否推广。'}],
+          evidence:[{label:'采纳后的正文建议',quote:anchors.decision}]},
+        {key:'quality',label:'质量审查',role:'质量审查智能体',
+          summary:'7,070架次除以366天，日均约19.3架次；删除全市节时断言。',
+          recordsTitle:'年度数据复核',
+          records:[{label:'分子与分母',value:'2024年全市累计飞行7,070架次，闰年共有366个日历日。'},
+            {label:'结果与单位',value:'7,070 ÷ 366 ≈ 19.3架次/日。运输血液净重4,412公斤单列。'}],
+          checks:[{label:'可发布',result:'注明统计期与来源，保留年末16条航线、年度架次与净重、全市日均架次，以及南山首飞的条件。'},
+            {label:'删除',result:'删除“全市节时约八成”。市级总量不能用于计算个体签收或成本改善。'},
+            {label:'待补证',result:'同线空地签收时间、单次或单位成本、停飞与异常改派记录。'}],
+          evidence:[{label:'报告中的年度复算',quote:anchors.audit}]}
+      ]
+    };
+  }
+
   function forReport(context = {}) {
     const id = textOf(context.id), title = textOf(context.title) || '当前报告', body = textOf(context.text);
+    if (context.demoCaseId === 'sz-blood-network-2024') {
+      const demo = window.bloodNetworkDemo;
+      const anchors = demo?.anchors;
+      if (demo?.id === context.demoCaseId && !context.modified &&
+          ['scale','timing','decision','audit'].every(key => anchors?.[key] && body.includes(anchors[key]))) {
+        return bloodNetworkReview(id,title,anchors);
+      }
+      return {id,title,kind:'needs-review',demo:false,afterShort:'当前正文待复核',
+        after:'预设审查对应生成时的报告。请根据当前正文重新核对来源、计算和试点条件。'};
+    }
     const original = curated.get(id);
     if (!context.modified && original && (title===original.title || title===original.title+'（示例）')) {
       const anchors=['摘要'+original.before,'核心结论'+original.after];

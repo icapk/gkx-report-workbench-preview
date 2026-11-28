@@ -1,4 +1,4 @@
-import {buildResearchFlow} from '../assets/research-flow-model.js?v=e78c9123e402';
+import {buildResearchFlow} from '../assets/research-flow-model.js?v=32cfd76e7bc5';
 import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8';
 
 (() => {
@@ -149,9 +149,34 @@ import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8'
     if(plain) document.execCommand('insertText',false,plain);
   });
   editor.addEventListener('drop', e => e.preventDefault());
+  const officialUrls = new Set(report.demoCaseId === 'sz-blood-network-2024'
+    ? (window.bloodNetworkDemo?.sources || []).filter(source =>
+      ['network-2024','nanshan-flight'].includes(source.id) && source.url.startsWith('https://')).map(source => source.url)
+    : []);
+  function prepareSourceLinks() {
+    editor.querySelectorAll('a[href]').forEach(link => {
+      if (officialUrls.has(link.getAttribute('href'))) link.tabIndex = 0;
+    });
+  }
+  if (officialUrls.size) {
+    prepareSourceLinks();
+    editor.addEventListener('input',prepareSourceLinks);
+    editor.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' || event.isComposing || event.repeat || event.target !== document.activeElement) return;
+      if (event.target.matches('a[href]') && officialUrls.has(event.target.getAttribute('href'))) {
+        event.preventDefault();
+        window.open(event.target.href,'_blank','noopener,noreferrer');
+      }
+    });
+  }
   function showSource(e) {
     const marker = e.target.closest('[data-source]');
-    if(marker) { e.preventDefault(); if (!trace.openAttachment(marker)) window.reportActions.run('source',marker); }
+    if(marker) { e.preventDefault(); if (!trace.openAttachment(marker)) window.reportActions.run('source',marker); return; }
+    const link = e.target.closest('a[href]');
+    if (link && editor.contains(link) && officialUrls.has(link.getAttribute('href')) && window.getSelection()?.isCollapsed) {
+      e.preventDefault();
+      window.open(link.href,'_blank','noopener,noreferrer');
+    }
   }
   editor.addEventListener('click', showSource);
   const sources = get('sources');

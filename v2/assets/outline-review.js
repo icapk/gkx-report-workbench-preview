@@ -7,6 +7,12 @@ const alignments = [['left', '左对齐'], ['center', '居中'], ['right', '右�
 const chapterType = row => row.kind || (['摘要', '结语'].includes(row.title) ? row.title : '正文');
 const newId = () => crypto.randomUUID();
 
+function patchOutlineItem(item, changes) {
+  const next = {...item, ...changes};
+  if (changes.skillSnapshot === null) delete next.skillSnapshot;
+  return next;
+}
+
 function spliceMove(list, from, to) {
   const next = [...list];
   next.splice(to, 0, ...next.splice(from, 1));
@@ -43,13 +49,29 @@ export function createOutlineReview(React) {
   function tool(label, image, handler, disabled = false) {
     return h('button',{type:'button',className:'outline-icon',title:label,'aria-label':label,onClick:handler,disabled},icon(image));
   }
-  function Advanced({value, onChange}) {
+  function Advanced({value, onChange, blockLabel, skill, inheritedLabel, inheritedNames = [], onSkillChange}) {
+    const catalog = window.WorkbenchSkills.catalog;
+    const selected = skill && catalog.find(item=>item.id===skill.skill_id);
+    const selectedName = skill?.name || selected?.name;
+    const defaultLabel = [inheritedLabel, inheritedNames.join('、')].filter(Boolean).join(' · ');
+    function chooseSkill(event) {
+      const choice = catalog.find(item=>item.id===event.target.value);
+      const snapshot = choice ? window.WorkbenchSkills.taskSkillFields([choice.name]).skillSnapshots[0] : null;
+      onSkillChange(snapshot);
+    }
     const style = {...defaults, ...value};
     function field(label, key, input) {
       const options = {'aria-label':label,value:style[key],onChange:e=>onChange({...style,[key]:e.target.value})};
       return h('label',null,label,input(options));
     }
-    return h('details',{className:'outline-advanced'},h('summary',null,icon('down'),'高级配置'),
+    return h('details',{className:'outline-advanced'},h('summary',null,icon('down'),onSkillChange ? '高级配置' : '标题样式',
+      selectedName && h('span',{className:'outline-assigned-skill',title:selectedName},'Skill · '+selectedName)),
+      onSkillChange && h('label',{className:'outline-skill-field'},'写作 Skill',
+        h('select',{'aria-label':blockLabel+'写作 Skill',value:skill?.skill_id || '',onChange:chooseSkill},
+          h('option',{value:''},defaultLabel),
+          skill?.skill_id && !selected && h('option',{value:skill.skill_id},selectedName || skill.skill_id),
+          catalog.map(entry=>h('option',{value:entry.id,key:entry.id},entry.name))),
+        selected?.description && h('span',{className:'outline-skill-description'},selected.description)),
       h('fieldset',null,h('legend',null,'文本样式'),
         field('字体','font',props=>h('select',props,fonts.map(v=>h('option',{key:v},v)))),
         field('字号（px）','size',props=>h('input',{...props,type:'number',min:1,max:200,step:1})),
@@ -127,7 +149,7 @@ export function createOutlineReview(React) {
     }
   }
 
-  return function OutlineReview({outline = [], topic, templateName, settings = {}, attachments = [], error, onChange, onSettingsChange, onConfirm, onCancel}) {
+  return function OutlineReview({outline = [], topic, templateName, settings = {}, attachments = [], taskSkillNames = [], error, onChange, onSettingsChange, onConfirm, onCancel}) {
     const root = React.useRef(null);
     const pendingFocus = React.useRef(null);
     const drag = React.useRef(null);
@@ -138,6 +160,8 @@ export function createOutlineReview(React) {
     const [remove,setRemove] = React.useState(null);
     const menuRef = React.useRef(null);
     const rows = outline;
+    const taskSkills = window.WorkbenchSkills.validTaskSkills(taskSkillNames);
+    const chapterSkills = row => row.skillSnapshot?.name ? [row.skillSnapshot.name] : taskSkills;
     const title = settings.title ?? topic ?? '';
     React.useLayoutEffect(()=>{
       if (!pendingFocus.current) return;
@@ -163,7 +187,7 @@ export function createOutlineReview(React) {
     },[]);
     function setRows(next) {setNotice('');onChange(next);}
     function setSettings(next) {setNotice('');onSettingsChange(next);}
-    function update(i, delta) {setRows(rows.map((row,n)=>n===i?{...row,...delta}:row));}
+    function update(i, delta) {setRows(rows.map((row,n)=>n===i?patchOutlineItem(row,delta):row));}
     function addChapter() {
       if(rows.length>=6){setNotice('至多添加 6 个章节。');return;}
       const next=[...rows];
@@ -253,18 +277,22 @@ export function createOutlineReview(React) {
         h('div',{className:'outline-block-tools'},grip(node,block.title),h('span',null,block.kind),arrows(node,rows[i].placeholders.length),
           tool('删除占位符 '+block.title,'remove',()=>setRemove(node))),
         h(PlaceholderEditor,{row:block,onChange:updateBlock}),
-        h(Advanced,{value:block.config,onChange:config=>updateBlock({...block,config})}));
+        h(Advanced,{value:block.config,onChange:config=>updateBlock({...block,config}),
+          blockLabel:'第 '+(i+1)+' 章第 '+(j+1)+' 个占位符',skill:block.skillSnapshot,
+          inheritedLabel:'沿用本章设置',inheritedNames:chapterSkills(rows[i]),
+          onSkillChange:skillSnapshot=>updateBlock(patchOutlineItem(block,{skillSnapshot}))}));
     }
     function renderChild(row,i,j) {
       const node={type:'child',i,j}, label='第 '+(i+1)+' 章第 '+(j+1)+' 个子标题';
       const details=childDetails(row), detail=details[j];
-      const updateDetail=delta=>update(i,{childDetails:details.map((v,k)=>k===j?{...v,...delta}:v)});
+      const updateDetail=delta=>update(i,{childDetails:details.map((v,k)=>k===j?patchOutlineItem(v,delta):v)});
       return h('li',{key:j,className:'outline-node outline-sub',...dropTarget(node)},
         h('div',{className:'outline-node-line'},grip(node,label),
           field(row.children[j],value=>update(i,{children:row.children.map((v,k)=>k===j?value:v)}),label,'child-'+i+'-'+j,'子标题','outline-name'),
           h('div',{className:'outline-node-actions'},arrows(node,row.children.length),tool('删除'+label,'remove',()=>setRemove(node)))),
         field(detail.body,body=>updateDetail({body}),label+'主题',null,'描述该段内容的主题','outline-description'),
-        h(Advanced,{value:detail.config,onChange:config=>updateDetail({config})}));
+        h(Advanced,{value:detail.config,onChange:config=>updateDetail({config}),blockLabel:label,skill:detail.skillSnapshot,
+          inheritedLabel:'沿用本章设置',inheritedNames:chapterSkills(row),onSkillChange:skillSnapshot=>updateDetail({skillSnapshot})}));
     }
     function renderChapter(row,i) {
       const name='第 '+(i+1)+' 章', type=chapterType(row), node={type:'chapter',i};
@@ -286,7 +314,8 @@ export function createOutlineReview(React) {
                 type==='正文' && tool('为'+name+'添加子标题','plus',()=>addChild(i)),
                 type!=='结语' && tool('删除'+name,'remove',()=>rows.length>1?setRemove(node):setNotice('至少保留 1 个章节。')))),
             field(row.body,value=>update(i,{body:value}),name+'主题',null,'描述该段内容的主题','outline-description'),
-            h(Advanced,{value:row.config,onChange:config=>update(i,{config})})),
+            h(Advanced,{value:row.config,onChange:config=>update(i,{config}),blockLabel:name,skill:row.skillSnapshot,
+              inheritedLabel:'沿用任务设置',inheritedNames:taskSkills,onSkillChange:skillSnapshot=>update(i,{skillSnapshot})})),
           h('ol',{className:'outline-sublist'},children.map((_,j)=>renderChild(row,i,j))),
           (row.placeholders||[]).map((block,j)=>renderBlock(block,i,j))));
     }

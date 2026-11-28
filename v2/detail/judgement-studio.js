@@ -39,7 +39,7 @@
   }
   function panelContent(stage, model) {
     let body = '<div class="gjs-stage-role"><i></i>' + esc(stage.role || stage.label) + '</div><h3>' + esc(stage.summary) + '</h3>';
-    body += recordList('模拟记录',stage.records,'value');
+    body += recordList(stage.recordsTitle || '模拟记录',stage.records,'value');
     if (stage.detail) body += '<p class="gjs-stage-detail">' + esc(stage.detail) + '</p>';
     if (stage.key === 'quality') body += recordList('逐项审查', stage.checks, 'result');
     if (stage.key === 'round' && Array.isArray(model.scenarios) && model.scenarios.length) {
@@ -58,10 +58,19 @@
     }
     const traceKey = {counter:'source',round:'reason',quality:'metric'}[stage.key];
     const traceLabel = {counter:'查看原始材料',round:'追溯判断依据',quality:'查看指标口径'}[stage.key];
-    return body + evidenceMarkup(stage) + '<button type="button" class="gjs-trace-link" data-trace-stage="' + traceKey + '">' + traceLabel + ' ↗</button>';
+    const sourceRef = stage.traceSourceId ? ' data-trace-source-id="' + esc(stage.traceSourceId) + '"' : '';
+    return body + evidenceMarkup(stage) + '<button type="button" class="gjs-trace-link" data-trace-stage="' + traceKey + '"' + sourceRef + '>' + traceLabel + ' ↗</button>';
   }
   function mount(host, model) {
     if (!(host instanceof Element)) return;
+    if (model?.kind === 'needs-review') {
+      instances.get(host)?.api.destroy();
+      const root = host.ownerDocument.createElement('section');
+      root.className = 'gjs';
+      root.innerHTML = '<header class="gjs-outcome"><h2>' + esc(model.afterShort) + '</h2><p>' + esc(model.after) + '</p></header>';
+      host.replaceChildren(root);
+      return;
+    }
     if (!model?.demo || model.stages?.length !== 3) model = window.GkxJudgementCases.forReport({id:model?.id, title:model?.title});
     const serial = JSON.stringify(model);
     const previous = instances.get(host);
@@ -130,7 +139,7 @@
     const api = {destroy};
     instances.set(host,{root,serial,api});
     const headline = model.afterShort || model.after || '研判结果';
-    root.innerHTML = '<header class="gjs-outcome"><div class="gjs-caption"><span class="gjs-verdict-icon" aria-hidden="true">✓</span>研判结论<span class="gjs-demo">模拟研判</span></div><h2>' + esc(headline) +
+    root.innerHTML = '<header class="gjs-outcome"><div class="gjs-caption"><span class="gjs-verdict-icon" aria-hidden="true">✓</span>研判结论<span class="gjs-demo">' + esc(model.reviewLabel || '模拟研判') + '</span></div><h2>' + esc(headline) +
       '</h2>' + (model.after && model.after !== headline ? '<p>' + esc(model.after) + '</p>' : '') + '</header><div class="gjs-path">' +
       '<h3 class="gjs-process-heading">判断形成过程</h3>' +
       stageDiagram(stages) + '<section class="gjs-panel" aria-label="当前阶段记录"></section></div>';

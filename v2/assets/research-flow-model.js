@@ -66,6 +66,61 @@ function describeFinishedStages(stages, {report, review, trace, hasRequest, mate
   }
 }
 
+function bloodResearchFlow({demo,title,goal,sections,complete,position,progress,review,reportId}) {
+  const {anchors,sources} = demo;
+  const staleReview = complete && review?.demo === false;
+  const stages = [
+    {
+      id:'question', title:'拆解送血扩围决策',
+      plan:'界定维持现状、单线试点与多线扩围三个选项。', result:'已列出三种选项及其判断依据。',
+      detail:goal || '评估深圳是否具备扩大无人机送血服务范围的条件。',
+      inputs:['运行基线：全市已开展多少飞行？','比较问题：空运与地运的签收用时能否直接对比？','试点门槛：还需取得哪些逐线数据？']
+    },
+    {
+      id:'reuse', title:'查阅运行与首飞资料',
+      plan:'查找市级年度汇总和南山航线首飞记录。', result:'两份官方资料分别覆盖全市运行规模和南山首飞。',
+      detail:'分别登记统计期、发布单位和观察对象，区分全年汇总、单次首飞和演练。',
+      inputs:sources.map(source=>source.agency+' · '+source.date+' · '+source.title)
+    },
+    {
+      id:'evidence', title:'核对规模与时效口径',
+      plan:'复算日均架次，核对15分钟与90分钟各自覆盖的路程。', result:'全年日均约19.3架次。南山首飞与地面往返的计时口径不同。',
+      detail:'将全市统计与单次航线记录分开核查。',
+      inputs:['核对2024年统计周期、飞行架次和运输净重。','核对两种运输方式的起讫点、单程或往返，以及是否包括交接。'],
+      outputs:[anchors.scale,anchors.audit,anchors.timing]
+    },
+    {
+      id:'challenge', title:'模拟反方与圆桌评审',
+      plan:'由反方质疑初稿，圆桌比较方案，再由质量审查复核。', result:'模拟审阅撤回全面扩围建议，保留可执行的单线对照试点。',
+      detail:'检查同一组事实可以支持哪些行动，以及哪些判断仍需补证。',
+      inputs:['反方：检验单次首飞能否代表各医院签收表现。','圆桌：比较维持现状、单线验证、多线扩围的取舍。','质量审查：逐项核对数字、单位、统计期和结论适用范围。'],
+      outputs:['反方校验：初稿“全市普遍节时约八成，应全面扩围”的推论缺少同程签收对照。','圆桌仲裁：先试一条具备同线路地面对照的候选线路，保留地面接续。','质量审查：撤回全市普遍节时约八成的推论，保留全市规模数据与附条件试点建议。']
+    },
+    {
+      id:'compose', title:'生成扩围评估报告',
+      plan:'按已确认大纲整理事实、证据缺口和行动建议。', result:'已形成含数据出处、审阅修订和扩围条件的报告。',
+      detail:'逐章呈现调查依据、方案选择和试点验收条件。',
+      inputs:sections,
+      outputs:[anchors.decision,...sections]
+    }
+  ];
+  const statuses = ['已明确','已查阅','已核对','已模拟评审','已生成'];
+  const rows = stages.map((stage,index)=>{
+    const awaitingReview = staleReview && index >= 3;
+    const done = !awaitingReview && (complete || index < position);
+    const active = !complete && index === position;
+    return {
+      id:stage.id,title:stage.title,
+      state:done ? 'done' : active ? 'active' : 'pending',
+      statusLabel:awaitingReview ? '待复核' : done ? statuses[index] : active ? '进行中' : '待开展',
+      summary:awaitingReview ? '当前工作稿与模拟审阅依据不同，需重新核对。' : done ? stage.result : stage.plan,
+      detail:stage.detail,items:done && stage.outputs ? stage.outputs : stage.inputs
+    };
+  });
+  return {title,reportId,stages:rows,progress,complete,progressNote:complete
+    ? '按本次模拟研究整理。公开数据出处和审阅修订见报告正文。' : '模拟研究随写作进度推进，可选择节点查看研究任务和已整理的依据。'};
+}
+
 export function buildResearchFlow(input = {}) {
   const report = input.report || {};
   const definition = input.definition || report.taskDefinition || report.draft?.taskDefinition || report.session?.state?.definition || {};
@@ -99,20 +154,37 @@ export function buildResearchFlow(input = {}) {
   const completedSteps = complete ? steps.length : clamp(completedCount ?? Math.floor(progress * steps.length / 100),0,Math.max(0,steps.length - 1));
   const currentStep = nameOf(steps[completedSteps]);
   const position = complete ? 4 : phaseForClock(steps.length,sections.length,completedSteps,progress);
+  const demoCaseId = definition.demoCaseId || report.demoCaseId;
+  if (demoCaseId === 'sz-blood-network-2024') {
+    // Detail renders inside the same-origin workbench frame. Both views use the shared case.
+    const demo = window.bloodNetworkDemo || window.parent.bloodNetworkDemo;
+    if (demo) return bloodResearchFlow({demo,title,goal,sections,complete,position,progress,
+      review:input.review,reportId:report.sessionId || report.id || demoCaseId});
+  }
   const taskItems = [scope && '范围：'+scope, reader && '读者：'+reader].filter(Boolean);
   const outlineName = confirmed ? '已确认大纲' : '留存大纲';
-  const currentChapter = !complete && completedSteps > 0 && completedSteps <= sections.length ? sections[completedSteps - 1] : '';
+  const currentIndex = !complete && completedSteps > 0 && completedSteps <= sections.length ? completedSteps - 1 : -1;
   const chapterItems = (step, pattern) => {
-    const activeChapter = position === step ? currentChapter : '';
-    const matched = outlineRows.find(row=>pattern.test(nameOf(row)) || titles(row?.children).some(child=>pattern.test(child)));
-    const chosen = activeChapter || nameOf(matched) || sections.find(name=>pattern.test(name));
+    const current = position === step && currentIndex >= 0;
+    const index = current ? currentIndex : outlineRows.findIndex(row=>
+      pattern.test(nameOf(row)) || titles(row?.children).some(child=>pattern.test(child)));
+    const section = outlineRows[index];
+    const chosen = nameOf(section) || (current ? sections[currentIndex] : sections.find(name=>pattern.test(name)));
     if (!chosen) return [];
-    const section = outlineRows.find(row=>nameOf(row)===chosen);
     const subtopics = titles(section?.children);
-    const body = text(section?.body);
-    return [(chosen === currentChapter ? '当前章节：' : '对应章节：')+chosen,
-      subtopics.length && '本章子题：'+subtopics.slice(0,3).join('、'), body && '写作要求：'+body].filter(Boolean);
+    const body = text(section?.body), skill = nameOf(section?.skillSnapshot);
+    return [(current ? '当前章节：' : '对应章节：')+chosen,
+      skill && '章节 Skill：'+skill, subtopics.length && '本章子题：'+subtopics.slice(0,3).join('、'),
+      body && '写作要求：'+body].filter(Boolean);
   };
+  const chapterPlan = sections.flatMap((chapter,index) => {
+    const skill = nameOf(outlineRows[index]?.skillSnapshot);
+    const items = [skill ? chapter+' · '+skill : chapter];
+    for (const choice of list(steps[index + 1]?.localSkills)) {
+      if (choice.scope !== 'chapter') items.push(chapter+' / '+choice.title+' · '+nameOf(choice.skillSnapshot));
+    }
+    return items;
+  });
   const stages = [
     {
       id:'question',title:'研究问题拆解',
@@ -143,7 +215,7 @@ export function buildResearchFlow(input = {}) {
       summary: complete ? '工作稿已生成' : sections.length ? '按'+sections.length+'个章节编排工作稿' : '汇总报告工作稿',
       detail: complete ? ('可打开《'+title+'》查看成稿。'+(sections.length ? outlineName+'共 '+sections.length+' 个章节。' : '该任务未保存分章计划。'))
         : sections.length ? outlineName+'共 '+sections.length+' 个章节。'+(currentStep ? '当前写作计划项为“'+currentStep+'”。' : '') : '当前任务未提供章节明细。',
-      items:sections
+      items:chapterPlan
     }
   ];
 

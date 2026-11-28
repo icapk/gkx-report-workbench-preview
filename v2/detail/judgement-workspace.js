@@ -40,7 +40,7 @@
     function update() {
       const text = editor.textContent.trim();
       const model = window.GkxJudgementCases.forReport({
-        id:sessionId, title:report.title, revision:report.revision, text, editor, modified:text !== baseText
+        id:sessionId, title:report.title, demoCaseId:report.demoCaseId, revision:report.revision, text, editor, modified:text !== baseText
       });
       const sources = trace.refresh(model);
       onReviewChange?.(model, sources);

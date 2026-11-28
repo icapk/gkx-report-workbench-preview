@@ -58,6 +58,11 @@
 .outline-advanced>summary {list-style:none;display:inline-flex;align-items:center;gap:2px;font-size:12px;line-height:23px;color:#475566;}
 .outline-advanced>summary svg {width:13px;height:13px;transform:rotate(-90deg);}
 .outline-advanced[open]>summary svg {transform:none;}
+.outline-assigned-skill {max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:6px;padding:0 7px;border-radius:4px;background:#e9f0ff;color:#3156a5;font-size:11px;line-height:19px;}
+.outline-advanced[open] .outline-assigned-skill {display:none;}
+.outline-advanced .outline-skill-field {display:block;max-width:420px;padding:6px 1px 8px;color:var(--outline-ink);font-size:13px;font-weight:550;}
+.outline-skill-field select {font-weight:400;}
+.outline-skill-description {display:block;margin-top:4px;font-size:12px;line-height:1.5;font-weight:400;color:var(--outline-muted);}
 .outline-advanced fieldset {padding:6px 1px 8px;border:0;display:grid;grid-template-columns:1.4fr 1fr .9fr 1.1fr;gap:6px;}
 .outline-advanced legend {font-size:13px;font-weight:550;padding:3px 0 0;}
 .outline-advanced label,.outline-placeholder-editor label {font-size:12px;color:#526073;min-width:0;}

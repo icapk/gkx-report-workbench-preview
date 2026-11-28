@@ -14,7 +14,10 @@
     tool.addEventListener('click', () => open('source', 0, tool));
     document.getElementById('judgement-host').addEventListener('click', event => {
       const link = event.target.closest('[data-trace-stage]');
-      if (link) open(link.dataset.traceStage, 0, link);
+      if (!link) return;
+      const key = link.dataset.traceStage, sourceId = link.dataset.traceSourceId;
+      const index = sourceId ? groups.find(group => group.key === key)?.items.findIndex(item => item.sourceId === sourceId) : 0;
+      open(key, index ?? 0, link);
     });
     function placePins() {
       frame = 0;

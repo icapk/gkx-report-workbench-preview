@@ -93,12 +93,32 @@
   }
 
   function normaliseOutline(rows) {
-    return list(rows).map(row => ({
-      ...(row && typeof row === 'object' ? structuredClone(row) : {}),
-      title:text(row?.title) || text(row),
-      body:text(row?.body),
-      children:list(row?.children).map(child => text(child?.title) || text(child)).filter(Boolean)
-    })).filter(row => row.title);
+    return list(rows).map(raw => {
+      const row = raw && typeof raw === 'object' ? structuredClone(raw) : {};
+      const children = [], details = [];
+      list(row.children).forEach((child, i) => {
+        const title = text(child?.title) || text(child);
+        if (!title) return;
+        children.push(title);
+        const {title: childTitle, ...inline} = child && typeof child === 'object' ? child : {};
+        details.push({...inline, ...row.childDetails?.[i]});
+      });
+      if (Array.isArray(row.childDetails) || details.some(detail => Object.keys(detail).length)) row.childDetails = details;
+      return {...row, title:text(row.title) || text(raw), body:text(row.body), children};
+    }).filter(row => row.title);
+  }
+
+  function scopedMethods(section) {
+    const items = [];
+    function add(scope, title, snapshot) {
+      if (text(snapshot?.skill_id) && text(snapshot.name)) {
+        items.push({scope, title, skillSnapshot:structuredClone(snapshot)});
+      }
+    }
+    add('chapter', section.title, section.skillSnapshot);
+    section.children.forEach((child, index) => add('child', child, section.childDetails?.[index]?.skillSnapshot));
+    list(section.placeholders).forEach(item => add('placeholder', item.title || item.kind, item.skillSnapshot));
+    return items;
   }
 
   function proposeOutline({definition = {}, launch = {}} = {}) {
@@ -144,10 +164,18 @@
     const sections = normaliseOutline(definition.outline);
     return [
       {title:'制定执行计划', detail:'按已确认的文章大纲安排各章节的写作顺序。'},
-      ...sections.map(section => ({
-        title:'撰写“' + section.title + '”',
-        detail:section.body || (section.children.length ? '按顺序展开' + section.children.join('、') + '。' : '整理本节的写作材料和要点。')
-      })),
+      ...sections.map(section => {
+        const detail = section.body || (section.children.length ? '按顺序展开' + section.children.join('、') + '。' : '整理本节的写作材料和要点。');
+        const step = {title:'撰写“' + section.title + '”', detail};
+        const selections = scopedMethods(section);
+        if (selections.length) {
+          step.localSkills = selections;
+          step.detail += '\n' + selections.map(item =>
+            (item.scope === 'chapter' ? '本章' : '“' + item.title + '”') + '采用' + item.skillSnapshot.name + '。'
+          ).join(' ');
+        }
+        return step;
+      }),
       {title:'汇总并检查报告', detail:'核对章节顺序、素材与目录，生成报告文档。'}
     ];
   }
@@ -187,6 +215,41 @@
       else sections[sections.length - 1].children.push(title);
     }
     return sections;
+  }
+
+  function publishedOutline(sections) {
+    return sections.map(section => scopedMethods(section).length ? structuredClone(section) :
+      {title:section.title, children:section.children});
+  }
+
+  // Keep saved selections on headings that still exist; a renamed or removed child must
+  // not cause its method to move to the next child when a manuscript is reopened.
+  function outlineFromSaved(fragment, original) {
+    const visible = derivedOutline(fragment);
+    if (!visible.length) return publishedOutline(original);
+    if (!original.some(section => scopedMethods(section).length)) return visible;
+    const known = original.slice();
+    return visible.map(section => {
+      const i = known.findIndex(row => row.title === section.title);
+      if (i < 0) return section;
+      const [row] = known.splice(i,1);
+      if (!scopedMethods(row).length) return section;
+      const children = row.children.map((title,index) => ({title, detail:row.childDetails?.[index]}));
+      const blocks = list(row.placeholders).slice();
+      const result = {...row, children:[], childDetails:[], placeholders:[]};
+      for (const title of section.children) {
+        const j = children.findIndex(child => child.title === title);
+        if (j >= 0) {
+          result.children.push(title);
+          result.childDetails.push(children.splice(j,1)[0].detail || {});
+          continue;
+        }
+        const k = blocks.findIndex(block => (block.title || block.kind) === title);
+        if (k >= 0) result.placeholders.push(blocks.splice(k,1)[0]);
+        else { result.children.push(title); result.childDetails.push({}); }
+      }
+      return result;
+    });
   }
 
   function sourceFiles(groups) {
@@ -243,11 +306,97 @@
     return '<ol>' + items.join('') + '</ol>';
   }
 
+  function methodContent(snapshot, label, task, files, compact) {
+    const id = text(snapshot?.skill_id), name = text(snapshot?.name);
+    if (!id || !name) return '';
+    const focus = '“' + label + '”';
+    const firstText = files.findIndex(file => file.content);
+    const file = files[firstText] || files[0];
+    const source = file ? '《' + escape(file.name) + '》' + (firstText >= 0 ? marker(firstText) : '（仅有条目）') : '';
+    const sourceNote = source ? '可从' + source + '核对相关记录，引用前需确认材料覆盖本节的问题。'
+      : '需补充可回查的原文或记录，并注明采集时段。';
+    const goal = escape(task.goal || task.topic);
+    const limit = escape(task.scope) || '本研究界定的对象与时段';
+    const local = escape(focus);
+    const methods = {
+      strategy: ['方案与取舍', '将' + local + '的推进方案和暂缓条件放在同一尺度下比较。',
+        [['先行试点','围绕' + goal + '选择可单独验证的环节，先确认实施主体、观察周期和退出条件。'],
+         ['暂缓扩大','如果对照条件或后续责任尚未明确，先补证，再决定是否扩大实施范围。']]],
+      industry: ['产业链环节对照', '沿' + local + '的投入、交付和使用环节追踪依赖关系。',
+        [['投入与交付','从' + limit + '内的关键投入入手，核对供给方、承接方和交付条件。'],
+         ['需求与缺口','区分已有的使用记录与意向需求，定位哪一环节仍需要验证。']]],
+      technology: ['路线验证条件', '对' + local + '采用同任务、同环境的验证口径。',
+        [['对照任务','根据' + goal + '选取可重复任务，记录运行环境、输入条件及成功判据。'],
+         ['应用边界','单次演示可以记录为观察，进入应用判断前仍需复测及异常处理记录。']]],
+      policy: ['政策适用比对', '判断' + local + '是否落入文件的地域、对象和有效期。',
+        [['适用范围','针对' + limit + '核对发布机关、有效版本及适用主体。' + sourceNote],
+         ['条件与例外','对支持事项与限制条款分别摘录；在找到明确条款前保留适用性判断。']]],
+      evidence: ['来源与口径', '对' + local + '逐项区分已有材料和待补证据。',
+        [['来源依据',sourceNote],
+         ['核验口径','复核' + limit + '内的观察对象、统计时点与指标分母。来自不同口径的数值暂不用于排序。']]],
+      argument: ['判断与反例', '检验' + local + '在观察对象或适用条件改变后是否仍成立。',
+        [['待论证判断','以“' + goal + '”为问题，对每项建议附一条可回查的观察。' + sourceNote],
+         ['可推翻的条件','若同范围、同时段的对照出现相反结果，应缩小结论适用范围并重新核对解释。']]],
+      writer: ['结论与依据', '围绕' + local + '按决策问题、事实依据及后续行动组织表述。',
+        [['决策问题',goal], ['依据与行动',sourceNote + '将待补材料及下一步验证要求列入建议。']]],
+      'deep-research': ['研究与复核安排', '把' + local + '拆为可分别回答、可交叉验证的问题。',
+        [['核心问题',goal], ['交叉验证',sourceNote + '再从另一项独立来源复核同一观察，分别记录相符与冲突之处。']]]
+    };
+    const method = methods[id];
+    if (!method) return '';
+    const [subtitle, description, rows] = method;
+    if (compact) return '<p><strong>' + escape(name) + '</strong>　' + description + '</p>';
+    const labelCell = value => '<th scope="row">' + value + '</th>';
+    return '<p><strong>' + escape(name) + ' · ' + subtitle + '</strong></p><p>' + description + '</p>' +
+      '<table><thead><tr><th scope="col">分析项</th><th scope="col">本节要点</th></tr></thead><tbody>' +
+      rows.map(([field,value]) => '<tr>' + labelCell(field) + '<td>' + value + '</td></tr>').join('') + '</tbody></table>';
+  }
+
   function logisticsComparison() {
     return '<table><thead><tr><th scope="col">场景</th><th scope="col">观察指标</th><th scope="col">试点条件</th></tr></thead><tbody>' +
       '<tr><th scope="row">医疗急送</th><td>同类急件从受理到签收的用时、按约定时限签收的比例，以及异常改派后的交接时间。</td><td>由收发两端约定模拟件的交接时限和签收要求，保留地面配送记录，并演练无法按时交接时的替代安排。</td></tr>' +
       '<tr><th scope="row">园区配送</th><td>按订单时段比较准时签收比例、积压件数和每个完成订单的配送成本。</td><td>选定固定收发点与可对照的配送时段，能调取订单和签收记录，并明确高峰期的地面接续方式。</td></tr>' +
       '</tbody></table>';
+  }
+
+  function bloodSections(anchors) {
+    return {
+      'blood-baseline': {
+        lead: anchors.scale,
+        paragraphs: [
+          '16条是截至2024年底已开通的航线数。7,070架次和4,412公斤是全年全市合计，未按医院、线路或紧急程度分列。评估新增线路时，应先取得候选医院的订血和签收记录。',
+          '全面扩围需要多条线路的需求和履约记录。有限试点先选择一条能取得空地对照记录的线路。若收发两端尚未约定签收时限或无法安排停航接续，则暂缓新增线路，维持现有服务。'
+        ]
+      },
+      'blood-comparison': {
+        lead: anchors.timing,
+        paragraphs: [
+          '2024年2月23日，深圳市血液中心向南山医院完成首飞。报道中的两个时长覆盖不同路程，不能用相减得到的75分钟作为每单节约时间，也不能据此预估新增医院的表现。',
+          '本次模拟初稿主张“全市普遍节时约八成，应全面扩围”。反方追问：各医院地面单程签收要多久？两份公开资料均未提供同线路、同时段的空地签收对照，初稿将一次首飞外推到了全市。'
+        ]
+      },
+      'blood-ruling': {
+        lead: anchors.decision,
+        paragraphs: [
+          '支持扩围的一方援引全年7,070架次说明已有运行基础。反方要求补齐候选线路的需求、时效和成本。模拟圆桌保留现有服务，采用有限试点取证；有运行基础可以启动验证，缺少跨线路收益依据则暂缓全面扩围。',
+          '由血液中心和试点医院在同一起讫点、相近时段分别记录空运与地运从受理到签收的全过程，逐笔登记成本。双方事先约定签收时限、值守和改派职责，将取消、延误及转地面接续的任务一并计入。'
+        ]
+      },
+      'blood-audit': {
+        lead: anchors.audit,
+        paragraphs: [
+          '2024年为闰年。把全年飞行架次除以366个日历日，得到全市平均每天约19.3架次。各线路启用时间与运行频率可能不同，不能把该均值写成单线日班次、日订单数或准时率。',
+          '经模拟质量审查，终稿撤回“全市普遍节时约八成，应全面扩围”的初稿建议，保留全市运行规模、南山首飞事实和有限试点建议。试点结束后按线路和时段复查按约签收比例、每个完成任务的总成本、停航及异常任务的接续结果。满足双方事先约定的标准后，再评估下一条线路。记录缺失或接续未验证时，维持试点并补采。'
+        ]
+      }
+    };
+  }
+
+  function bloodReferences(sources) {
+    return '<p><strong>数据来源与参考文献</strong></p>' + sources.map(source =>
+      '<p>' + escape(source.agency) + '，' + escape(source.date) + '，《' + escape(source.title) + '》<br>' +
+      '<a href="' + escape(source.url) + '">' + escape(source.url) + '</a></p>'
+    ).join('');
   }
 
   function promptAlreadyShown(prompt, task) {
@@ -273,6 +422,8 @@
     // Stored document fields belong to the previous publication when a new run completes.
     const generating = context.phase === 'complete';
     const saved = generating ? null : savedContent(report, draft, context.existing);
+    const demoCaseId = definition.demoCaseId || report.demoCaseId || draft.taskDefinition?.demoCaseId;
+    const blood = demoCaseId === 'sz-blood-network-2024' ? window.bloodNetworkDemo : null;
     const fields = new Map(list(definition.fields).map(field => [field.id, field]));
     const field = id => text(fields.get(id)?.value);
     const prompt = text(definition.prompt) || text(draft.prompt) || text(report.prompt) || text(launch.prompt);
@@ -284,20 +435,21 @@
     const task = {topic:field('F01') || title, goal:field('F02'), scope:field('F03'), reader:field('F04')};
     const confirmedOutline = Array.isArray(definition.outline) ? normaliseOutline(definition.outline) : null;
     const preferredOutline = confirmedOutline ?? [!generating && context.existing?.outline, context.outline, definition.templateSpec?.outline, draft.templateSpec?.outline, launch.templateSpec?.outline, !generating && report.templateSpec?.outline].map(normaliseOutline).find(rows => rows.length);
-    const sources = files.map(file => file.name);
+    const sources = blood ? blood.sources.map(source => ({...source, text:source.detail, location:source.agency+' · '+source.date})) : files.map(file => file.name);
     const complete = definition.consent === true && (report.progress === 100 || !!draft.taskDefinition || context.phase === 'complete');
     const steps = complete ? writingSteps(definition) : [];
     if (saved) {
-      let outline = derivedOutline(saved.doc.content);
-      if (!outline.length && preferredOutline) outline = preferredOutline.map(({title,children}) => ({title,children}));
+      const storedOutline = normaliseOutline(saved.record.outline);
+      const outline = outlineFromSaved(saved.doc.content, storedOutline.length ? storedOutline : preferredOutline || []);
       if (!saved.doc.content.querySelector('h1')) {
         const heading = document.createElement('h1'); heading.textContent = title; saved.doc.content.prepend(heading);
       }
       const knownSources = list(saved.record.sources).map(item => text(item) || text(item?.title) || text(item?.name)).filter(Boolean);
-      return {title, html:saved.doc.innerHTML, sources:knownSources.length ? knownSources : sources, outline, steps:list(saved.record.steps).length ? saved.record.steps : steps};
+      return {title, html:saved.doc.innerHTML, sources:blood ? sources : knownSources.length ? knownSources : sources, outline, steps:list(saved.record.steps).length ? saved.record.steps : steps, ...(blood && {demoCaseId})};
     }
 
-    const chapters = preferredOutline || (structure[type] || structure['战略分析报告']).map(title => ({title,body:'',children:[]}));
+    const chapters = preferredOutline || (blood ? normaliseOutline(blood.outline) : (structure[type] || structure['战略分析报告']).map(title => ({title,body:'',children:[]})));
+    const bloodChapters = blood && bloodSections(blood.anchors);
     const logisticsTopic = task.topic === '深圳低空物流示范场景研究';
     const compareLogistics = logisticsTopic && task.goal.includes('医疗急送') && task.goal.includes('园区配送');
     const seed = !logisticsTopic || compareLogistics ? exampleNotes[task.topic] : null;
@@ -305,11 +457,15 @@
     const lead = seed?.[3] || seed?.[0] || (fieldSentence('研究主题', task.topic) + (fieldSentence('研究目标', task.goal) || '当前首先需要明确观察对象、比较条件和判断依据。'));
     const hasSummary = chapters.some(section => /^(?:摘要|执行摘要|内容摘要)$/.test(section.title));
     const html = [heading(1,title,definition.outlineSettings?.titleConfig), '<blockquote><p>' + metadata + '</p></blockquote>'];
-    if (!hasSummary && !confirmedOutline) html.push('<h2>摘要</h2>', paragraph(lead), materialObservation(files));
+    if (blood) html.push(
+      '<p><strong>评审建议</strong>　先在具备地面接续条件的线路做空地对照，再用签收和成本记录决定是否扩大覆盖。</p>',
+      paragraph('本报告模拟评估深圳是否扩大无人机送血服务范围。运行数据来自公开资料，文中评审意见与试点安排用于决策演示。')
+    );
+    if (!blood && !hasSummary && !confirmedOutline) html.push('<h2>摘要</h2>', paragraph(lead), materialObservation(files));
     if (seed && task.goal) html.push(paragraph(fieldSentence('研究目标', task.goal)));
     if (task.scope) html.push(paragraph(fieldSentence('研究范围', task.scope)));
     if (task.reader) html.push(paragraph(fieldSentence('目标读者', task.reader)));
-    if (prompt && prompt !== task.topic && !promptAlreadyShown(prompt, task)) html.push(paragraph('本次委托：' + prompt));
+    if (!blood && prompt && prompt !== task.topic && !promptAlreadyShown(prompt, task)) html.push(paragraph('本次委托：' + prompt));
     const unresolved = [...fields.values()].map(f => text(f.unresolved)).filter(Boolean);
     if (unresolved.length) html.push(paragraph('仍需明确：' + unresolved.join('；') + '。'));
     let sourceIndex = chapters.findIndex(section => /资料|证据|信号|来源/.test(section.title));
@@ -318,22 +474,36 @@
       html.push(heading(2,section.title,section.config));
       const isSummary = section.kind === '摘要' || /^(?:摘要|执行摘要|内容摘要)$/.test(section.title);
       const commentary = isSummary ? lead : sectionText(section.title, task, seed);
-      const body = section.body || commentary;
-      html.push(styledBody(paragraph(!hasSummary && body === lead ? '本节围绕“' + task.topic + '”界定观察对象。应先明确比较单位和样本范围，再展开后续分析。' : body), section.config));
+      const preset = blood && blood.outline.find(row => row.id === section.id || (!section.id && row.title === section.title));
+      const bloodChapter = preset && bloodChapters[preset.id];
+      const body = bloodChapter?.lead || section.body || commentary;
+      html.push(styledBody(paragraph(!blood && !hasSummary && body === lead ? '本节围绕“' + task.topic + '”界定观察对象。应先明确比较单位和样本范围，再展开后续分析。' : body), section.config));
+      if (bloodChapter && section.body && section.body !== preset.body) html.push(styledBody(paragraph(section.body),section.config));
       if (isSummary) html.push(materialObservation(files));
+      if (section.skillSnapshot) html.push(styledBody(methodContent(section.skillSnapshot, section.title, task, files, false), section.config));
       section.children.forEach((child, index) => {
         const options = section.childDetails?.[index];
-        html.push(heading(3,child,options?.config), styledBody(paragraph(options?.body || sectionText(child, task, seed)), options?.config));
+        const presetIndex = preset ? preset.children.findIndex(candidate =>
+          options?.id ? candidate.id === options.id : (text(candidate.title) || text(candidate)) === child) : -1;
+        const content = bloodChapter?.paragraphs[presetIndex];
+        const customNote = content && options?.body && options.body !== preset.children[presetIndex].body ? paragraph(options.body) : '';
+        html.push(heading(3,child,options?.config), styledBody(paragraph(content || options?.body || sectionText(child, task, seed)) + customNote, options?.config));
+        const method = options?.skillSnapshot || section.skillSnapshot;
+        if (method) html.push(styledBody(methodContent(method, child, task, files, !options?.skillSnapshot), options?.config));
       });
       for (const item of list(section.placeholders)) {
-        html.push(heading(3,item.title || item.kind,item.config), styledBody(window.WorkbenchPlaceholders.render(item),item.config));
+        const label = item.title || item.kind;
+        html.push(heading(3,label,item.config), styledBody(window.WorkbenchPlaceholders.render(item),item.config));
+        const method = item.skillSnapshot || section.skillSnapshot;
+        if (method) html.push(styledBody(methodContent(method, label, task, files, true), item.config));
       }
-      if (i === sourceIndex) {
+      if (!blood && i === sourceIndex) {
         if (compareLogistics) html.push(logisticsComparison());
         const missingEvidence = compareLogistics ? '本次会话还缺少两个场景的对照记录，试点优先次序需待验证。' : '本次会话尚未附可核验的资料，涉及规模、排名或因果关系的判断均需补证。';
         html.push(files.length ? evidence(files) : paragraph(missingEvidence));
       }
     });
-    return {title, html:html.join('\n'), sources, outline:confirmedOutline ?? chapters.map(({title,children}) => ({title,children})), steps};
+    if (blood) html.push(bloodReferences(sources));
+    return {title, html:html.join('\n'), sources, outline:confirmedOutline ?? publishedOutline(chapters), steps, ...(blood && {demoCaseId})};
   };
 })();

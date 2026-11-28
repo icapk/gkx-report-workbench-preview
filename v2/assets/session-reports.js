@@ -6,7 +6,7 @@
   const generationDuration = 24000;
   const oldGenerationDuration = 6000;
   const home = new URL('../index.html', document.currentScript.src);
-  const detail = new URL('../detail/index.html?v=4cc3f7972b5b', document.currentScript.src);
+  const detail = new URL('../detail/index.html?v=70dd5463f449', document.currentScript.src);
   // The composer can omit the report type, including on tasks saved by older versions.
   function normalizeWorkspace(workspace) {
     if (Array.isArray(workspace?.reports)) {
@@ -60,6 +60,7 @@
       template: report.template || report.draft?.template || '不使用模板', templateSpec: report.templateSpec,
       template_id: report.template_id, template_version: report.template_version,
       ...window.WorkbenchSkills.taskSkillFields(report.skills, report.skillSnapshots),
+      ...(report.demoCaseId ? {demoCaseId:report.demoCaseId} : {}),
       sourceTaskId: report.id, sessionId: report.id, runId: report.session?.runId
     };
   }
@@ -111,6 +112,7 @@
       knowledgeFiles:files.filter(file=>file.source==='knowledge'),
       session:{runId:crypto.randomUUID(), startedAt:ts, edits:[], historyBefore:previous ? timeline(previous,previous.session?.state) : []}
     };
+    if (!input.demoCaseId) delete report.demoCaseId;
     delete report.sourceTaskId;
     delete report.sessionId;
     delete report.runId;
@@ -150,10 +152,11 @@
     if (!report) return null;
     const projectTitle = folder(workspace,report)?.name;
     const released = report.publishedReport;
-    if (released) return {...released,type:released.type || report.type,sessionId:id,projectId:report.folderId,projectTitle};
+    const caseIdentity = report.demoCaseId ? {demoCaseId:report.demoCaseId} : {};
+    if (released) return {...caseIdentity,...released,type:released.type || report.type,sessionId:id,projectId:report.folderId,projectTitle};
     if (!hasReport(report)) return null;
     const content = window.buildSessionReportContent({report, draft:report.draft,project:projectTitle});
-    return {...content,sessionId:id,projectId:report.folderId,projectTitle,type:report.type,
+    return {...caseIdentity,...content,sessionId:id,projectId:report.folderId,projectTitle,type:report.type,
       date:report.updatedAt || null,revision:'original',history:timeline(report,null)};
   }
   function save(launch,state) {
@@ -203,6 +206,7 @@
         report.draft = draft;
         const content = window.buildSessionReportContent({report,draft,definition,launch,phase:'complete',project:draft.project});
         report.publishedReport = {...content,revision:launch.runId,date:report.updatedAt,type:report.type,
+          ...(report.demoCaseId ? {demoCaseId:report.demoCaseId} : {}),
           history:timeline(report,state),sourceDetails:[...filesFor(report), ...(definition.outlineSettings?.files || [])].map(file=>({title:file.name,text:file.text || ''}))};
         report.generated = true;
       }

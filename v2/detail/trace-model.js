@@ -182,10 +182,65 @@
       makeGroup('reason','推断溯源','模拟仲裁',[reason])];
   }
 
+  function bloodNetworkTrace(demo, material, review) {
+    const reviewed = review?.kind === 'blood-network';
+    const anchors = demo.anchors;
+    const sourceItems = demo.sources.map(source => {
+      const annual = source.id === 'network-2024';
+      const index = material.findIndex(entry => typeof entry === 'string' ? entry === source.title :
+        entry?.id === source.id || entry?.title === source.title);
+      return extract(source.title,'官方公开资料',{
+        sourceId:source.id,sourceIndex:index,
+        claim:annual ? '市卫生健康委披露了2024年全市运行总量。' : '市血液中心报道了南山航线首飞及原地面往返用时。',
+        quote:annual ? '全年累计飞行7,070架次' : '相较于原来地面运输的往返90分钟',
+        location:[source.agency,source.date].filter(Boolean).join(' · '),
+        fields:[field('资料要点',source.detail),field('查找位置',annual ? '演练报道末段的2024年度汇总' : '首段的首飞经过与地面往返比较')],
+        links:[{label:'打开'+source.agency+'原文',href:secureLink(source.url)}],
+        boundary:annual ? '统计范围为深圳全市。飞行架次、血液净重和年末航线数分别计量。' :
+          '报道中的约八成是该航线首飞与原地面往返的比较；推广至其他线路需要同口径的签收记录。',
+        ...(reviewed ? {anchor:annual ? anchors.scale : anchors.timing} : {})
+      });
+    });
+    const sourceGroup=makeGroup('source','原文溯源','官方公开资料',sourceItems);
+    if (!reviewed) {
+      return {summary:'可回查生成报告时使用的两篇公开资料。当前正文的指标与结论需重新核验。',
+        groups:[sourceGroup,makeGroup('metric','指标溯源','待重新核验',[extract('当前正文的计算','待重新核验',{claim:'请确认当前原文、分子分母及单位。'})]),
+          makeGroup('reason','推断溯源','待重新审查',[extract('当前正文的判断','待重新审查',{claim:'预设审查对应生成时的报告。正文修订后需要重新判断证据能否支持结论。'})])]};
+    }
+    const annotatedSources=sourceItems.map(item => item.links[0]);
+    const annual=sourceItems.find(item => item.sourceId === 'network-2024');
+    const flights=7070, calendarDays=366, perDay=(flights/calendarDays).toFixed(1);
+    const metric = extract('全市日均飞行架次 · '+perDay+'架次/日','公开数据复算',{
+      claim:'按日历日计算2024年全市运行规模。',location:'市卫生健康委披露的年度汇总 · 2024年',
+      anchor:anchors.audit,
+      fields:[field('计算结果',flights.toLocaleString('en-US')+' ÷ '+calendarDays+' ≈ '+perDay+'架次/日'),
+        field('分子','2024年全市无人机血液运输飞行架次合计，单位为架次。'),
+        field('分母','2024年日历日合计，含2月29日。'),
+        field('独立统计项','截至年末开通16条航线；全年运送血液净重4,412公斤。')],
+      records:{headers:['统计项','数值','单位／范围'],rows:[
+        ['累计飞行',flights.toLocaleString('en-US'),'架次 · 全市全年'],['日历日',String(calendarDays),'天 · 2024年'],
+        ['计算所得日均',perDay,'架次/日 · 全市']]},
+      links:annual.links,boundary:'日均只描述全市运行量。签收时长、成本和异常改派需另取线路级原始记录。'
+    });
+    const reason = extract('为何先做同线路对照试点','预设审查建议',{
+      claim:anchors.decision,anchor:anchors.decision,location:'演示圆桌 · 根据公开材料作出的条件判断',
+      fields:[field('已知事实','年度运行量与南山首飞分别有官方报道。'),
+        field('采纳','有地面接续的线路先做空地对照。统一受理、出发与签收时间，登记成本及异常。'),
+        field('驳回','现有证据不足以支持全面扩围；把首飞和地面往返的比较外推至全市会夸大结论。'),
+        field('何时调整','同类线路达到事先约定的比较条件后考虑分批扩大。不能保障地面接续的线路暂缓。')],
+      links:annotatedSources,related:['source','metric'],
+      boundary:'这是原型演示中的预设判断。两篇官方报道提供事实依据，实际是否扩围需要主管部门另行决策。'
+    });
+    return {summary:'两篇官方资料可回查，年度日均可复算。试点取舍为预设审查，签收、成本和异常仍待采集。',
+      groups:[sourceGroup,makeGroup('metric','指标溯源','公开数据复算',[metric]),makeGroup('reason','推断溯源','预设审查建议',[reason])]};
+  }
+
   function build({report={},entries,editor,review}={}) {
     const material = Array.isArray(entries) ? entries : (Array.isArray(report.sources) ? report.sources.map(s => typeof s === 'string' ? report.sourceDetails?.find(detail=>detail?.title===s) || s : s) : []);
     const sources=reportSources(material,editor);
     const id=clean(report.sessionId) || clean(report.id);
+    if (report.demoCaseId === 'sz-blood-network-2024' && window.bloodNetworkDemo?.id === report.demoCaseId)
+      return bloodNetworkTrace(window.bloodNetworkDemo, material, review?.id === id ? review : null);
     if (review?.demo === true && review.id === id) {
       if(review.kind==='curated' && id==='sample-low-altitude-logistics') return {summary:'深圳低空条例第二十八条可回查，四笔模拟订单可复算。确定试点先后仍缺真实对照记录。',groups:logistics(sources,review)};
       if(review.kind==='curated' && id==='1:153') {
