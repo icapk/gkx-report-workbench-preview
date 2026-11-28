@@ -1,4 +1,4 @@
-import {buildResearchFlow} from '../assets/research-flow-model.js?v=ba1f7f16df17';
+import {buildResearchFlow} from '../assets/research-flow-model.js?v=8106cbb7c02f';
 import {mountResearchFlow} from '../assets/research-flow-view.js?v=5433332dfec8';
 
 (() => {

@@ -182,7 +182,7 @@ export function buildResearchFlow(input = {}) {
     const subtopics = titles(section?.children);
     const body = text(section?.body), skill = nameOf(section?.skillSnapshot);
     return [(current ? '当前章节：' : '对应章节：')+chosen,
-      skill && '章节 Skill：'+skill, subtopics.length && '本章子题：'+subtopics.slice(0,3).join('、'),
+      skill && '自定义技能：'+skill, subtopics.length && '本章子题：'+subtopics.slice(0,3).join('、'),
       body && '写作要求：'+body].filter(Boolean);
   };
   const stages = [

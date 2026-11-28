@@ -1,6 +1,6 @@
 import {renderVersionPicker} from "../../preview-versions.js";
-import {createGeneration, createSessionPane} from "./session-pane.js?v=6660f09fcd54";
-import {createOutlineReview} from "./outline-review.js?v=d13d1f8be4e7";
+import {createGeneration, createSessionPane} from "./session-pane.js?v=3f9ed52e30f0";
+import {createOutlineReview} from "./outline-review.js?v=f3fa8b32bb33";
 import {createKnowledgeLibrary} from "./knowledge-library.js?v=be5b8a530cde";
 import {lookupTemplate} from "./template-library.js?v=88ba6a39fbc1";
 var Rx=t=>{throw TypeError(t)};var Ax=(t,n,r)=>n.has(t)||Rx("Cannot "+r);var wn=(t,n,r)=>(Ax(t,n,"read from private field"),r?r.call(t):n.get(t)),jx=(t,n,r)=>n.has(t)?Rx("Cannot add the same private member more than once"):n instanceof WeakSet?n.add(t):n.set(t,r),ph=(t,n,r,o)=>(Ax(t,n,"write to private field"),o?o.call(t,r):n.set(t,r),r);function Iz(t,n){for(var r=0;r<n.length;r++){const o=n[r];if(typeof o!="string"&&!Array.isArray(o)){for(const l in o)if(l!=="default"&&!(l in t)){const c=Object.getOwnPropertyDescriptor(o,l);c&&Object.defineProperty(t,l,c.get?c:{enumerable:!0,get:()=>o[l]})}}}return Object.freeze(Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}))}function Hz(t){return t&&t.__esModule&&Object.prototype.hasOwnProperty.call(t,"default")?t.default:t}var hh={exports:{}},gc={};/**

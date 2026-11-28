@@ -65,9 +65,9 @@ export function createOutlineReview(React) {
       return h('label',null,label,input(options));
     }
     return h('details',{className:'outline-advanced'},h('summary',null,icon('down'),onSkillChange ? '高级配置' : '标题样式',
-      selectedName && h('span',{className:'outline-assigned-skill',title:selectedName},'Skill · '+selectedName)),
-      onSkillChange && h('label',{className:'outline-skill-field'},'写作 Skill',
-        h('select',{'aria-label':blockLabel+'写作 Skill',value:skill?.skill_id || '',onChange:chooseSkill},
+      selectedName && h('span',{className:'outline-assigned-skill',title:selectedName},'自定义技能 · '+selectedName)),
+      onSkillChange && h('label',{className:'outline-skill-field'},'自定义技能',
+        h('select',{'aria-label':blockLabel+'自定义技能',value:skill?.skill_id || '',onChange:chooseSkill},
           h('option',{value:''},defaultLabel),
           skill?.skill_id && !selected && h('option',{value:skill.skill_id},selectedName || skill.skill_id),
           catalog.map(entry=>h('option',{value:entry.id,key:entry.id},entry.name))),
