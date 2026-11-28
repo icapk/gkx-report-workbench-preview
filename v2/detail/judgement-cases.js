@@ -81,11 +81,11 @@
             opponent:'其中2轮由人接管，只有6轮独立完成。分开记录，自主完成是6/10＝60%，含接管的最终完成才是80%。'},
           {writer:'同意分开。固定工位的模拟表能演示这种统计方法，实际设备要补哪类记录？',
             opponent:'要看目标工位的连续试次，记录每次介入、失败和异常恢复。现在没有对应的现场日志。'},
-          {writer:'既然是限定工位，可否直接安排小范围试用，同时收集这些日志？',
-            opponent:'我倾向先复测目标工位。否则还不清楚重复表现和异常能否恢复。是否应先复测，再决定试用？'}
+          {writer:'我会把建议写成“先复测目标工位，再判断部署价值”，单列人工介入和异常恢复。这样能保留这次演示的观察吗？',
+            opponent:'可以。保留演示条件和样表算法，设备在真实工位的表现等现场日志；按这条共识修改即可。'}
         ],
-        consensus:'模拟试次须分列自主完成60%与含接管完成80%，两者均不能代替现场部署证据。',
-        dispute:'先进入限定工位试用，还是先做目标工位复测、核对介入与恢复记录？'
+        consensus:'分列模拟自主完成60%与含接管完成80%。按双方同意的顺序改稿，先复测目标工位，再凭现场记录判断部署价值。',
+        dispute:''
       },
       summary:'10轮模拟抓取中有2轮靠人工接管完成，自主完成率应为60%。',
       detail:'如果把“演示成功”写成“可部署”，需要说明成功条件、测试环境和人工介入情况。报告提出了这几项核验要求，当前会话没有附上实际测试记录。',
@@ -94,16 +94,15 @@
         {label:'本稿 · 信号与证据',quote:'本次会话尚未附可核验的资料，涉及规模、排名或因果关系的判断均需补证。'}
       ]
     }, {
-      key:'round', label:'圆桌仲裁', role:'圆桌主持',
-      summary:'先复测目标工位，核对自主完成、人工接管与异常恢复后，再决定是否限定试用。',
-      detail:'双方的分歧在于演示结果能支持多强的结论。先固定操作任务，记录何时介入、出了异常能否恢复。试用方取得这些记录后，再判断是否适合自己的作业环境。',
+      key:'round', label:'圆桌仲裁', role:'共识记录',
+      summary:'双方已同意先复测目标工位，按共识改稿。',
+      detail:'本轮没有待裁分歧。待目标工位取得连续试次、人工介入和异常恢复记录，再决定是否试用。',
       evidence:[
         {label:'本稿 · 信号与证据',quote:'可选取同一操作任务，对照感知、规划、执行和异常恢复四个环节，记录任务成功条件、人工介入方式及采样环境。'}
       ],
       voices:[
-        {name:'执笔研究员',text:'一次演示能说明设备在那组条件下完成了任务。能否据此判断部署价值？'},
-        {name:'反方智能体',text:'要先知道操作是否可重复、出了异常由谁恢复，以及跟实际应用环境差多少。'},
-        {name:'圆桌主持',text:'保留这条技术观察，把部署判断列为待复测事项；后续用同一任务的记录回来复核。'}
+        {name:'写作智能体',text:'在演示条件下记录这次观察，把部署判断留给目标工位的复测。'},
+        {name:'反方智能体',text:'同意。实际设备的结果需查连续的任务和介入记录。'}
       ]
     }, {
       key:'quality', label:'质量审查', role:'质量审查智能体',
@@ -378,8 +377,9 @@
         const model = structuredClone(original);
         for (const stage of model.stages) stage.records = recordSet[stage.key];
         const round = model.stages.find(stage=>stage.key==='round');
-        round.records = [{label:'提交圆桌的分歧',value:model.stages[0].chat.dispute},
-          {label:'裁定',value:round.summary}];
+        const {consensus,dispute} = model.stages[0].chat;
+        round.records = dispute ? [{label:'提交圆桌的分歧',value:dispute},{label:'裁定',value:round.summary}] :
+          [{label:'直接入稿的共识',value:consensus}];
         model.stages[2].checks=recordSet.checks;
         return {...model,id,kind:'curated',demo:true};
       }
