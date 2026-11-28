@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="14.3125" height="11.25" viewBox="0 0 14.3125 11.25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="open-folder">
+<path id="rear-panel" d="M1.625 10.625C1.075 10.625 0.625 10.175 0.625 9.625V1.375C0.625 0.875 0.875 0.625 1.375 0.625H4.325C4.55833 0.625 4.75833 0.708333 4.925 0.875L6.175 2.125H10.875C11.375 2.125 11.625 2.375 11.625 2.875V4.375" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" stroke="#4E5969"/>
+<path id="front-flap" d="M3.775 4.375H13.125C13.625 4.375 13.7917 4.625 13.625 5.125L11.925 9.875C11.7583 10.375 11.425 10.625 10.925 10.625H1.625L3.025 4.975C3.125 4.575 3.375 4.375 3.775 4.375Z" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" stroke="#4E5969"/>
+</g>
+</svg>

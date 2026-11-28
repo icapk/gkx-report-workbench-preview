@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Ellipse 14301">
+<mask id="stroke0_0_109">
+<circle cx="7" cy="7" r="6" stroke-width="2" stroke="white"/>
+</mask>
+<g clip-path="url(#paint0_angular_0_109_clip_path)" data-figma-skip-parse="true" mask="url(#stroke0_0_109)"><g transform="matrix(0.006 0 0 0.006 7 7)"><foreignObject x="-2833.33" y="-2833.33" width="5666.67" height="5666.67"><div xmlns="http://www.w3.org/1999/xhtml" style="background:conic-gradient(from 90deg,rgba(22, 93, 255, 1) 0deg,rgba(22, 93, 255, 0) 360deg);height:100%;width:100%;opacity:1"></div></foreignObject></g></g><circle cx="7" cy="7" r="6" stroke-width="2" stroke="black" stroke-opacity="0" data-figma-gradient-stroke="{&#34;type&#34;:&#34;GRADIENT_ANGULAR&#34;,&#34;stops&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.086274512112140656,&#34;g&#34;:0.3647058904170990,&#34;b&#34;:1.0,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:0.086274512112140656,&#34;g&#34;:0.3647058904170990,&#34;b&#34;:1.0,&#34;a&#34;:0.0},&#34;position&#34;:1.0}],&#34;transform&#34;:{&#34;m00&#34;:12.0,&#34;m01&#34;:-1.7916959284486680e-14,&#34;m02&#34;:1.0000001192092896,&#34;m10&#34;:-3.1821035606852122e-14,&#34;m11&#34;:12.0,&#34;m12&#34;:1.0000001192092896},&#34;opacity&#34;:1.0,&#34;blendMode&#34;:&#34;NORMAL&#34;,&#34;stopsVar&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.086274512112140656,&#34;g&#34;:0.3647058904170990,&#34;b&#34;:1.0,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:0.086274512112140656,&#34;g&#34;:0.3647058904170990,&#34;b&#34;:1.0,&#34;a&#34;:0.0},&#34;position&#34;:1.0}],&#34;visible&#34;:true}"/>
+</g>
+<defs>
+<clipPath id="paint0_angular_0_109_clip_path"><rect x="-10" y="-10" width="34" height="34"/></clipPath></defs>
+</svg>

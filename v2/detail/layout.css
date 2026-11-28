@@ -1,0 +1,78 @@
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:#1d2129;font-size:14px;--blue:#345cf4;--line:#e7eaf0}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{display:flex;flex-direction:column;background:white}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,[contenteditable]:focus-visible{outline:2px solid #5b83f5;outline-offset:2px}
+button:disabled{cursor:default}
+button i,i[data-icon]{display:inline-flex;align-items:center;justify-content:center;flex:none}
+i[data-icon] svg{width:16px;height:16px;display:block}
+[hidden]{display:none!important}
+.workspace,.document-pane{display:flex;flex:1;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:white}
+
+.report-surface {
+  display: grid;
+  grid-template-columns: minmax(285px, 39%) minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.report-surface.conversation-only { grid-template-columns: minmax(0, 1fr); }
+.conversation { overflow: auto; min-height: 0; overscroll-behavior: contain; }
+.conversation-content { max-width: 800px; margin: auto; padding: 25px clamp(18px, 2.4vw, 40px) 40px; }
+.document-pane { border-left: 1px solid var(--line); }
+.tool-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 47px; padding: 6px 14px; border-bottom: 1px solid var(--line); flex: none; }
+.tool-row button,.icon-btn { display: inline-flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: 5px; color: #4e5969; gap: 5px; font-size: 12px; white-space: nowrap; }
+.tool-row button { height: 29px; padding: 0 6px; }
+.tool-row button:hover,.icon-btn:hover { background: #f1f4fa; color: var(--blue); }
+.tool-row button svg { width: 14px; height: 14px; }
+#close-report { flex: none; }
+.report-tools{display:flex;align-items:center;flex-wrap:wrap;gap:2px}
+.tool-sep{display:block;width:1px;height:16px;background:#dde2ea;margin:0 2px}
+[data-action="toc"][aria-expanded="true"]{color:var(--blue);background:#edf2ff}
+.icon-btn{height:30px;width:30px;padding:0;flex:none}
+.reading-layout{min-height:0;flex:1;display:flex;position:relative}
+.reader{flex:1;min-width:0;overflow:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+.paper{max-width:1240px;margin:0 auto;padding:24px clamp(17px,1.8vw,36px) 60px}
+.report-text{font-size:15px;line-height:1.75;overflow-wrap:anywhere;color:#404c5d;display:flow-root;caret-color:#345cf4;min-height:60px}
+.report-text:focus-visible{outline:0}
+.report-text h1,.report-text h2,.report-text h3,.references h2,.references h3{color:#1d2532;text-align:left}
+.report-text h1{font-size:clamp(20px,1.65vw,26px);font-weight:600;line-height:1.45;margin:0 0 17px;padding-bottom:12px;border-bottom:1px solid #e5e8ee;letter-spacing:.2px}
+.report-text h2,.references h2{font-size:18px;font-weight:600;line-height:1.5;margin:26px 0 12px;padding-bottom:7px;border-bottom:1px solid #e6e9ee}
+.report-text h3,.references h3{font-size:16px;font-weight:600;margin:18px 0 9px}
+.report-text p{margin:0 0 12px}
+.report-text blockquote{margin:0 0 20px;padding:0 13px;border-left:3px solid #d1d9e6;color:#667181;font-size:13px;line-height:1.75}
+.report-text blockquote p{margin:0}
+.report-text ol,.references ol{padding-left:24px;margin:6px 0 12px}
+.report-text li,.references li{padding-left:3px;margin:5px 0}
+.report-text li::marker{color:#4c5766;font-variant-numeric:tabular-nums}
+.report-text [data-source]{display:inline-flex;align-items:center;justify-content:center;height:16px;min-width:16px;vertical-align:super;line-height:1;font-size:10px;background:#edf2ff;color:#345be9;border:1px solid #d4dfff;border-radius:3px;padding:1px 3px;margin:0 2px;cursor:pointer}
+.report-text table{border-collapse:collapse;width:100%;font-size:14px}
+.report-text td,.report-text th{padding:8px 12px;border:1px solid #dee3ea;text-align:left}
+.report-text th{background:#f6f8fb}.report-text figure{margin:14px 0}.report-text img{max-width:100%;height:auto;border:1px solid #e7eaf0;border-radius:4px}
+.references{color:#566275;font-size:14px;line-height:1.7}.references h3{font-size:14px}.references button{border:0;background:transparent;text-align:left;padding:0;color:inherit}.references button:hover{color:var(--blue);text-decoration:underline}
+.toc{display:flex;flex-direction:column;width:clamp(140px,12vw,205px);min-width:0;flex:none;background:#f7f8fa;border-right:1px solid var(--line)}
+.toc-heading{display:flex;align-items:center}
+.toc-heading{justify-content:space-between;padding:14px 12px 7px 20px;font-size:14px}
+#toc-items{overflow:auto;padding:0 10px 22px}
+#toc-items button{display:block;width:100%;padding:6px 7px;border:0;border-radius:4px;background:transparent;text-align:left;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;color:#536073;font-size:13px;line-height:19px}
+#toc-items button[data-level="2"]{padding-left:17px}#toc-items button[data-level="3"]{padding-left:28px}
+#toc-items button:hover,#toc-items button[aria-current="location"]{background:#eaf0ff;color:#315add}
+
+@media (max-width: 800px) {
+  .report-surface { grid-template-columns: minmax(0, 1fr); }
+  .report-surface:not(.conversation-only) .conversation { display: none; }
+  .document-pane { border-left: 0; }
+}
+@media (max-width: 760px) {
+  .tool-row { padding: 6px; align-items: flex-start; }
+  .tool-sep { display: none; }
+  .paper { padding: 22px 17px 44px; }
+  .report-text { font-size: 14px; }
+  .report-text h1 { font-size: 21px; }
+  .toc { position: absolute; inset: 0 auto 0 0; width: min(235px,80%); z-index: 2; box-shadow: 3px 0 18px #253b5922; }
+}
+.report-date{white-space:nowrap}
+.detail-unavailable{flex:1;background:#fff;border-radius:9px;display:grid;align-content:center;justify-items:center;color:#596579;padding:20px;text-align:center}.detail-unavailable h1{font-size:21px;color:#273650;margin:0}.detail-unavailable button{border-radius:5px;background:#edf3ff;color:#335cd2;border:1px solid #cfdbfc;padding:6px 13px}
+
+.ph-file-open{min-width:0;overflow-wrap:anywhere}

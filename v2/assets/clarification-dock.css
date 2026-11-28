@@ -1,0 +1,697 @@
+
+.writing-scroll-content[data-docked-clarification=true] {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.writing-scroll-content[data-docked-clarification=true] > .home-workflow-slot {
+  display: none;
+}
+
+.clarification-workspace {
+  --cf-ease: cubic-bezier(.22, 1, .36, 1);
+  position: absolute;
+  inset-block: 42px 16px;
+  left: calc(50% + 4px);
+  transform: translateX(-50%);
+  width: min(792px, calc(100% - 38px));
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  container-type: size;
+}
+
+.clarification-workspace .home-conversation-history {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.clarification-workspace .white-clarification-dock {
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid #e5e6eb;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 10px #18181b08;
+}
+
+.white-clarification-dock[data-cf-dock-empty=true] {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.white-clarification-dock:has(.cf-follow-up textarea:focus) {
+  border-color: #165dff;
+}
+
+.white-clarification-dock .cf-conversation {
+  min-height: 0;
+  padding: 0;
+}
+
+body:has([data-docked-clarification=true]) .cf-controls-host .cf-demo-panel {
+  top: 63px;
+  bottom: auto;
+}
+
+@media (max-width: 760px) {
+  .clarification-workspace {
+    inset-block: 44px 10px;
+    left: 50%;
+  }
+}
+
+.home-conversation-history:empty {
+  display: none;
+}
+
+.cf-history-host {
+  flex: 0 0 auto;
+}
+
+.cf-history-host .cf-conversation-history {
+  display: flow-root;
+  padding: 18px 0 6px;
+  overflow-wrap: anywhere;
+}
+
+.cf-history-host .cf-user-message {
+  margin-bottom: 20px;
+}
+
+.cf-request-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #4e5969;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.cf-history-host .cf-agent-note {
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cf-history-host .cf-agent-note p {
+  margin: 0;
+  color: #4e5969;
+  font-size: 14px;
+}
+
+.cf-history-host .cf-clarification-submitted {
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.cf-thinking-status {
+  color: #4e5969;
+}
+
+.cf-thinking-status > span:last-child {
+  animation: cf-thinking-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes cf-thinking-pulse {
+  50% { opacity: .5; }
+}
+
+.cf-stage-reveal {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.cf-stage-content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cf-home-flow .cf-composer-stage .cf-action-panel,
+.cf-home-flow .cf-composer-stage .cf-kokonut-card {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+}
+
+.cf-recognition-trace {
+  margin: 0 0 12px 41px;
+  max-width: min(540px, calc(100% - 41px));
+}
+
+.cf-dock-panel {
+  padding: 16px 16px 12px;
+}
+
+.cf-dock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 4px 10px;
+}
+
+.cf-dock-header h2 {
+  margin: 0;
+  color: #1d2129;
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.cf-dock-header h2:focus {
+  outline: none;
+}
+
+.cf-dock-nav {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #4e5969;
+  white-space: nowrap;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cf-arrow-forward {
+  transform: rotate(180deg);
+}
+
+.cf-arrow-up {
+  transform: rotate(90deg);
+}
+
+.cf-dock-options {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cf-dock-option {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 41px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  color: #1d2129;
+  text-align: left;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.cf-dock-option:is(:hover,:focus-visible,[data-chosen=true]) {
+  background: #f2f3f5;
+}
+
+.cf-dock-option kbd {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border-radius: 6px;
+  background: #f2f3f5;
+  color: #4e5969;
+  font: inherit;
+  font-size: 12px;
+}
+
+.cf-dock-option:is(:hover,:focus-visible,[data-chosen=true]) kbd {
+  background: #e5e6eb;
+  color: #1d2129;
+}
+
+.cf-dock-option svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+}
+
+.cf-dock-option:is(:hover,:focus-visible,[data-chosen=true]) svg {
+  opacity: 1;
+}
+
+.cf-dock-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 9px 4px 0;
+  border-top: 1px solid #f0f0f2;
+}
+
+.cf-dock-custom {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 7px;
+  color: #4e5969;
+}
+
+.cf-dock-custom svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+
+.cf-product .cf-dock-custom textarea,
+.cf-product .cf-follow-up textarea {
+  min-height: 36px;
+  max-height: 96px;
+  padding: 7px 9px;
+  border-color: transparent;
+  resize: none;
+  font-size: 14px;
+}
+
+.cf-product .cf-dock-custom textarea {
+  field-sizing: content;
+}
+
+.cf-dock-fields {
+  padding: 0 4px;
+}
+
+.cf-dock-fields .cf-field-row {
+  padding: 8px 0;
+}
+
+.cf-dock-fields .cf-field-source {
+  margin-top: 3px;
+}
+
+.cf-dock-confirm {
+  justify-content: flex-end;
+}
+
+.cf-follow-up {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.cf-follow-up textarea {
+  flex: 1;
+}
+
+.cf-follow-up button {
+  margin-bottom: 2px;
+}
+
+@media (max-width: 760px) {
+
+  .cf-dock-panel {
+    padding: 12px 9px 9px;
+  }
+
+  .cf-dock-header {
+    gap: 4px;
+  }
+
+  .cf-dock-header h2 {
+    font-size: 14px;
+  }
+
+  .cf-dock-nav {
+    gap: 0;
+    font-size: 11px;
+  }
+
+  .cf-dock-nav button {
+    width: 24px;
+    height: 27px;
+  }
+}
+
+/* =====================================================================
+   需求澄清模块 · UI / 交互 / 动效优化（2026-11-24）
+   色板与字号对齐首页 Arco token：
+   正文 #1D2129 · 次要 #4E5969 · 弱提示 #86909C · 禁用 #C9CDD4
+   浅底 #F2F3F5 · 分隔线/边框 #E5E6EB · 主色 #165DFF · 主色浅底 #E8F3FF
+   黑色主按钮 #2A2A2A（悬停 #111，禁用 #C9CDD4，同首页发送键）
+   字号三档 12/20 · 14/22 · 16/24；圆角 卡片 12 · 控件 8 · 标签 4
+   ===================================================================== */
+.clarification-app:is(.cf-home-flow,.cf-history-host){font-family:"PingFang SC",-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+.clarification-app:is(.cf-home-flow,.cf-history-host){
+  --cf-ease:cubic-bezier(.22,1,.36,1);
+  --color-primary:#2A2A2A;--color-primary-foreground:#fff;
+  --color-foreground:#1D2129;--color-card-foreground:#1D2129;--color-text:#1D2129;--color-muted:#4E5969;
+  --color-accent:#F2F3F5;--color-accent-foreground:#1D2129;
+  --color-secondary:#F2F3F5;--color-secondary-foreground:#1D2129;
+  --color-muted-foreground:#86909C;--color-border:#E5E6EB;--color-input:#E5E6EB;
+  --color-ring:#165DFF;--color-destructive:#F53F3F;
+  color:#1D2129;font-size:14px;line-height:22px;
+}
+
+/* ---------- 焦点：统一 2px 主色 ---------- */
+.clarification-app:is(.cf-home-flow,.cf-history-host) :is(button,summary,a):focus-visible{outline:2px solid #165DFF;outline-offset:2px;box-shadow:none}
+
+/* ---------- 按钮 ---------- */
+.clarification-app.cf-home-flow [data-slot=button]{border-radius:8px;box-shadow:none;transition:background-color 140ms var(--cf-ease),color 140ms var(--cf-ease),transform 90ms var(--cf-ease)}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=default]{background:#2A2A2A;color:#fff}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=default]:not(:disabled):hover{background:#111}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=default]:disabled{opacity:1;background:#C9CDD4;color:#fff;cursor:not-allowed}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=ghost]{background:transparent;color:#4E5969}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=ghost]:not(:disabled):hover{background:#F2F3F5;color:#1D2129}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=ghost]:disabled{opacity:1;color:#C9CDD4}
+.clarification-app.cf-home-flow [data-slot=button][data-variant=outline]{border-color:#E5E6EB}
+
+/* ---------- 底部面板容器 ---------- */
+/* 报告生成后输入框收起：外框和阴影一起淡出 */
+.clarification-app .cf-autoheight{overflow:hidden;transition:height 220ms var(--cf-ease)}
+.clarification-app .cf-autoheight-inner{display:flow-root}
+.clarification-app.cf-home-flow .cf-dock-panel{display:flex;flex-direction:column;max-height:min(510px,64cqh);padding:16px}
+.clarification-app.cf-home-flow .cf-dock-panel[data-busy] .cf-dock-option{pointer-events:none}
+.clarification-app.cf-home-flow .cf-dock-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#C9CDD4 transparent}
+
+/* 标题行固定 32px：提问和确认两种状态下标题不跳动 */
+.clarification-app.cf-home-flow .cf-dock-header{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:32px;margin:0 0 8px;padding:0 0 0 8px}
+.clarification-app.cf-home-flow .cf-dock-header h2{min-width:0;margin:0;font-size:16px;line-height:24px;font-weight:500;color:#1D2129}
+.clarification-app.cf-home-flow .cf-dock-nav{flex:none;display:flex;align-items:center;gap:4px;color:#4E5969;font-size:12px;line-height:20px;font-variant-numeric:tabular-nums}
+.clarification-app.cf-home-flow .cf-dock-nav [data-slot=button]{width:28px;height:28px;padding:0;color:#4E5969}
+.clarification-app.cf-home-flow .cf-dock-nav [data-slot=button]:disabled{color:#C9CDD4}
+.clarification-app.cf-home-flow .cf-dock-count{min-width:32px;text-align:center}
+
+/* ---------- 选项：同一栅格（编号 x24，文字 x60） ---------- */
+.clarification-app.cf-home-flow .cf-dock-options{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+.clarification-app.cf-home-flow .cf-dock-option{display:grid;grid-template-columns:24px minmax(0,1fr) 16px;align-items:center;column-gap:12px;width:100%;min-height:40px;margin:0;padding:8px;border-radius:8px;background:transparent;color:#1D2129;font-size:14px;line-height:22px;text-align:left;overflow-wrap:anywhere;cursor:pointer;transition:background-color 140ms var(--cf-ease)}
+.clarification-app.cf-home-flow .cf-dock-option kbd{display:grid;place-items:center;width:24px;height:24px;border-radius:4px;background:#F2F3F5;color:#4E5969;font:inherit;font-size:12px;line-height:20px;font-variant-numeric:tabular-nums;transition:background-color 140ms var(--cf-ease),color 140ms var(--cf-ease),box-shadow 140ms var(--cf-ease)}
+.clarification-app.cf-home-flow .cf-dock-option>svg{width:16px;height:16px;color:#86909C;opacity:0;transform:translateX(-4px);transition:opacity 140ms var(--cf-ease),transform 140ms var(--cf-ease),color 140ms var(--cf-ease)}
+@media (hover:hover){
+  .clarification-app.cf-home-flow .cf-dock-option:hover{background:#F2F3F5}
+  .clarification-app.cf-home-flow .cf-dock-option:hover kbd{background:#E5E6EB;color:#1D2129}
+  .clarification-app.cf-home-flow .cf-dock-option:hover>svg{opacity:1;transform:none}
+}
+.clarification-app.cf-home-flow .cf-dock-option:focus-visible{background:#F2F3F5;outline:2px solid #165DFF;outline-offset:-2px}
+.clarification-app.cf-home-flow .cf-dock-option:focus-visible kbd{background:#E5E6EB;color:#1D2129}
+.clarification-app.cf-home-flow .cf-dock-option:focus-visible>svg{opacity:1;transform:none}
+/* 已选：主色浅底 + 勾，和悬停/焦点区分开 */
+.clarification-app.cf-home-flow .cf-dock-option[data-chosen=true]{background:#E8F3FF}
+.clarification-app.cf-home-flow .cf-dock-option[data-chosen=true] kbd{background:#165DFF;color:#fff}
+.clarification-app.cf-home-flow .cf-dock-option[data-chosen=true]>svg{opacity:1;transform:none;color:#165DFF}
+/* 宽元素按下不缩放，只加深底色 */
+.clarification-app.cf-home-flow button.cf-dock-option:not(:disabled):active,
+.clarification-app.cf-home-flow button.cf-field-row:not(:disabled):active{transform:none}
+.clarification-app.cf-home-flow .cf-dock-option:not([data-chosen=true]):active{background:#E5E6EB}
+
+/* 自定义回答：作为第 4 行，图标在编号列，文字从 x60 开始 */
+.clarification-app.cf-home-flow .cf-dock-custom{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:start;column-gap:12px;min-height:40px;margin:0;padding:8px;border-radius:8px;background:transparent;color:#86909C;cursor:text;box-shadow:inset 0 0 0 1px transparent;transition:background-color 140ms var(--cf-ease),box-shadow 140ms var(--cf-ease)}
+.clarification-app.cf-home-flow .cf-dock-custom>svg{justify-self:center;width:16px;height:16px;margin-top:4px;transition:color 140ms var(--cf-ease)}
+@media (hover:hover){.clarification-app.cf-home-flow .cf-dock-custom:hover{background:#F2F3F5}}
+.clarification-app.cf-home-flow .cf-dock-custom:focus-within{background:#fff;box-shadow:inset 0 0 0 1px #165DFF}
+.clarification-app.cf-home-flow .cf-dock-custom:focus-within>svg,
+.clarification-app.cf-home-flow .cf-dock-custom[data-filled=true]>svg{color:#4E5969}
+.clarification-app.cf-home-flow .cf-dock-custom textarea[data-slot=textarea]{display:block;width:100%;min-height:24px;max-height:88px;margin:0;padding:1px 0;border:0;border-radius:0;background:transparent;box-shadow:none;outline:none;resize:none;font-size:14px;line-height:22px;color:#1D2129;field-sizing:content}
+.clarification-app:is(.cf-home-flow,.cf-history-host) textarea::placeholder{color:#86909C;opacity:1}
+
+/* ---------- 底栏：始终固定在面板底部 ---------- */
+.clarification-app.cf-home-flow .cf-dock-footer{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 0;padding:12px 0 0;border-top:1px solid #E5E6EB}
+.clarification-app.cf-home-flow [data-clarification-question] .cf-dock-footer{justify-content:flex-end}
+.clarification-app.cf-home-flow .cf-dock-footer [data-slot=button]{height:32px;padding:5px 12px;font-size:14px;line-height:22px;font-weight:500}
+.clarification-app.cf-home-flow .cf-dock-hint{font-size:12px;line-height:20px;color:#86909C}
+.clarification-app.cf-home-flow .cf-dock-confirm{justify-content:space-between}
+
+/* ---------- 确认列表：整行可点，铅笔在行尾，只标注需要注意的项 ---------- */
+.clarification-app.cf-home-flow .cf-field-results{display:grid;gap:4px}
+.clarification-app.cf-home-flow .cf-field-row{display:grid;grid-template-columns:64px minmax(0,1fr) 16px;align-items:start;column-gap:12px;width:100%;margin:0;padding:8px;border:0;border-radius:8px;background:transparent;color:#1D2129;font:inherit;text-align:left;cursor:pointer;transition:background-color 140ms var(--cf-ease),opacity 140ms var(--cf-ease)}
+.clarification-app.cf-home-flow .cf-field-row:disabled{cursor:default;opacity:.48}
+.clarification-app.cf-home-flow .cf-field-label{display:block;padding:0;font-size:14px;line-height:22px;font-weight:400;color:#86909C}
+.clarification-app.cf-home-flow .cf-field-value{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;font-size:14px;line-height:22px;color:#1D2129;overflow-wrap:anywhere}
+.clarification-app.cf-home-flow .cf-field-text{display:block}
+.clarification-app.cf-home-flow button[data-confirmed-field="F04"] .cf-field-value:has(.cf-badge[data-tone="neutral"]) {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+
+  > .cf-field-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  > .cf-field-source {
+    flex: none;
+  }
+}
+
+.clarification-app.cf-home-flow .cf-field-source{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;font-size:12px;line-height:20px;color:#86909C}
+.clarification-app.cf-home-flow .cf-field-note{color:#86909C}
+.clarification-app.cf-home-flow .cf-badge{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:#F2F3F5;color:#4E5969;font-size:12px;line-height:20px;font-weight:400;white-space:nowrap}
+.clarification-app.cf-home-flow .cf-badge[data-tone=danger]{background:#FFECE8;color:#F53F3F}
+.clarification-app.cf-home-flow .cf-field-edit{width:16px;height:16px;margin-top:3px;color:#86909C;opacity:0;transition:opacity 140ms var(--cf-ease)}
+@media (hover:hover){
+  .clarification-app.cf-home-flow button.cf-field-row:not(:disabled):hover{background:#F2F3F5}
+  .clarification-app.cf-home-flow button.cf-field-row:not(:disabled):hover .cf-field-edit{opacity:1}
+}
+.clarification-app.cf-home-flow button.cf-field-row:focus-visible{background:#F2F3F5;outline:2px solid #165DFF;outline-offset:-2px}
+.clarification-app.cf-home-flow button.cf-field-row:focus-visible .cf-field-edit{opacity:1}
+.clarification-app.cf-home-flow .cf-field-row:not(:disabled):active{background:#E5E6EB}
+/* 保存后高亮被修改的那一行 */
+.clarification-app.cf-home-flow .cf-field-row[data-flash]{animation:cf-row-flash 1400ms var(--cf-ease) both}
+@keyframes cf-row-flash{0%,35%{background:#E8F3FF}100%{background:rgba(232,243,255,0)}}
+/* 行内编辑 */
+.clarification-app.cf-home-flow .cf-field-row-editing{cursor:default;background:#F7F8FA}
+.clarification-app.cf-home-flow .cf-field-row-editing .cf-field-label{color:#4E5969}
+.clarification-app.cf-home-flow .cf-field-row-editing .cf-field-value{grid-column:2/4;align-items:stretch;gap:8px}
+.clarification-app.cf-home-flow textarea.cf-field-input{display:block;width:100%;min-height:66px;max-height:160px;margin:0;padding:8px 12px;border:1px solid transparent;border-radius:8px;background:#F2F3F5;box-shadow:none;outline:none;resize:none;font-size:14px;line-height:22px;color:#1D2129;field-sizing:content;transition:background-color 140ms var(--cf-ease),border-color 140ms var(--cf-ease)}
+.clarification-app.cf-home-flow textarea.cf-field-input:hover{background:#E5E6EB}
+.clarification-app.cf-home-flow textarea.cf-field-input:focus{background:#fff;border-color:#165DFF;box-shadow:none}
+.clarification-app.cf-home-flow .cf-field-edit-actions{display:flex;justify-content:flex-end;gap:8px}
+.clarification-app.cf-home-flow .cf-field-edit-actions [data-slot=button]{height:28px;padding:3px 12px;font-size:14px;line-height:22px;font-weight:500}
+
+/* ---------- 识别中：底部面板只放一行状态说明 ---------- */
+.clarification-app.cf-home-flow .cf-dock-status{display:flex;align-items:center;min-height:52px;padding:15px 24px;font-size:14px;line-height:22px;color:#86909C}
+
+/* ---------- 提交后的追问输入框（与首页发送键一致） ---------- */
+.clarification-app.cf-home-flow .cf-follow-up{display:flex;align-items:flex-end;gap:12px;padding:12px 12px 12px 24px}
+.clarification-app.cf-home-flow .cf-follow-up textarea[data-slot=textarea]{flex:1;min-width:0;min-height:28px;max-height:112px;margin:0;padding:3px 0;border:0;border-radius:0;background:transparent;box-shadow:none;outline:none;resize:none;font-size:14px;line-height:22px;color:#1D2129;field-sizing:content}
+.clarification-app.cf-home-flow .cf-send{flex:none;display:grid;place-items:center;width:28px;height:28px;margin:0;padding:0;border-radius:8px;background:#2A2A2A;color:#fff;transition:background-color 160ms var(--cf-ease)}
+.clarification-app.cf-home-flow .cf-send:not(:disabled):hover{background:#111}
+.clarification-app.cf-home-flow .cf-send:disabled{background:#C9CDD4;cursor:not-allowed}
+.clarification-app.cf-home-flow .cf-send svg{width:16px;height:16px}
+
+/* ---------- 对话记录 ---------- */
+.clarification-app.cf-history-host .cf-conversation-history{display:flow-root;padding:16px 0 8px}
+.clarification-app.cf-history-host .cf-user-message{position:relative;width:fit-content;max-width:75%;margin:0 0 16px auto;padding:8px 12px;border-radius:12px 12px 4px 12px;background:#F2F3F5;color:#1D2129}
+.clarification-app.cf-history-host .cf-user-message>p{margin:0;font-size:14px;line-height:22px;color:#1D2129;white-space:pre-wrap;overflow-wrap:anywhere}
+.clarification-app.cf-history-host .cf-attachments{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.clarification-app.cf-history-host .cf-attachment-detail summary{display:flex;align-items:center;gap:4px;padding:3px 8px;border:1px solid #E5E6EB;border-radius:8px;background:#fff;color:#1D2129;font-size:12px;line-height:20px;cursor:pointer;transition:border-color 140ms var(--cf-ease)}
+.clarification-app.cf-history-host .cf-attachment-detail summary:hover{border-color:#C9CDD4}
+.clarification-app.cf-history-host .cf-attachment-detail svg{width:16px;height:16px;color:#86909C}
+.clarification-app.cf-history-host .cf-attachment-detail pre{margin:8px 0 0;padding:8px 12px;border:1px solid #E5E6EB;border-radius:8px;background:#fff;color:#4E5969;font:inherit;font-size:12px;line-height:20px;white-space:pre-wrap}
+/* Agent 一轮输出：左侧思考球只出现在最近一轮，旧的一轮保留空位让文字对齐 */
+.clarification-app.cf-history-host .cf-agent-turn{display:block;margin:0 0 16px}
+.clarification-app.cf-history-host .cf-agent-turn p.cf-agent-text{margin:4px 0 0;font-size:14px;line-height:22px;color:#1D2129;animation:cf-fade-in 180ms var(--cf-ease) both}
+/* 步骤列表（对齐 Claude：每步语义图标、进行中流光、完成后给结果、整组可折叠） */
+.clarification-app.cf-history-host .cf-processing-message{margin:0;padding:0;max-width:none}
+.clarification-app.cf-history-host .cf-steps-head{display:inline-flex;align-items:center;gap:6px;max-width:100%;margin:0;padding:0;border:0;border-radius:4px;background:none;font:inherit;font-size:14px;line-height:22px;color:#4E5969;text-align:left;cursor:pointer}
+.clarification-app.cf-history-host .cf-steps-head:hover .cf-steps-title{color:#1D2129}
+/* 仅进行中显示思考球，完成标题与正文左对齐。 */
+.clarification-app.cf-history-host .cf-steps-lead{flex:none;display:grid;place-items:center;width:22px;height:22px}
+.clarification-app.cf-history-host .cf-steps-lead canvas{display:block;width:22px;height:22px;animation:cf-fade-in 200ms var(--cf-ease) both}
+.clarification-app.cf-history-host .cf-steps-meta{color:#86909C}
+.clarification-app.cf-history-host .cf-steps-meta::before{content:"·";margin-right:6px;color:#C9CDD4}
+.clarification-app.cf-history-host .cf-steps-chevron{flex:none;width:16px;height:16px;color:#86909C;transition:transform 200ms var(--cf-ease)}
+.clarification-app.cf-history-host .cf-steps-head[aria-expanded=true] .cf-steps-chevron{transform:rotate(180deg)}
+.clarification-app.cf-history-host .cf-steps-body.cf-autoheight{transition-duration:240ms}
+/* 步骤缩进在标题下方，左侧细引导线表示从属关系 */
+.clarification-app.cf-history-host .cf-step-list{display:grid;gap:4px;margin:4px 0 2px 10px;padding:2px 0 2px 17px;border-left:1px solid #E5E6EB;list-style:none}
+.clarification-app.cf-history-host .cf-step{display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:8px;align-items:start;font-size:12px;line-height:20px;animation:cf-msg-in 180ms var(--cf-ease) both}
+.clarification-app.cf-history-host .cf-step-icon{display:flex;align-items:center;height:20px;color:#C9CDD4;transition:color 200ms var(--cf-ease)}
+.clarification-app.cf-history-host .cf-step-icon svg{width:14px;height:14px;stroke-width:1.75}
+.clarification-app.cf-history-host .cf-step[data-status=running] .cf-step-icon{color:#86909C}
+.clarification-app.cf-history-host .cf-step-main{min-width:0}
+.clarification-app.cf-history-host .cf-step-label{color:#4E5969}
+.clarification-app.cf-history-host .cf-step-result{color:#86909C}
+.clarification-app.cf-history-host .cf-step-result::before{content:"·";margin:0 6px;color:#C9CDD4}
+.clarification-app.cf-history-host .cf-step-detail{display:block;font-size:12px;line-height:20px;color:#86909C}
+.clarification-app.cf-history-host :is(.cf-steps-title[data-active],.cf-step[data-status=running] .cf-step-label,.cf-result-card[data-generating] .cf-result-meta){background:linear-gradient(90deg,#86909C 0%,#86909C 40%,#1D2129 50%,#86909C 60%,#86909C 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:cf-shimmer 1.8s linear infinite}
+@keyframes cf-shimmer{from{background-position:100% 0}to{background-position:0% 0}}
+/* 报告结果卡片（对齐 Claude 的文件卡片）：入场上浮淡入，生成中进度条 + 流光，完成后出现下载 */
+.clarification-app.cf-history-host .cf-result-card {
+  position: relative;
+  max-width: 520px;
+  margin: 8px 0 0;
+  border: 1px solid #e5e6eb;
+  border-radius: 12px;
+  background: linear-gradient(105deg, #e8f2ff, #f4f8ff 36%, #fff);
+  background: linear-gradient(105deg in oklab, #e8f2ff, #f4f8ff 36%, #fff);
+  overflow: hidden;
+  animation: cf-card-in 280ms var(--cf-ease) both;
+  transition: border-color 160ms var(--cf-ease);
+}
+
+.clarification-app.cf-history-host .cf-result-card[data-hovered=true] {
+  border-color: #8fb7f5;
+}
+
+@keyframes cf-card-in{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.clarification-app.cf-history-host .cf-result-head {
+  --cf-result-padding: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--cf-result-padding);
+}
+.clarification-app.cf-history-host .cf-result-main{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.clarification-app.cf-history-host .cf-result-icon {
+  --report-icon-width: clamp(54px, 14.5vw, 64px);
+  flex: none;
+  inline-size: var(--report-icon-width);
+  block-size: 40px;
+}
+
+.clarification-app.cf-history-host .cf-result-icon > report-hover-icon {
+  position: absolute;
+  inset-inline-start: calc(var(--cf-result-padding) + 6px);
+  inset-block-end: 0;
+}
+.clarification-app.cf-history-host .cf-result-text{display:flex;flex-direction:column;min-width:0}
+.clarification-app.cf-history-host .cf-result-title{overflow:hidden;font-size:14px;line-height:22px;font-weight:500;color:#1D2129;white-space:nowrap;text-overflow:ellipsis}
+.clarification-app.cf-history-host .cf-result-meta{font-size:12px;line-height:20px;color:#5D6B7E;animation:cf-fade-in 200ms var(--cf-ease) both}
+.clarification-app.cf-history-host .cf-result-download{flex:none;display:grid;place-items:center;width:32px;height:32px;margin:0;padding:0;border:0;border-radius:8px;background:transparent;color:#4E5969;cursor:pointer;transition:background-color 140ms var(--cf-ease),color 140ms var(--cf-ease);animation:cf-pop-in 200ms var(--cf-ease) 80ms both}
+.clarification-app.cf-history-host .cf-result-download:hover{background:#F2F3F5;color:#1D2129}
+.clarification-app.cf-history-host .cf-result-download svg{width:16px;height:16px}
+.clarification-app.cf-history-host .cf-result-download[data-done]{color:#00B42A}
+.clarification-app.cf-history-host .cf-result-download[data-done] svg{animation:cf-pop-in 200ms var(--cf-ease) both}
+@keyframes cf-pop-in{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.clarification-app.cf-history-host .cf-result-progress{position:absolute;left:0;right:0;bottom:0;height:2px;opacity:1;transition:opacity 300ms var(--cf-ease) 300ms}
+.clarification-app.cf-history-host .cf-result-progress>span{display:block;width:0;height:100%;background:#165DFF;transition-property:width;transition-timing-function:cubic-bezier(.22,1,.36,1)}
+.clarification-app.cf-history-host .cf-result-card:not([data-generating]) .cf-result-progress{opacity:0}
+.clarification-app.cf-history-host .cf-agent-turn p.cf-agent-closing{margin:8px 0 0;animation-delay:120ms}
+.clarification-app.cf-history-host .cf-result-turn .cf-result-card{margin-top:0}
+/* 步骤标题按下不缩放 */
+.clarification-app.cf-history-host button.cf-steps-head:not(:disabled):active{transform:none}
+/* 系统事件：居中细分隔线 */
+.clarification-app.cf-history-host .cf-system-event{display:flex;align-items:center;gap:12px;margin:4px 0 16px;color:#86909C;font-size:12px;line-height:20px}
+.clarification-app.cf-history-host .cf-system-event::before,
+.clarification-app.cf-history-host .cf-system-event::after{content:"";flex:1;height:1px;background:#E5E6EB}
+/* 新消息入场 */
+.clarification-app.cf-history-host .cf-msg{animation:cf-msg-in 180ms var(--cf-ease) both}
+@keyframes cf-msg-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes cf-fade-in{from{opacity:0}to{opacity:1}}
+
+/* ---------- 进入澄清的编排：光晕/背景先淡出 → 内容上移、输入框变形 ---------- */
+
+/* ---------- 手机 ---------- */
+@media (max-width:760px){
+  .clarification-app.cf-home-flow .cf-dock-panel{padding:12px}
+  .clarification-app.cf-home-flow .cf-dock-header{flex-wrap:wrap;row-gap:4px;min-height:0}
+  .clarification-app.cf-home-flow .cf-dock-header h2{flex:1 0 100%}
+  .clarification-app.cf-home-flow .cf-dock-nav{margin-left:-8px}
+  .clarification-app.cf-home-flow .cf-dock-nav [data-slot=button]{width:32px;height:32px}
+  .clarification-app.cf-home-flow .cf-dock-footer{flex-wrap:wrap;row-gap:8px}
+  .clarification-app.cf-home-flow .cf-dock-status{padding:15px 20px}
+  .clarification-app.cf-home-flow .cf-follow-up{padding:12px 12px 12px 20px}
+  .clarification-app.cf-history-host .cf-user-message{max-width:85%}
+}
+/* 触屏：数字快捷键提示换成单选圆点，行尾编辑图标常显 */
+@media (pointer:coarse){
+  .clarification-app.cf-home-flow .cf-dock-option kbd{justify-self:center;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1.5px #C9CDD4;font-size:0}
+  .clarification-app.cf-home-flow .cf-dock-option[data-chosen=true] kbd{background:#fff;box-shadow:inset 0 0 0 5px #165DFF}
+  .clarification-app.cf-home-flow .cf-dock-option>svg{display:none}
+  .clarification-app.cf-home-flow .cf-field-edit{opacity:1}
+}
+
+/* ---------- 减少动态效果 ---------- */
+
+/* Adapt the reference conversation layout to the workbench composer wrapper. */
+
+/* The mobile portal places the workbench 8px lower than the reference shell. */
+
+@media (prefers-reduced-motion: reduce) {
+  .clarification-app:is(.cf-home-flow,.cf-history-host) :is(.cf-autoheight,.cf-result-progress,.cf-result-progress > span) {
+    transition: none;
+  }
+
+  .clarification-app:is(.cf-home-flow,.cf-history-host) :is(.cf-msg,.cf-step,.cf-steps-title,.cf-step-label,.cf-steps-lead canvas,.cf-result-meta,.cf-agent-text,.cf-field-row,.cf-result-download svg) {
+    animation: none;
+  }
+}
+
+/* Demo controls retain the workbench's dark utility treatment. */
+.cf-controls-host .cf-demo-panel {
+  width: min(236px, calc(100vw - 24px));
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgb(24 24 27 / 16%);
+}
+
+.cf-controls-host .cf-demo-panel[data-open=false] {
+  width: max-content;
+  height: auto;
+}
+
+.cf-controls-host .cf-demo-panel[data-open=false] .cf-demo-heading {
+  width: auto;
+  padding-inline: 12px;
+  gap: 6px;
+}
+
+.cf-controls-host .cf-demo-heading {
+  height: 40px;
+  padding-inline: 12px;
+}
+
+.cf-controls-host .cf-demo-heading:focus-visible {
+  outline: 2px solid #c9cdd4;
+  outline-offset: -3px;
+}
+
+.cf-controls-host .cf-demo-content {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+}
+
+.cf-controls-host .cf-demo-content[hidden] {
+  display: none;
+}
+
+.cf-controls-host .cf-demo-panel [data-slot=field-group] {
+  gap: 10px;
+}
+
+.cf-controls-host .cf-demo-panel [data-slot=field] {
+  gap: 5px;
+}
+
+.cf-controls-host .cf-demo-panel [data-slot=field-label] {
+  font-size: 12px;
+  line-height: 18px;
+  color: #d4d4d8;
+}
+
+.cf-controls-host .cf-demo-panel [data-slot=select-trigger] {
+  height: 34px;
+}
+
+.cf-controls-host .cf-demo-switch {
+  min-height: 28px;
+  margin: 0;
+  padding-top: 10px;
+  color: #d4d4d8;
+  font-size: 12px;
+}
+
+.cf-controls-host .cf-demo-panel .cf-demo-content > [data-slot=button] {
+  height: 32px;
+  font-size: 12px;
+}
+
+@media (pointer: coarse) {
+  .cf-controls-host .cf-demo-panel[data-open=false] .cf-demo-heading {
+    height: 44px;
+  }
+}

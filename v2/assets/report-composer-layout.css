@@ -1,0 +1,71 @@
+.strategy-workspace .composer-entry-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  max-height: 136px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.strategy-workspace .composer-entry-line > .prompt-input {
+  flex: 1 1 12em;
+  min-width: min(12em, 100%);
+  width: auto;
+}
+
+.strategy-workspace [data-node-id="7:25"]:has(.composer-token) {
+  height: auto;
+  min-height: 128px;
+  row-gap: 8px;
+}
+
+.composer-entry-line .composer-token {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  max-width: 100%;
+  min-width: 0;
+  height: 26px;
+  padding: 0 3px 0 8px;
+  gap: 2px;
+  border-radius: 4px;
+  background: #f2f3f5;
+  color: var(--color-text);
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.composer-token-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-token-remove {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 3px;
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.composer-token-remove svg { width: 13px; height: 13px; }
+.composer-token-remove:is(:hover,:focus-visible) { background: #e5e6eb; }
+.composer-token-remove:focus-visible { outline: 1px solid var(--color-primary); outline-offset: -1px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .composer-token:not(:hover):not(:focus-within) .composer-token-remove { opacity: 0; }
+}
+
+@media (max-width: 760px) {
+  .strategy-workspace [data-node-id="7:25"]:has(.composer-token) { min-height: 166px; }
+}
